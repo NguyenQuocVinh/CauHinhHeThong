@@ -1,0 +1,57 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR VERIFY EXADATA SMART FLASH CACHE IS CREATED 
+
+
+
+
+NOTE: Look for size or size:
+
+	 name:              	 dm01cel01_FLASHCACHE
+	 cellDisk:          	 FD_03_dm01cel01,FD_08_dm01cel01,FD_06_dm01cel01,FD_13_dm01cel01,FD_11_dm01cel01,FD_15_dm01cel01,FD_01_dm01cel01,FD_10_dm01cel01,FD_09_dm01cel01,FD_04_dm01cel01,FD_05_dm01cel01,FD_02_dm01cel01,FD_00_dm01cel01,FD_12_dm01cel01,FD_07_dm01cel01,FD_14_dm01cel01
+	 creationTime:      	 2012-01-10T21:52:01+07:00
+	 degradedCelldisks: 	 
+	 effectiveCacheSize:	 364.75G
+	 id:                	 7b85a6b2-8679-43bc-89e8-c2f0c1cac0be
+	 size:              	 364.75G
+	 status:            	 normal
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR VERIFY EXADATA SMART FLASH CACHE IS CREATED 
+
+
+
+
+NOTE: Look for size or size:
+
+	 name:              	 dm01cel02_FLASHCACHE
+	 cellDisk:          	 FD_07_dm01cel02,FD_13_dm01cel02,FD_08_dm01cel02,FD_14_dm01cel02,FD_12_dm01cel02,FD_06_dm01cel02,FD_05_dm01cel02,FD_01_dm01cel02,FD_09_dm01cel02,FD_10_dm01cel02,FD_11_dm01cel02,FD_15_dm01cel02,FD_02_dm01cel02,FD_00_dm01cel02,FD_04_dm01cel02,FD_03_dm01cel02
+	 creationTime:      	 2012-01-10T21:52:01+07:00
+	 degradedCelldisks: 	 
+	 effectiveCacheSize:	 364.75G
+	 id:                	 9b765a7c-d579-4ae4-a369-dd2cad083332
+	 size:              	 364.75G
+	 status:            	 normal
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR VERIFY EXADATA SMART FLASH CACHE IS CREATED 
+
+
+
+
+NOTE: Look for size or size:
+
+	 name:              	 dm01cel03_FLASHCACHE
+	 cellDisk:          	 FD_02_dm01cel03,FD_00_dm01cel03,FD_07_dm01cel03,FD_06_dm01cel03,FD_11_dm01cel03,FD_10_dm01cel03,FD_04_dm01cel03,FD_15_dm01cel03,FD_14_dm01cel03,FD_01_dm01cel03,FD_12_dm01cel03,FD_09_dm01cel03,FD_05_dm01cel03,FD_03_dm01cel03,FD_08_dm01cel03,FD_13_dm01cel03
+	 creationTime:      	 2012-01-10T21:52:01+07:00
+	 degradedCelldisks: 	 
+	 effectiveCacheSize:	 364.75G
+	 id:                	 29928184-1775-4edd-b9fb-78ddcf20c0d4
+	 size:              	 364.75G
+	 status:            	 normal
+
+
+
+

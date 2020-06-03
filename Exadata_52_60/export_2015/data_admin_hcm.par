@@ -1,0 +1,5 @@
+JOB_NAME=expdhsx
+logfile=admin_hcm.log  
+dumpfile=admin_hcm%U.dmp 
+filesize=4G directory=MYDPUMP_DIR
+schemas=admin_hcm

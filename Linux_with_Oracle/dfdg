@@ -1,0 +1,101 @@
+#!/bin/bash
+# FUNCTION
+#   Displays ASM diskgroup information, space usage. Displays usage by DISKS.
+#   Displays ongoing operations and list of files on diskgroup.
+# NOTES
+#   Developed for 11g Oracle Version. The entry must be in the /etc/oratab
+#   for ASM instance
+# CREATED
+#   Aychin Gasimov 03/2011 aychin.gasimov@gmail.com
+# MODIFIED
+#   Xavier Picamal 08/2012
+#       Added -r key
+# ------------------------------------------------------------------------------
+
+TMP1=`grep -E '\+' /etc/oratab`
+if [ -z "$TMP1" ]; then
+  echo "Please check /etc/oratab file, there is no entry for ASM instance."
+  exit 1
+fi
+
+ORACLE_HOME=`echo ${TMP1//\:/ } | awk {'print $2'}`
+ORACLE_SID=`echo ${TMP1//\:/ } | awk {'print $1'}`
+
+cd $ORACLE_HOME/bin
+
+dispinfo () {
+ echo "Use -d key to display usage by disks"
+ echo "Use -o key to display asm operations in progress (disk rebalancing)"
+ echo "Use -r key to display min, max and avergage free megabytes by diskgroups"
+ echo "Use -f  to list files and directories of the disk group"
+ }
+
+case "$1" in
+ -d)
+     sqlplus -S '/ as sysasm' << EOF
+       set linesize 200
+       set pagesize 50000
+       col path format a50
+       col free_pct format a8
+       select group_number,name,path,state,os_mb,total_mb,free_mb,round(free_mb*100/total_mb)||'%' free_pct from v\$asm_disk where header_status='MEMBER';
+EOF
+     dispinfo;
+     ;;
+ -o)
+     sqlplus -S '/ as sysasm' << EOF
+       set linesize 200
+       select * from v\$asm_operation;
+EOF
+     ;;
+ -f)
+     if [ -e $2 ]; then
+      echo "Please specify diskgroup name after -f key"
+     else
+      sqlplus -S '/ as sysasm' << EOF
+       alter session set nls_date_format='dd.mm.yyyy hh24:mi:ss';
+       set linesize 200
+       set pagesize 50000
+       variable pindx number;
+       exec select group_number into :pindx from v\$asm_diskgroup where upper(name)=upper('$2');
+       col reference_index noprint
+       break on reference_index skip 1 on report
+       compute sum label "Total size of all files in MBytes on diskgroup $2" of mb on report
+       col type format a15
+       col files format a80
+       select decode(aa.alias_directory,'Y',sys_connect_by_path(aa.name,'/'),'N',lpad(' ',level)||aa.name) files,  aa.REFERENCE_INDEX,
+              b.type, b.blocks, round(b.bytes/1024/1024,0) mb, b.creation_date, b.modification_date
+         from (select * from v\$asm_alias order by name) aa,
+              (select parent_index from v\$asm_alias where group_number = :pindx and alias_index=0) a,
+              (select * from v\$asm_file where group_number = :pindx) b
+         where aa.file_number=b.file_number(+)
+         start with aa.PARENT_INDEX=a.parent_index
+         connect by prior aa.REFERENCE_INDEX=aa.PARENT_INDEX;
+EOF
+     dispinfo;
+     fi;
+     ;;
+ -r)
+     sqlplus -S '/ as sysasm' << EOF
+     alter session set nls_date_format='dd.mm.yyyy hh24:mi:ss';
+     set linesize 200
+     set pagesize 5000
+     select dg.name,dg.allocation_unit_size/1024/1024 "AU(Mb)",min(d.free_mb) Min,
+     max(d.free_mb) Max, round(avg(d.free_mb),2) as Avg
+     from gv\$asm_disk d, gv\$asm_diskgroup dg
+     where d.group_number = dg.group_number
+     group by dg.name, dg.allocation_unit_size/1024/1024;
+EOF
+     dispinfo;
+     ;;
+ -h)
+     dispinfo;
+     ;;
+  *)
+     sqlplus -S '/ as sysasm' << EOF
+      set linesize 200
+      set pagesize 50000
+      col free_pct format a8
+      select group_number,name,sector_size,block_size,allocation_unit_size,state,total_mb,free_mb,round(free_mb*100/total_mb)||'%' free_pct from v\$asm_diskgroup;
+EOF
+     dispinfo;
+esac

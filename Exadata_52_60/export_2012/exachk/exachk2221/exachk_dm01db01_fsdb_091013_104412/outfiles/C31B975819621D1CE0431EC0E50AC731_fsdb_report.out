@@ -1,0 +1,9 @@
+TO REVIEW COLLECTED DATA FOR FSDB FOR REDO LOG FILE SIZE 
+
+
+
+
+group 1 thread 1 size = 52428800                                                
+group 2 thread 1 size = 52428800                                                
+group 3 thread 2 size = 52428800                                                
+group 4 thread 2 size = 52428800                                                

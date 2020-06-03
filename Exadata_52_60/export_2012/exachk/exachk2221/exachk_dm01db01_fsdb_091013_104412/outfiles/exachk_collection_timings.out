@@ -1,0 +1,278 @@
+Tue Sep 10 10:47:32 2013 - ASM Diskgroup Attributes
+Tue Sep 10 10:47:33 2013 - ASM initialization parameters
+Tue Sep 10 10:47:34 2013 - Database Parameters on ccbs
+Tue Sep 10 10:47:35 2013 - Database Parameters on fsdb
+Tue Sep 10 10:47:35 2013 - Database Undocumented Parameters on ccbs
+Tue Sep 10 10:47:36 2013 - Database Undocumented Parameters on fsdb
+Tue Sep 10 10:47:37 2013 - Clusterware and RDBMS software version on dm01db01
+Tue Sep 10 10:47:38 2013 - Compute node PCI bus slot speed for infiniband HCAs on dm01db01
+Tue Sep 10 10:47:38 2013 - Kernel parameters on dm01db01
+Tue Sep 10 10:47:38 2013 - Maximum number of semaphore sets on system on dm01db01
+Tue Sep 10 10:47:39 2013 - Maximum number of semaphores on system on dm01db01
+Tue Sep 10 10:47:39 2013 - Maximum number of semaphores per semaphore set on dm01db01
+Tue Sep 10 10:47:39 2013 - Patches for Grid Infrastructure  on dm01db01
+Tue Sep 10 10:47:46 2013 - Patches for RDBMS Home  on dm01db01
+Tue Sep 10 10:47:53 2013 - RDBMS patch inventory on dm01db01
+Tue Sep 10 10:47:57 2013 - number of semaphore operations per semop system call on dm01db01
+
+
+Tue Sep 10 10:48:22 2013 - STARTED ON  dm01db01
+
+Tue Sep 10 10:48:22 2013 - CRS user limits configuration on dm01db01
+Tue Sep 10 10:48:23 2013 - CRS user time zone check on dm01db01
+Tue Sep 10 10:48:24 2013 - Clusterware patch inventory on dm01db01
+Tue Sep 10 10:48:24 2013 - Exadata Critical Issue DB09 on dm01db01
+Tue Sep 10 10:48:24 2013 - Exadata infiniband switches on dm01db01
+Tue Sep 10 10:48:24 2013 - Exadata software version on database server on dm01db01
+Tue Sep 10 10:48:27 2013 - Exadata system model number on dm01db01
+Tue Sep 10 10:48:27 2013 - HCA firmware version on database server on dm01db01
+Tue Sep 10 10:48:27 2013 - HCA transfer rate on database server on dm01db01
+Tue Sep 10 10:48:27 2013 - Infiniband Switch counters on all switches on dm01db01
+Tue Sep 10 10:48:27 2013 - MaxStartups setting in sshd_config on dm01db01
+Tue Sep 10 10:48:27 2013 - Minimum exadata version required for ASR  on dm01db01
+Tue Sep 10 10:48:29 2013 - OFED Software version on database server on dm01db01
+Tue Sep 10 10:48:29 2013 - Obtain hardware information on dm01db01
+Tue Sep 10 10:48:29 2013 - Operating system and Kernel version on database server on dm01db01
+Tue Sep 10 10:48:29 2013 - Raid controller bus link speed on dm01db01
+Tue Sep 10 10:48:32 2013 - System Event Log on dm01db01
+Tue Sep 10 10:48:32 2013 - Verify Database Server Disk Controller Configuration  on dm01db01
+Tue Sep 10 10:48:32 2013 - Verify Database Server Physical Drive Configuration on dm01db01
+Tue Sep 10 10:48:32 2013 - Verify Database Server Virtual Drive Configuration  on dm01db01
+Tue Sep 10 10:48:32 2013 - Verify Disk Cache Policy on database server on dm01db01
+Tue Sep 10 10:48:37 2013 - Verify Hardware and Firmware on Database and Storage Servers (CheckHWnFWProfile) [Database Server] on dm01db01
+Tue Sep 10 10:48:37 2013 - Verify InfiniBand Address Resolution Protocol (ARP) Configuration on Database Servers on dm01db01
+Tue Sep 10 10:48:39 2013 - Verify InfiniBand Fabric Topology (verify-topology) on dm01db01
+Tue Sep 10 10:48:39 2013 - Verify InfiniBand subnet manager is not running on database server on dm01db01
+Tue Sep 10 10:48:39 2013 - Verify InfiniBand subnet manager is running on an InfiniBand switch on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify Master (Rack) Serial Number is Set [Database Server] on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify RAID Controller Battery Condition [Database Server] on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify RAID Controller Battery Temperature [Database Server] on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify database server boot device maximum mount count on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify database server disk controllers use writeback cache  on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify database server logical volumes maximum mount count  on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify imageinfo on database server on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify imageinfo on database server to compare systemwide on dm01db01
+Tue Sep 10 10:48:43 2013 - Verify service exachkcfg autostart status on database server on dm01db01
+Tue Sep 10 10:48:43 2013 - root time zone check on dm01db01
+Tue Sep 10 10:49:11 2013 - verify asr exadata configuration check via ASREXACHECK on database server on dm01db01
+
+
+Tue Sep 10 11:01:50 2013 - STARTED ON  dm01cel01
+
+Tue Sep 10 11:01:56 2013 - Ambient Temperature on storage server on dm01cel01
+Tue Sep 10 11:01:58 2013 - Exadata Critical Issue EX10 on dm01cel01
+Tue Sep 10 11:02:00 2013 - Exadata Critical Issue EX11 on dm01cel01
+Tue Sep 10 11:02:00 2013 - Exadata software version on storage server on dm01cel01
+Tue Sep 10 11:02:01 2013 - Exadata software version on storage servers on dm01cel01
+Tue Sep 10 11:02:03 2013 - Exadata storage server system model number  on dm01cel01
+Tue Sep 10 11:02:03 2013 - RAID controller version on storage servers on dm01cel01
+Tue Sep 10 11:02:03 2013 - Verify Disk Cache Policy on storage servers on dm01cel01
+Tue Sep 10 11:02:21 2013 - Verify Electronic Storage Module (ESM) Lifetime is within Specification  on dm01cel01
+Tue Sep 10 11:02:24 2013 - Verify Hardware and Firmware on Database and Storage Servers (CheckHWnFWProfile) [Storage Server] on dm01cel01
+Tue Sep 10 11:02:24 2013 - Verify InfiniBand subnet manager is not running on storage server on dm01cel01
+Tue Sep 10 11:02:27 2013 - Verify Master (Rack) Serial Number is Set [Storage Server] on dm01cel01
+Tue Sep 10 11:02:27 2013 - Verify PCI bridge is configured for generation II on storage servers on dm01cel01
+Tue Sep 10 11:02:28 2013 - Verify RAID Controller Battery Condition [Storage Server] on dm01cel01
+Tue Sep 10 11:02:28 2013 - Verify RAID Controller Battery Temperature [Storage Server] on dm01cel01
+Tue Sep 10 11:02:29 2013 - Verify There Are No Storage Server Memory (ECC) Errors  on dm01cel01
+Tue Sep 10 11:02:30 2013 - Verify imageinfo on storage server on dm01cel01
+Tue Sep 10 11:02:31 2013 - Verify imageinfo on storage server to compare systemwide on dm01cel01
+Tue Sep 10 11:02:33 2013 - Verify release tracking bug on storage servers on dm01cel01
+Tue Sep 10 11:02:33 2013 - Verify service exachkcfg autostart status on storage server on dm01cel01
+Tue Sep 10 11:02:33 2013 - Verify storage server disk controllers use writeback cache  on dm01cel01
+Tue Sep 10 11:02:46 2013 - Verify storage server network configuration with ipconf on dm01cel01
+Tue Sep 10 11:03:28 2013 - verify asr exadata configuration check via ASREXACHECK on storage servers on dm01cel01
+Tue Sep 10 11:06:12 2013 - Configure Storage Server alerts to be sent via email on dm01cel01
+Tue Sep 10 11:06:14 2013 - Exadata Celldisk predictive failures on dm01cel01
+Tue Sep 10 11:06:21 2013 - Exadata Critical Issue EX9 on dm01cel01
+Tue Sep 10 11:06:21 2013 - Exadata storage server root filesystem free space on dm01cel01
+Tue Sep 10 11:06:21 2013 - HCA firmware version on storage server on dm01cel01
+Tue Sep 10 11:06:22 2013 - OFED Software version on storage server on dm01cel01
+Tue Sep 10 11:06:22 2013 - OSWatcher status on storage servers on dm01cel01
+Tue Sep 10 11:06:22 2013 - Operating system and Kernel version on storage server on dm01cel01
+Tue Sep 10 11:06:24 2013 - Scan storage server alerthistory for open alerts on dm01cel01
+Tue Sep 10 11:06:26 2013 - Storage server make and model on dm01cel01
+Tue Sep 10 11:06:26 2013 - Verify Data Network is Separate from Management Network on storage server on dm01cel01
+Tue Sep 10 11:06:26 2013 - Verify Ethernet Cable Connection Quality on storage servers on dm01cel01
+Tue Sep 10 11:06:27 2013 - Verify Exadata Smart Flash Cache is created on dm01cel01
+Tue Sep 10 11:06:28 2013 - Verify Exadata Smart Flash Log is Created on dm01cel01
+Tue Sep 10 11:06:29 2013 - Verify InfiniBand Cable Connection Quality on storage servers on dm01cel01
+Tue Sep 10 11:06:30 2013 - Verify Software on Storage Servers (CheckSWProfile.sh)  on dm01cel01
+Tue Sep 10 11:06:48 2013 - Verify average ping times to DNS nameserver on dm01cel01
+Tue Sep 10 11:06:49 2013 - Verify celldisk configuration on disk drives on dm01cel01
+Tue Sep 10 11:06:51 2013 - Verify celldisk configuration on flash memory devices on dm01cel01
+
+
+Tue Sep 10 11:02:03 2013 - STARTED ON  dm01cel02
+
+Tue Sep 10 11:02:09 2013 - Ambient Temperature on storage server on dm01cel02
+Tue Sep 10 11:02:12 2013 - Exadata Critical Issue EX10 on dm01cel02
+Tue Sep 10 11:02:14 2013 - Exadata Critical Issue EX11 on dm01cel02
+Tue Sep 10 11:02:14 2013 - Exadata software version on storage server on dm01cel02
+Tue Sep 10 11:02:14 2013 - Exadata software version on storage servers on dm01cel02
+Tue Sep 10 11:02:17 2013 - Exadata storage server system model number  on dm01cel02
+Tue Sep 10 11:02:17 2013 - RAID controller version on storage servers on dm01cel02
+Tue Sep 10 11:02:17 2013 - Verify Disk Cache Policy on storage servers on dm01cel02
+Tue Sep 10 11:02:34 2013 - Verify Electronic Storage Module (ESM) Lifetime is within Specification  on dm01cel02
+Tue Sep 10 11:02:37 2013 - Verify Hardware and Firmware on Database and Storage Servers (CheckHWnFWProfile) [Storage Server] on dm01cel02
+Tue Sep 10 11:02:37 2013 - Verify InfiniBand subnet manager is not running on storage server on dm01cel02
+Tue Sep 10 11:02:41 2013 - Verify Master (Rack) Serial Number is Set [Storage Server] on dm01cel02
+Tue Sep 10 11:02:41 2013 - Verify PCI bridge is configured for generation II on storage servers on dm01cel02
+Tue Sep 10 11:02:41 2013 - Verify RAID Controller Battery Condition [Storage Server] on dm01cel02
+Tue Sep 10 11:02:41 2013 - Verify RAID Controller Battery Temperature [Storage Server] on dm01cel02
+Tue Sep 10 11:02:43 2013 - Verify There Are No Storage Server Memory (ECC) Errors  on dm01cel02
+Tue Sep 10 11:02:43 2013 - Verify imageinfo on storage server on dm01cel02
+Tue Sep 10 11:02:45 2013 - Verify imageinfo on storage server to compare systemwide on dm01cel02
+Tue Sep 10 11:02:46 2013 - Verify release tracking bug on storage servers on dm01cel02
+Tue Sep 10 11:02:46 2013 - Verify service exachkcfg autostart status on storage server on dm01cel02
+Tue Sep 10 11:02:46 2013 - Verify storage server disk controllers use writeback cache  on dm01cel02
+Tue Sep 10 11:02:50 2013 - Verify storage server network configuration with ipconf on dm01cel02
+Tue Sep 10 11:03:30 2013 - verify asr exadata configuration check via ASREXACHECK on storage servers on dm01cel02
+Tue Sep 10 11:06:11 2013 - Configure Storage Server alerts to be sent via email on dm01cel02
+Tue Sep 10 11:06:13 2013 - Exadata Celldisk predictive failures on dm01cel02
+Tue Sep 10 11:06:20 2013 - Exadata Critical Issue EX9 on dm01cel02
+Tue Sep 10 11:06:20 2013 - Exadata storage server root filesystem free space on dm01cel02
+Tue Sep 10 11:06:21 2013 - HCA firmware version on storage server on dm01cel02
+Tue Sep 10 11:06:21 2013 - OFED Software version on storage server on dm01cel02
+Tue Sep 10 11:06:21 2013 - OSWatcher status on storage servers on dm01cel02
+Tue Sep 10 11:06:21 2013 - Operating system and Kernel version on storage server on dm01cel02
+Tue Sep 10 11:06:23 2013 - Scan storage server alerthistory for open alerts on dm01cel02
+Tue Sep 10 11:06:25 2013 - Storage server make and model on dm01cel02
+Tue Sep 10 11:06:25 2013 - Verify Data Network is Separate from Management Network on storage server on dm01cel02
+Tue Sep 10 11:06:25 2013 - Verify Ethernet Cable Connection Quality on storage servers on dm01cel02
+Tue Sep 10 11:06:26 2013 - Verify Exadata Smart Flash Cache is created on dm01cel02
+Tue Sep 10 11:06:28 2013 - Verify Exadata Smart Flash Log is Created on dm01cel02
+Tue Sep 10 11:06:28 2013 - Verify InfiniBand Cable Connection Quality on storage servers on dm01cel02
+Tue Sep 10 11:06:29 2013 - Verify Software on Storage Servers (CheckSWProfile.sh)  on dm01cel02
+Tue Sep 10 11:06:47 2013 - Verify average ping times to DNS nameserver on dm01cel02
+Tue Sep 10 11:06:48 2013 - Verify celldisk configuration on disk drives on dm01cel02
+Tue Sep 10 11:06:50 2013 - Verify celldisk configuration on flash memory devices on dm01cel02
+Tue Sep 10 11:06:52 2013 - Verify griddisk ASM status on dm01cel02
+Tue Sep 10 11:07:00 2013 - Verify griddisk count matches across all storage servers where a given prefix name exists on dm01cel02
+
+
+Tue Sep 10 11:02:18 2013 - STARTED ON  dm01cel03
+
+Tue Sep 10 11:02:23 2013 - Ambient Temperature on storage server on dm01cel03
+Tue Sep 10 11:02:25 2013 - Exadata Critical Issue EX10 on dm01cel03
+Tue Sep 10 11:02:28 2013 - Exadata Critical Issue EX11 on dm01cel03
+Tue Sep 10 11:02:28 2013 - Exadata software version on storage server on dm01cel03
+Tue Sep 10 11:02:28 2013 - Exadata software version on storage servers on dm01cel03
+Tue Sep 10 11:02:31 2013 - Exadata storage server system model number  on dm01cel03
+Tue Sep 10 11:02:31 2013 - RAID controller version on storage servers on dm01cel03
+Tue Sep 10 11:02:31 2013 - Verify Disk Cache Policy on storage servers on dm01cel03
+Tue Sep 10 11:02:48 2013 - Verify Electronic Storage Module (ESM) Lifetime is within Specification  on dm01cel03
+Tue Sep 10 11:02:51 2013 - Verify Hardware and Firmware on Database and Storage Servers (CheckHWnFWProfile) [Storage Server] on dm01cel03
+Tue Sep 10 11:02:51 2013 - Verify InfiniBand subnet manager is not running on storage server on dm01cel03
+Tue Sep 10 11:02:54 2013 - Verify Master (Rack) Serial Number is Set [Storage Server] on dm01cel03
+Tue Sep 10 11:02:54 2013 - Verify PCI bridge is configured for generation II on storage servers on dm01cel03
+Tue Sep 10 11:02:55 2013 - Verify RAID Controller Battery Condition [Storage Server] on dm01cel03
+Tue Sep 10 11:02:55 2013 - Verify RAID Controller Battery Temperature [Storage Server] on dm01cel03
+Tue Sep 10 11:02:56 2013 - Verify There Are No Storage Server Memory (ECC) Errors  on dm01cel03
+Tue Sep 10 11:02:57 2013 - Verify imageinfo on storage server on dm01cel03
+Tue Sep 10 11:02:58 2013 - Verify imageinfo on storage server to compare systemwide on dm01cel03
+Tue Sep 10 11:03:00 2013 - Verify release tracking bug on storage servers on dm01cel03
+Tue Sep 10 11:03:00 2013 - Verify service exachkcfg autostart status on storage server on dm01cel03
+Tue Sep 10 11:03:00 2013 - Verify storage server disk controllers use writeback cache  on dm01cel03
+Tue Sep 10 11:03:03 2013 - Verify storage server network configuration with ipconf on dm01cel03
+Tue Sep 10 11:03:45 2013 - verify asr exadata configuration check via ASREXACHECK on storage servers on dm01cel03
+Tue Sep 10 11:06:26 2013 - Configure Storage Server alerts to be sent via email on dm01cel03
+Tue Sep 10 11:06:27 2013 - Exadata Celldisk predictive failures on dm01cel03
+Tue Sep 10 11:06:35 2013 - Exadata Critical Issue EX9 on dm01cel03
+Tue Sep 10 11:06:35 2013 - Exadata storage server root filesystem free space on dm01cel03
+Tue Sep 10 11:06:35 2013 - HCA firmware version on storage server on dm01cel03
+Tue Sep 10 11:06:35 2013 - OFED Software version on storage server on dm01cel03
+Tue Sep 10 11:06:35 2013 - OSWatcher status on storage servers on dm01cel03
+Tue Sep 10 11:06:35 2013 - Operating system and Kernel version on storage server on dm01cel03
+Tue Sep 10 11:06:38 2013 - Scan storage server alerthistory for open alerts on dm01cel03
+Tue Sep 10 11:06:39 2013 - Storage server make and model on dm01cel03
+Tue Sep 10 11:06:39 2013 - Verify Data Network is Separate from Management Network on storage server on dm01cel03
+Tue Sep 10 11:06:39 2013 - Verify Ethernet Cable Connection Quality on storage servers on dm01cel03
+Tue Sep 10 11:06:41 2013 - Verify Exadata Smart Flash Cache is created on dm01cel03
+Tue Sep 10 11:06:42 2013 - Verify Exadata Smart Flash Log is Created on dm01cel03
+Tue Sep 10 11:06:42 2013 - Verify InfiniBand Cable Connection Quality on storage servers on dm01cel03
+Tue Sep 10 11:06:43 2013 - Verify Software on Storage Servers (CheckSWProfile.sh)  on dm01cel03
+Tue Sep 10 11:07:01 2013 - Verify average ping times to DNS nameserver on dm01cel03
+Tue Sep 10 11:07:03 2013 - Verify celldisk configuration on disk drives on dm01cel03
+Tue Sep 10 11:07:04 2013 - Verify celldisk configuration on flash memory devices on dm01cel03
+Tue Sep 10 11:07:06 2013 - Verify griddisk ASM status on dm01cel03
+Tue Sep 10 11:07:14 2013 - Verify griddisk count matches across all storage servers where a given prefix name exists on dm01cel03
+
+
+Tue Sep 10 11:08:41 2013 - STARTED ON  dm01sw-ib3
+
+Tue Sep 10 11:08:41 2013 - Hostname in /etc/hosts on dm01sw-ib3
+Tue Sep 10 11:08:41 2013 - Infiniband Switch NTP configuration on dm01sw-ib3
+Tue Sep 10 11:08:41 2013 - Infiniband subnet manager status on dm01sw-ib3
+Tue Sep 10 11:08:41 2013 - Infiniband switch HCA status on dm01sw-ib3
+Tue Sep 10 11:08:41 2013 - Infiniband switch HOSTNAME configuration on dm01sw-ib3
+Tue Sep 10 11:08:42 2013 - Infiniband switch firmware version on dm01sw-ib3
+Tue Sep 10 11:08:42 2013 - Infiniband switch health on dm01sw-ib3
+Tue Sep 10 11:08:42 2013 - Infiniband switch module configuration on dm01sw-ib3
+Tue Sep 10 11:08:42 2013 - Infiniband switch subnet manager configuration on dm01sw-ib3
+Tue Sep 10 11:08:42 2013 - Infiniband switch type(Spine or leaf) on dm01sw-ib3
+Tue Sep 10 11:09:00 2013 - Verify average ping times to DNS nameserver on dm01sw-ib3
+Tue Sep 10 11:09:01 2013 - sm_priority configuration on Infiniband switch on dm01sw-ib3
+
+
+Tue Sep 10 11:08:58 2013 - STARTED ON  dm01sw-ib2
+
+Tue Sep 10 11:08:58 2013 - Hostname in /etc/hosts on dm01sw-ib2
+Tue Sep 10 11:08:58 2013 - Infiniband Switch NTP configuration on dm01sw-ib2
+Tue Sep 10 11:08:58 2013 - Infiniband subnet manager status on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch HCA status on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch HOSTNAME configuration on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch firmware version on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch health on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch module configuration on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch subnet manager configuration on dm01sw-ib2
+Tue Sep 10 11:08:59 2013 - Infiniband switch type(Spine or leaf) on dm01sw-ib2
+Tue Sep 10 11:09:18 2013 - Verify average ping times to DNS nameserver on dm01sw-ib2
+Tue Sep 10 11:09:18 2013 - sm_priority configuration on Infiniband switch on dm01sw-ib2
+Tue Sep 10 10:51:19 2013 - Clusterware and RDBMS software version on dm01db02
+Tue Sep 10 10:51:19 2013 - Compute node PCI bus slot speed for infiniband HCAs on dm01db02
+Tue Sep 10 10:51:20 2013 - Kernel parameters on dm01db02
+Tue Sep 10 10:51:20 2013 - Maximum number of semaphore sets on system on dm01db02
+Tue Sep 10 10:51:20 2013 - Maximum number of semaphores on system on dm01db02
+Tue Sep 10 10:51:20 2013 - Maximum number of semaphores per semaphore set on dm01db02
+Tue Sep 10 10:51:21 2013 - Patches for Grid Infrastructure  on dm01db02
+Tue Sep 10 10:51:28 2013 - Patches for RDBMS Home  on dm01db02
+Tue Sep 10 10:51:35 2013 - RDBMS patch inventory on dm01db02
+Tue Sep 10 10:51:39 2013 - number of semaphore operations per semop system call on dm01db02
+
+
+Tue Sep 10 10:52:05 2013 - STARTED ON  dm01db02
+
+Tue Sep 10 10:52:05 2013 - CRS user limits configuration on dm01db02
+Tue Sep 10 10:52:05 2013 - CRS user time zone check on dm01db02
+Tue Sep 10 10:52:06 2013 - Clusterware patch inventory on dm01db02
+Tue Sep 10 10:52:06 2013 - Exadata Critical Issue DB09 on dm01db02
+Tue Sep 10 10:52:06 2013 - Exadata software version on database server on dm01db02
+Tue Sep 10 10:52:09 2013 - Exadata system model number on dm01db02
+Tue Sep 10 10:52:09 2013 - HCA firmware version on database server on dm01db02
+Tue Sep 10 10:52:09 2013 - HCA transfer rate on database server on dm01db02
+Tue Sep 10 10:52:09 2013 - MaxStartups setting in sshd_config on dm01db02
+Tue Sep 10 10:52:09 2013 - Minimum exadata version required for ASR  on dm01db02
+Tue Sep 10 10:52:10 2013 - OFED Software version on database server on dm01db02
+Tue Sep 10 10:52:10 2013 - Obtain hardware information on dm01db02
+Tue Sep 10 10:52:10 2013 - Operating system and Kernel version on database server on dm01db02
+Tue Sep 10 10:52:11 2013 - Raid controller bus link speed on dm01db02
+Tue Sep 10 10:52:13 2013 - System Event Log on dm01db02
+Tue Sep 10 10:52:13 2013 - Verify Database Server Disk Controller Configuration  on dm01db02
+Tue Sep 10 10:52:13 2013 - Verify Database Server Physical Drive Configuration on dm01db02
+Tue Sep 10 10:52:13 2013 - Verify Database Server Virtual Drive Configuration  on dm01db02
+Tue Sep 10 10:52:13 2013 - Verify Disk Cache Policy on database server on dm01db02
+Tue Sep 10 10:52:17 2013 - Verify Hardware and Firmware on Database and Storage Servers (CheckHWnFWProfile) [Database Server] on dm01db02
+Tue Sep 10 10:52:17 2013 - Verify InfiniBand Address Resolution Protocol (ARP) Configuration on Database Servers on dm01db02
+Tue Sep 10 10:52:18 2013 - Verify InfiniBand subnet manager is not running on database server on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify Master (Rack) Serial Number is Set [Database Server] on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify RAID Controller Battery Condition [Database Server] on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify RAID Controller Battery Temperature [Database Server] on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify database server boot device maximum mount count on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify database server disk controllers use writeback cache  on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify database server logical volumes maximum mount count  on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify imageinfo on database server on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify imageinfo on database server to compare systemwide on dm01db02
+Tue Sep 10 10:52:21 2013 - Verify service exachkcfg autostart status on database server on dm01db02
+Tue Sep 10 10:52:21 2013 - root time zone check on dm01db02
+Tue Sep 10 10:52:47 2013 - verify asr exadata configuration check via ASREXACHECK on database server on dm01db02

@@ -1,0 +1,67 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Thu Nov 6 21:00:01 2014
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database (not started)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G; #updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> #  backup incremental level 1 copies 2 format '+RECO/RMAN/level1_%D_%T_%U','/mnt/nfs52100/RMAN/level1_%D_%T_%U' tag MONTHLY_LEVEL_1 
+41>    backup incremental level 1 copies 2 format '+RECO/RMAN/level1_%D_%T_%U' tag MONTHLY_LEVEL_1 
+42> 
+43>   database include current controlfile;
+44> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+45> 	backup as compressed backupset copies 2 archivelog all format '+DATA/RMAN/archi_%D_%T_%U','/u03/rman_ccbs_ftp5/RMAN/archi_%D_%T_%U'
+46>   tag monthly_arch delete input;
+47> }
+48> 
+Starting backup at 06/11/2014 21:00:01
+using target database control file instead of recovery catalog
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of backup command at 11/06/2014 21:00:01
+RMAN-06403: could not obtain a fully authorized session
+ORA-01034: ORACLE not available
+ORA-27101: shared memory realm does not exist
+Linux-x86_64 Error: 2: No such file or directory
+
+Recovery Manager complete.

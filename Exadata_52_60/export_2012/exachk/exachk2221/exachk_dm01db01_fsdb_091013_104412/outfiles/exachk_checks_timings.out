@@ -1,0 +1,936 @@
+start time - Tue Sep 10 10:55:58 2013 - asm disk attribute check main branch on dm01db01
+
+end time -  Tue Sep 10 10:55:58 2013 - asm disk attribute check main branch on dm01db01
+
+start time - Tue Sep 10 10:55:59 2013 - ASM allocation unit size for all disk groups on dm01db01
+
+end time -  Tue Sep 10 10:55:59 2013 - ASM allocation unit size for all disk groups on dm01db01
+
+start time - Tue Sep 10 10:55:59 2013 - ASM disk group compatible.rdbms parameter on dm01db01
+
+end time -  Tue Sep 10 10:55:59 2013 - ASM disk group compatible.rdbms parameter on dm01db01
+
+start time - Tue Sep 10 10:55:59 2013 - ASM Cell smart scan on dm01db01
+
+end time -  Tue Sep 10 10:55:59 2013 - ASM Cell smart scan on dm01db01
+
+start time - Tue Sep 10 10:55:59 2013 - ASM disk group compatible.asm parameter on dm01db01
+
+end time -  Tue Sep 10 10:55:59 2013 - ASM disk group compatible.asm parameter on dm01db01
+
+start time - Tue Sep 10 10:55:59 2013 - Verify the database server InfiniBand network is in "connected" mode. on dm01db01
+
+end time -  Tue Sep 10 10:56:00 2013 - Verify the database server InfiniBand network is in "connected" mode. on dm01db01
+
+start time - Tue Sep 10 10:56:01 2013 - Verify Cluster Synchronization Services (CSS) misscount = 60 on dm01db01
+
+end time -  Tue Sep 10 10:56:01 2013 - Verify Cluster Synchronization Services (CSS) misscount = 60 on dm01db01
+
+start time - Tue Sep 10 10:56:02 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Cluster Home] on dm01db01
+
+end time -  Tue Sep 10 10:56:02 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Cluster Home] on dm01db01
+
+start time - Tue Sep 10 10:56:02 2013 - Verify database server InfiniBand network MTU size is 65520 on dm01db01
+
+end time -  Tue Sep 10 10:56:03 2013 - Verify database server InfiniBand network MTU size is 65520 on dm01db01
+
+start time - Tue Sep 10 10:56:06 2013 - Turn NUMA Off [Operating System] on dm01db01
+
+end time -  Tue Sep 10 10:56:06 2013 - Turn NUMA Off [Operating System] on dm01db01
+
+start time - Tue Sep 10 10:56:08 2013 - ASM Version on dm01db01
+
+end time -  Tue Sep 10 10:56:08 2013 - ASM Version on dm01db01
+
+start time - Tue Sep 10 10:56:09 2013 - High Redundancy Controlfile on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:56:11 2013 - High Redundancy Controlfile on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:56:11 2013 - High Redundancy Controlfile on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:56:13 2013 - High Redundancy Controlfile on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:56:19 2013 - Verify InfiniBand is the Private Network for Oracle Clusterware Communication on dm01db01
+
+end time -  Tue Sep 10 10:56:20 2013 - Verify InfiniBand is the Private Network for Oracle Clusterware Communication on dm01db01
+
+start time - Tue Sep 10 10:56:20 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Database Home] on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:56:20 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Database Home] on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:56:20 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:56:20 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:56:21 2013 - Free space in root file system on dm01db01
+
+end time -  Tue Sep 10 10:56:21 2013 - Free space in root file system on dm01db01
+
+start time - Tue Sep 10 10:56:22 2013 - DBM FailGroups on dm01db01
+
+end time -  Tue Sep 10 10:56:22 2013 - DBM FailGroups on dm01db01
+
+start time - Tue Sep 10 10:56:22 2013 - Manage ASM Audit File Directory Growth with cron on dm01db01
+
+end time -  Tue Sep 10 10:56:23 2013 - Manage ASM Audit File Directory Growth with cron on dm01db01
+
+start time - Tue Sep 10 10:56:23 2013 - Verify Data Network is Separate from Management Network on dm01db01
+
+end time -  Tue Sep 10 10:56:23 2013 - Verify Data Network is Separate from Management Network on dm01db01
+
+start time - Tue Sep 10 10:56:24 2013 - GI shell limits soft nofile on dm01db01
+
+end time -  Tue Sep 10 10:56:24 2013 - GI shell limits soft nofile on dm01db01
+
+start time - Tue Sep 10 10:56:24 2013 - GI shell limits soft nproc on dm01db01
+
+end time -  Tue Sep 10 10:56:24 2013 - GI shell limits soft nproc on dm01db01
+
+start time - Tue Sep 10 10:56:24 2013 - GI shell limits hard nofile on dm01db01
+
+end time -  Tue Sep 10 10:56:24 2013 - GI shell limits hard nofile on dm01db01
+
+start time - Tue Sep 10 10:56:24 2013 - GI shell limits hard nproc on dm01db01
+
+end time -  Tue Sep 10 10:56:25 2013 - GI shell limits hard nproc on dm01db01
+
+start time - Tue Sep 10 10:56:25 2013 - DB shell limits hard nproc on dm01db01
+
+end time -  Tue Sep 10 10:56:25 2013 - DB shell limits hard nproc on dm01db01
+
+start time - Tue Sep 10 10:56:25 2013 - DB shell limits soft nofile on dm01db01
+
+end time -  Tue Sep 10 10:56:25 2013 - DB shell limits soft nofile on dm01db01
+
+start time - Tue Sep 10 10:56:25 2013 - DB shell limits hard nofile on dm01db01
+
+end time -  Tue Sep 10 10:56:25 2013 - DB shell limits hard nofile on dm01db01
+
+start time - Tue Sep 10 10:56:25 2013 - DB shell limits hard stack on dm01db01
+
+end time -  Tue Sep 10 10:56:25 2013 - DB shell limits hard stack on dm01db01
+
+start time - Tue Sep 10 10:56:25 2013 - DB shell limits soft nproc on dm01db01
+
+end time -  Tue Sep 10 10:56:26 2013 - DB shell limits soft nproc on dm01db01
+
+start time - Tue Sep 10 10:56:26 2013 - NIC Bonding Mode for Public on dm01db01
+
+end time -  Tue Sep 10 10:56:26 2013 - NIC Bonding Mode for Public on dm01db01
+
+start time - Tue Sep 10 10:56:27 2013 - NIC Bonding Mode Public on dm01db01
+
+end time -  Tue Sep 10 10:56:27 2013 - NIC Bonding Mode Public on dm01db01
+
+start time - Tue Sep 10 10:56:27 2013 - User Open File Limit on dm01db01
+
+end time -  Tue Sep 10 10:56:28 2013 - User Open File Limit on dm01db01
+
+start time - Tue Sep 10 10:56:28 2013 - VIP NIC bonding config. on dm01db01
+
+end time -  Tue Sep 10 10:56:28 2013 - VIP NIC bonding config. on dm01db01
+
+start time - Tue Sep 10 10:56:29 2013 - ohasd Log File Ownership on dm01db01
+
+end time -  Tue Sep 10 10:56:29 2013 - ohasd Log File Ownership on dm01db01
+
+start time - Tue Sep 10 10:56:29 2013 - oradism executable permission on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:56:29 2013 - oradism executable permission on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:56:29 2013 - Interconnect NIC bonding config. on dm01db01
+
+end time -  Tue Sep 10 10:56:30 2013 - Interconnect NIC bonding config. on dm01db01
+
+start time - Tue Sep 10 10:56:30 2013 - oradism executable ownership on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:56:30 2013 - oradism executable ownership on dm01db01 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:56:30 2013 - crsd/orarootagent_root Log File Ownership on dm01db01
+
+end time -  Tue Sep 10 10:56:30 2013 - crsd/orarootagent_root Log File Ownership on dm01db01
+
+start time - Tue Sep 10 10:56:30 2013 - SELinux status on dm01db01
+
+end time -  Tue Sep 10 10:56:31 2013 - SELinux status on dm01db01
+
+start time - Tue Sep 10 10:56:31 2013 - Number of SCAN listners on dm01db01
+
+end time -  Tue Sep 10 10:56:32 2013 - Number of SCAN listners on dm01db01
+
+start time - Tue Sep 10 10:56:33 2013 - VKTM priority on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:56:33 2013 - VKTM priority on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:56:33 2013 - VKTM priority on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:56:34 2013 - VKTM priority on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:56:35 2013 - LMS priority on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:56:35 2013 - LMS priority on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:56:35 2013 - LMS priority on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:56:36 2013 - LMS priority on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:56:37 2013 - NIC Bonding Mode for interconnect on dm01db01
+
+end time -  Tue Sep 10 10:56:37 2013 - NIC Bonding Mode for interconnect on dm01db01
+
+start time - Tue Sep 10 10:56:37 2013 - NIC Bonding Mode interconnect on dm01db01
+
+end time -  Tue Sep 10 10:56:38 2013 - NIC Bonding Mode interconnect on dm01db01
+
+start time - Tue Sep 10 10:56:39 2013 - CRS HOME env variable on dm01db01
+
+end time -  Tue Sep 10 10:56:39 2013 - CRS HOME env variable on dm01db01
+
+start time - Tue Sep 10 10:56:40 2013 - OSWatcher status on dm01db01
+
+end time -  Tue Sep 10 10:56:40 2013 - OSWatcher status on dm01db01
+
+start time - Tue Sep 10 10:56:40 2013 - crsd Log File Ownership on dm01db01
+
+end time -  Tue Sep 10 10:56:40 2013 - crsd Log File Ownership on dm01db01
+
+start time - Tue Sep 10 10:56:43 2013 - Non-routable network for interconnect on dm01db01
+
+end time -  Tue Sep 10 10:56:43 2013 - Non-routable network for interconnect on dm01db01
+
+start time - Tue Sep 10 10:56:43 2013 - Cluster time synchronization server on dm01db01
+
+end time -  Tue Sep 10 10:56:44 2013 - Cluster time synchronization server on dm01db01
+
+start time - Tue Sep 10 10:56:44 2013 - NTP with correct setting on dm01db01
+
+end time -  Tue Sep 10 10:56:44 2013 - NTP with correct setting on dm01db01
+
+start time - Tue Sep 10 10:56:44 2013 - Remote listener set to scan name on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:56:46 2013 - Remote listener set to scan name on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:56:46 2013 - Remote listener set to scan name on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:56:48 2013 - Remote listener set to scan name on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:56:48 2013 - ohasd/orarootagent_root Log File Ownership on dm01db01
+
+end time -  Tue Sep 10 10:56:48 2013 - ohasd/orarootagent_root Log File Ownership on dm01db01
+
+start time - Tue Sep 10 10:56:50 2013 - Voting disk status on dm01db01
+
+end time -  Tue Sep 10 10:56:50 2013 - Voting disk status on dm01db01
+
+start time - Tue Sep 10 10:56:50 2013 - Local listener set to node VIP on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:56:54 2013 - Local listener set to node VIP on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:56:54 2013 - Local listener set to node VIP on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:56:57 2013 - Local listener set to node VIP on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:56:57 2013 - ASM cache size branch on dm01db01
+
+end time -  Tue Sep 10 10:56:57 2013 - ASM cache size branch on dm01db01
+
+start time - Tue Sep 10 10:56:59 2013 - Verify Oracle ASM instance use RDS Protocol over InfiniBand Network. on dm01db01
+
+end time -  Tue Sep 10 10:56:59 2013 - Verify Oracle ASM instance use RDS Protocol over InfiniBand Network. on dm01db01
+
+start time - Tue Sep 10 10:57:05 2013 - cluster_interconnects on dm01db01
+
+end time -  Tue Sep 10 10:57:06 2013 - cluster_interconnects on dm01db01
+
+start time - Tue Sep 10 10:57:06 2013 - cluster_interconnects on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:07 2013 - cluster_interconnects on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:07 2013 - cluster_interconnects on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:08 2013 - cluster_interconnects on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:08 2013 - Recovery and Create File Destinations on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:09 2013 - Recovery and Create File Destinations on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:09 2013 - Recovery and Create File Destinations on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:09 2013 - Recovery and Create File Destinations on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:09 2013 - db_recovery_file_dest_size on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:10 2013 - db_recovery_file_dest_size on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:10 2013 - db_recovery_file_dest_size on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:11 2013 - db_recovery_file_dest_size on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:11 2013 - Verify InfiniBand Cable Connection Quality on dm01db01
+
+end time -  Tue Sep 10 10:57:11 2013 - Verify InfiniBand Cable Connection Quality on dm01db01
+
+start time - Tue Sep 10 10:57:11 2013 - Verify Ethernet Cable Connection Quality on dm01db01
+
+end time -  Tue Sep 10 10:57:12 2013 - Verify Ethernet Cable Connection Quality on dm01db01
+
+start time - Tue Sep 10 10:57:12 2013 - compatible on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:13 2013 - compatible on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:13 2013 - compatible on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:13 2013 - compatible on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:13 2013 - log_archive_dest_n on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:14 2013 - log_archive_dest_n on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:14 2013 - log_archive_dest_n on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:14 2013 - log_archive_dest_n on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:14 2013 - High Redundancy Redolog files on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:16 2013 - High Redundancy Redolog files on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:16 2013 - High Redundancy Redolog files on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:17 2013 - High Redundancy Redolog files on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:17 2013 - Verify Platform Configuration and Initialization Parameters for Consolidation on dm01db01
+
+end time -  Tue Sep 10 10:57:18 2013 - Verify Platform Configuration and Initialization Parameters for Consolidation on dm01db01
+
+start time - Tue Sep 10 10:57:18 2013 - Verify ASM griddisk,diskgroup and Failure group mapping on dm01db01
+
+end time -  Tue Sep 10 10:57:29 2013 - Verify ASM griddisk,diskgroup and Failure group mapping on dm01db01
+
+start time - Tue Sep 10 10:57:32 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:33 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:33 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:33 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:40 2013 - Operational Best Practices on dm01db01
+
+end time -  Tue Sep 10 10:57:40 2013 - Operational Best Practices on dm01db01
+
+start time - Tue Sep 10 10:57:40 2013 - Clusterware status on dm01db01
+
+end time -  Tue Sep 10 10:57:41 2013 - Clusterware status on dm01db01
+
+start time - Tue Sep 10 10:57:41 2013 - Consolidation Database Practices on dm01db01
+
+end time -  Tue Sep 10 10:57:41 2013 - Consolidation Database Practices on dm01db01
+
+start time - Tue Sep 10 10:57:41 2013 - Computer failure prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:57:41 2013 - Computer failure prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:57:41 2013 - Data corruption prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:57:42 2013 - Data corruption prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:57:42 2013 - Logical corruption prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:57:42 2013 - Logical corruption prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:57:42 2013 - Database/Cluster/Site failure prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:57:42 2013 - Database/Cluster/Site failure prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:57:42 2013 - Client failover operational best practices on dm01db01
+
+end time -  Tue Sep 10 10:57:42 2013 - Client failover operational best practices on dm01db01
+
+start time - Tue Sep 10 10:57:48 2013 - SCN Healthcheck Result A Branch on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:49 2013 - SCN Healthcheck Result A Branch on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:49 2013 - SCN Healthcheck Result A Branch on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:49 2013 - SCN Healthcheck Result A Branch on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:53 2013 - SCN Healthcheck Result B Branch on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result B Branch on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result B Branch on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result B Branch on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result C Branch on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result C Branch on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result C Branch on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:57:54 2013 - SCN Healthcheck Result C Branch on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:57:55 2013 - Verify average ping times to DNS nameserver on dm01db01
+
+end time -  Tue Sep 10 10:58:13 2013 - Verify average ping times to DNS nameserver on dm01db01
+
+start time - Tue Sep 10 10:58:24 2013 - Exadata Critical Issue DB8 on dm01db01
+
+end time -  Tue Sep 10 10:58:24 2013 - Exadata Critical Issue DB8 on dm01db01
+
+start time - Tue Sep 10 10:58:27 2013 - Processes parameter for ASM instance warn branch on dm01db01
+
+end time -  Tue Sep 10 10:58:27 2013 - Processes parameter for ASM instance warn branch on dm01db01
+
+start time - Tue Sep 10 10:58:27 2013 - Branch for MaxStartups setting in sshd_config on dm01db01
+
+end time -  Tue Sep 10 10:58:27 2013 - Branch for MaxStartups setting in sshd_config on dm01db01
+
+start time - Tue Sep 10 10:58:27 2013 - Processes parameter for ASM instance fail branch on dm01db01
+
+end time -  Tue Sep 10 10:58:28 2013 - Processes parameter for ASM instance fail branch on dm01db01
+
+start time - Tue Sep 10 10:58:28 2013 - Processes parameter for ASM instance on dm01db01
+
+end time -  Tue Sep 10 10:58:28 2013 - Processes parameter for ASM instance on dm01db01
+
+start time - Tue Sep 10 10:58:36 2013 - Verify operating system hugepages count satisfies total SGA requirements on dm01db01
+
+end time -  Tue Sep 10 10:58:36 2013 - Verify operating system hugepages count satisfies total SGA requirements on dm01db01
+
+start time - Tue Sep 10 10:58:39 2013 - Database failure prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:58:39 2013 - Database failure prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:58:45 2013 - Is this Exadata? on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:58:45 2013 - Is this Exadata? on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:58:45 2013 - Is this Exadata? on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:58:45 2013 - Is this Exadata? on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:58:47 2013 - Verify no ASM external redundancy diskgroups exist on dm01db01
+
+end time -  Tue Sep 10 10:58:48 2013 - Verify no ASM external redundancy diskgroups exist on dm01db01
+
+start time - Tue Sep 10 10:58:48 2013 - Verify no ASM unprotected templates exist on dm01db01
+
+end time -  Tue Sep 10 10:58:48 2013 - Verify no ASM unprotected templates exist on dm01db01
+
+start time - Tue Sep 10 10:58:50 2013 - Is this Exadata? on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:58:50 2013 - Is this Exadata? on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:58:50 2013 - Is this Exadata? on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:58:50 2013 - Is this Exadata? on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:58:51 2013 - Storage failures prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:58:52 2013 - Storage failures prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:58:52 2013 - Disks without Disk Group on dm01db01
+
+end time -  Tue Sep 10 10:58:52 2013 - Disks without Disk Group on dm01db01
+
+start time - Tue Sep 10 10:58:52 2013 - switch_ip_type_name_mapping_detail.out is created? on dm01db01
+
+end time -  Tue Sep 10 10:58:52 2013 - switch_ip_type_name_mapping_detail.out is created? on dm01db01
+
+start time - Tue Sep 10 10:58:53 2013 - Number of switches in Infiniband Fabric more than 12 on dm01db01
+
+end time -  Tue Sep 10 10:58:53 2013 - Number of switches in Infiniband Fabric more than 12 on dm01db01
+
+start time - Tue Sep 10 10:58:53 2013 - Number of switches in Infiniband Fabric less than 12 on dm01db01
+
+end time -  Tue Sep 10 10:58:53 2013 - Number of switches in Infiniband Fabric less than 12 on dm01db01
+
+start time - Tue Sep 10 10:58:55 2013 - Is this Exadata for network failure? on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:58:55 2013 - Is this Exadata for network failure? on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:58:55 2013 - Is this Exadata for network failure? on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:58:55 2013 - Is this Exadata for network failure? on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:58:55 2013 - Network failure prevention best practices on dm01db01
+
+end time -  Tue Sep 10 10:58:55 2013 - Network failure prevention best practices on dm01db01
+
+start time - Tue Sep 10 10:58:56 2013 - Is this Exadata? on dm01db01 for ccbs database
+
+end time - Tue Sep 10 10:58:56 2013 - Is this Exadata? on dm01db01 for ccbs database
+
+start time - Tue Sep 10 10:58:56 2013 - Is this Exadata? on dm01db01 for fsdb database
+
+end time - Tue Sep 10 10:58:56 2013 - Is this Exadata? on dm01db01 for fsdb database
+
+start time - Tue Sep 10 10:58:56 2013 - Software maintenance best practices on dm01db01
+
+end time -  Tue Sep 10 10:58:56 2013 - Software maintenance best practices on dm01db01
+
+start time - Tue Sep 10 10:59:06 2013 - Verify no ASM corruption is reported on dm01db01
+
+end time -  Tue Sep 10 10:59:08 2013 - Verify no ASM corruption is reported on dm01db01
+
+start time - Tue Sep 10 10:59:09 2013 - Verify vm.min_free_kbytes on dm01db01
+
+end time -  Tue Sep 10 10:59:09 2013 - Verify vm.min_free_kbytes on dm01db01
+
+start time - Tue Sep 10 10:59:21 2013 - asm disk attribute check main branch on dm01db02
+
+end time -  Tue Sep 10 10:59:21 2013 - asm disk attribute check main branch on dm01db02
+
+start time - Tue Sep 10 10:59:21 2013 - Verify the database server InfiniBand network is in "connected" mode. on dm01db02
+
+end time -  Tue Sep 10 10:59:21 2013 - Verify the database server InfiniBand network is in "connected" mode. on dm01db02
+
+start time - Tue Sep 10 10:59:22 2013 - Verify Cluster Synchronization Services (CSS) misscount = 60 on dm01db02
+
+end time -  Tue Sep 10 10:59:23 2013 - Verify Cluster Synchronization Services (CSS) misscount = 60 on dm01db02
+
+start time - Tue Sep 10 10:59:23 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Cluster Home] on dm01db02
+
+end time -  Tue Sep 10 10:59:23 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Cluster Home] on dm01db02
+
+start time - Tue Sep 10 10:59:23 2013 - Verify database server InfiniBand network MTU size is 65520 on dm01db02
+
+end time -  Tue Sep 10 10:59:24 2013 - Verify database server InfiniBand network MTU size is 65520 on dm01db02
+
+start time - Tue Sep 10 10:59:24 2013 - Turn NUMA Off [Operating System] on dm01db02
+
+end time -  Tue Sep 10 10:59:24 2013 - Turn NUMA Off [Operating System] on dm01db02
+
+start time - Tue Sep 10 10:59:25 2013 - ASM Version on dm01db02
+
+end time -  Tue Sep 10 10:59:25 2013 - ASM Version on dm01db02
+
+start time - Tue Sep 10 10:59:25 2013 - High Redundancy Controlfile on dm01db02 for ccbs database
+
+end time - Tue Sep 10 10:59:28 2013 - High Redundancy Controlfile on dm01db02 for ccbs database
+
+start time - Tue Sep 10 10:59:28 2013 - High Redundancy Controlfile on dm01db02 for fsdb database
+
+end time - Tue Sep 10 10:59:30 2013 - High Redundancy Controlfile on dm01db02 for fsdb database
+
+start time - Tue Sep 10 10:59:30 2013 - Verify InfiniBand is the Private Network for Oracle Clusterware Communication on dm01db02
+
+end time -  Tue Sep 10 10:59:31 2013 - Verify InfiniBand is the Private Network for Oracle Clusterware Communication on dm01db02
+
+start time - Tue Sep 10 10:59:31 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Database Home] on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:59:31 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. [Database Home] on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:59:31 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:59:32 2013 - Verify Oracle RAC Databases use RDS Protocol over InfiniBand Network. on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:59:32 2013 - Free space in root file system on dm01db02
+
+end time -  Tue Sep 10 10:59:32 2013 - Free space in root file system on dm01db02
+
+start time - Tue Sep 10 10:59:32 2013 - DBM FailGroups on dm01db02
+
+end time -  Tue Sep 10 10:59:33 2013 - DBM FailGroups on dm01db02
+
+start time - Tue Sep 10 10:59:33 2013 - Manage ASM Audit File Directory Growth with cron on dm01db02
+
+end time -  Tue Sep 10 10:59:33 2013 - Manage ASM Audit File Directory Growth with cron on dm01db02
+
+start time - Tue Sep 10 10:59:33 2013 - Verify Data Network is Separate from Management Network on dm01db02
+
+end time -  Tue Sep 10 10:59:34 2013 - Verify Data Network is Separate from Management Network on dm01db02
+
+start time - Tue Sep 10 10:59:34 2013 - GI shell limits soft nofile on dm01db02
+
+end time -  Tue Sep 10 10:59:34 2013 - GI shell limits soft nofile on dm01db02
+
+start time - Tue Sep 10 10:59:34 2013 - GI shell limits soft nproc on dm01db02
+
+end time -  Tue Sep 10 10:59:34 2013 - GI shell limits soft nproc on dm01db02
+
+start time - Tue Sep 10 10:59:34 2013 - GI shell limits hard nofile on dm01db02
+
+end time -  Tue Sep 10 10:59:34 2013 - GI shell limits hard nofile on dm01db02
+
+start time - Tue Sep 10 10:59:34 2013 - GI shell limits hard nproc on dm01db02
+
+end time -  Tue Sep 10 10:59:35 2013 - GI shell limits hard nproc on dm01db02
+
+start time - Tue Sep 10 10:59:35 2013 - DB shell limits hard nproc on dm01db02
+
+end time -  Tue Sep 10 10:59:35 2013 - DB shell limits hard nproc on dm01db02
+
+start time - Tue Sep 10 10:59:35 2013 - DB shell limits soft nofile on dm01db02
+
+end time -  Tue Sep 10 10:59:35 2013 - DB shell limits soft nofile on dm01db02
+
+start time - Tue Sep 10 10:59:35 2013 - DB shell limits hard nofile on dm01db02
+
+end time -  Tue Sep 10 10:59:35 2013 - DB shell limits hard nofile on dm01db02
+
+start time - Tue Sep 10 10:59:35 2013 - DB shell limits hard stack on dm01db02
+
+end time -  Tue Sep 10 10:59:35 2013 - DB shell limits hard stack on dm01db02
+
+start time - Tue Sep 10 10:59:35 2013 - DB shell limits soft nproc on dm01db02
+
+end time -  Tue Sep 10 10:59:36 2013 - DB shell limits soft nproc on dm01db02
+
+start time - Tue Sep 10 10:59:36 2013 - NIC Bonding Mode for Public on dm01db02
+
+end time -  Tue Sep 10 10:59:36 2013 - NIC Bonding Mode for Public on dm01db02
+
+start time - Tue Sep 10 10:59:36 2013 - NIC Bonding Mode Public on dm01db02
+
+end time -  Tue Sep 10 10:59:37 2013 - NIC Bonding Mode Public on dm01db02
+
+start time - Tue Sep 10 10:59:37 2013 - User Open File Limit on dm01db02
+
+end time -  Tue Sep 10 10:59:37 2013 - User Open File Limit on dm01db02
+
+start time - Tue Sep 10 10:59:37 2013 - VIP NIC bonding config. on dm01db02
+
+end time -  Tue Sep 10 10:59:38 2013 - VIP NIC bonding config. on dm01db02
+
+start time - Tue Sep 10 10:59:38 2013 - ohasd Log File Ownership on dm01db02
+
+end time -  Tue Sep 10 10:59:39 2013 - ohasd Log File Ownership on dm01db02
+
+start time - Tue Sep 10 10:59:39 2013 - oradism executable permission on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:59:39 2013 - oradism executable permission on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:59:39 2013 - Interconnect NIC bonding config. on dm01db02
+
+end time -  Tue Sep 10 10:59:40 2013 - Interconnect NIC bonding config. on dm01db02
+
+start time - Tue Sep 10 10:59:40 2013 - oradism executable ownership on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+end time - Tue Sep 10 10:59:40 2013 - oradism executable ownership on dm01db02 for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+start time - Tue Sep 10 10:59:40 2013 - crsd/orarootagent_root Log File Ownership on dm01db02
+
+end time -  Tue Sep 10 10:59:40 2013 - crsd/orarootagent_root Log File Ownership on dm01db02
+
+start time - Tue Sep 10 10:59:40 2013 - SELinux status on dm01db02
+
+end time -  Tue Sep 10 10:59:40 2013 - SELinux status on dm01db02
+
+start time - Tue Sep 10 10:59:40 2013 - Number of SCAN listners on dm01db02
+
+end time -  Tue Sep 10 10:59:42 2013 - Number of SCAN listners on dm01db02
+
+start time - Tue Sep 10 10:59:42 2013 - VKTM priority on dm01db02 for ccbs database
+
+end time - Tue Sep 10 10:59:42 2013 - VKTM priority on dm01db02 for ccbs database
+
+start time - Tue Sep 10 10:59:42 2013 - VKTM priority on dm01db02 for fsdb database
+
+end time - Tue Sep 10 10:59:43 2013 - VKTM priority on dm01db02 for fsdb database
+
+start time - Tue Sep 10 10:59:44 2013 - LMS priority on dm01db02 for ccbs database
+
+end time - Tue Sep 10 10:59:44 2013 - LMS priority on dm01db02 for ccbs database
+
+start time - Tue Sep 10 10:59:44 2013 - LMS priority on dm01db02 for fsdb database
+
+end time - Tue Sep 10 10:59:45 2013 - LMS priority on dm01db02 for fsdb database
+
+start time - Tue Sep 10 10:59:45 2013 - NIC Bonding Mode for interconnect on dm01db02
+
+end time -  Tue Sep 10 10:59:46 2013 - NIC Bonding Mode for interconnect on dm01db02
+
+start time - Tue Sep 10 10:59:46 2013 - NIC Bonding Mode interconnect on dm01db02
+
+end time -  Tue Sep 10 10:59:47 2013 - NIC Bonding Mode interconnect on dm01db02
+
+start time - Tue Sep 10 10:59:47 2013 - CRS HOME env variable on dm01db02
+
+end time -  Tue Sep 10 10:59:47 2013 - CRS HOME env variable on dm01db02
+
+start time - Tue Sep 10 10:59:48 2013 - OSWatcher status on dm01db02
+
+end time -  Tue Sep 10 10:59:48 2013 - OSWatcher status on dm01db02
+
+start time - Tue Sep 10 10:59:48 2013 - crsd Log File Ownership on dm01db02
+
+end time -  Tue Sep 10 10:59:48 2013 - crsd Log File Ownership on dm01db02
+
+start time - Tue Sep 10 10:59:49 2013 - Non-routable network for interconnect on dm01db02
+
+end time -  Tue Sep 10 10:59:49 2013 - Non-routable network for interconnect on dm01db02
+
+start time - Tue Sep 10 10:59:50 2013 - Cluster time synchronization server on dm01db02
+
+end time -  Tue Sep 10 10:59:50 2013 - Cluster time synchronization server on dm01db02
+
+start time - Tue Sep 10 10:59:50 2013 - NTP with correct setting on dm01db02
+
+end time -  Tue Sep 10 10:59:50 2013 - NTP with correct setting on dm01db02
+
+start time - Tue Sep 10 10:59:51 2013 - Remote listener set to scan name on dm01db02 for ccbs database
+
+end time - Tue Sep 10 10:59:52 2013 - Remote listener set to scan name on dm01db02 for ccbs database
+
+start time - Tue Sep 10 10:59:52 2013 - Remote listener set to scan name on dm01db02 for fsdb database
+
+end time - Tue Sep 10 10:59:54 2013 - Remote listener set to scan name on dm01db02 for fsdb database
+
+start time - Tue Sep 10 10:59:54 2013 - ohasd/orarootagent_root Log File Ownership on dm01db02
+
+end time -  Tue Sep 10 10:59:54 2013 - ohasd/orarootagent_root Log File Ownership on dm01db02
+
+start time - Tue Sep 10 10:59:54 2013 - Voting disk status on dm01db02
+
+end time -  Tue Sep 10 10:59:55 2013 - Voting disk status on dm01db02
+
+start time - Tue Sep 10 10:59:55 2013 - Local listener set to node VIP on dm01db02 for ccbs database
+
+end time - Tue Sep 10 10:59:58 2013 - Local listener set to node VIP on dm01db02 for ccbs database
+
+start time - Tue Sep 10 10:59:58 2013 - Local listener set to node VIP on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:02 2013 - Local listener set to node VIP on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:02 2013 - ASM cache size branch on dm01db02
+
+end time -  Tue Sep 10 11:00:02 2013 - ASM cache size branch on dm01db02
+
+start time - Tue Sep 10 11:00:03 2013 - Verify Oracle ASM instance use RDS Protocol over InfiniBand Network. on dm01db02
+
+end time -  Tue Sep 10 11:00:03 2013 - Verify Oracle ASM instance use RDS Protocol over InfiniBand Network. on dm01db02
+
+start time - Tue Sep 10 11:00:07 2013 - cluster_interconnects on dm01db02
+
+end time -  Tue Sep 10 11:00:08 2013 - cluster_interconnects on dm01db02
+
+start time - Tue Sep 10 11:00:08 2013 - cluster_interconnects on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:09 2013 - cluster_interconnects on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:09 2013 - cluster_interconnects on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:10 2013 - cluster_interconnects on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:10 2013 - Recovery and Create File Destinations on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:10 2013 - Recovery and Create File Destinations on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:10 2013 - Recovery and Create File Destinations on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:11 2013 - Recovery and Create File Destinations on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:11 2013 - db_recovery_file_dest_size on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:12 2013 - db_recovery_file_dest_size on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:12 2013 - db_recovery_file_dest_size on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:13 2013 - db_recovery_file_dest_size on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:13 2013 - Verify InfiniBand Cable Connection Quality on dm01db02
+
+end time -  Tue Sep 10 11:00:13 2013 - Verify InfiniBand Cable Connection Quality on dm01db02
+
+start time - Tue Sep 10 11:00:13 2013 - Verify Ethernet Cable Connection Quality on dm01db02
+
+end time -  Tue Sep 10 11:00:13 2013 - Verify Ethernet Cable Connection Quality on dm01db02
+
+start time - Tue Sep 10 11:00:13 2013 - compatible on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:14 2013 - compatible on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:14 2013 - compatible on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:15 2013 - compatible on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:15 2013 - log_archive_dest_n on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:15 2013 - log_archive_dest_n on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:15 2013 - log_archive_dest_n on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:15 2013 - log_archive_dest_n on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:16 2013 - High Redundancy Redolog files on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:17 2013 - High Redundancy Redolog files on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:17 2013 - High Redundancy Redolog files on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:18 2013 - High Redundancy Redolog files on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:18 2013 - Verify Platform Configuration and Initialization Parameters for Consolidation on dm01db02
+
+end time -  Tue Sep 10 11:00:18 2013 - Verify Platform Configuration and Initialization Parameters for Consolidation on dm01db02
+
+start time - Tue Sep 10 11:00:19 2013 - Verify ASM griddisk,diskgroup and Failure group mapping on dm01db02
+
+end time -  Tue Sep 10 11:00:19 2013 - Verify ASM griddisk,diskgroup and Failure group mapping on dm01db02
+
+start time - Tue Sep 10 11:00:21 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:22 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:22 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:22 2013 - Database init parameter DB_BLOCK_CHECKING on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:25 2013 - Operational Best Practices on dm01db02
+
+end time -  Tue Sep 10 11:00:25 2013 - Operational Best Practices on dm01db02
+
+start time - Tue Sep 10 11:00:25 2013 - Clusterware status on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Clusterware status on dm01db02
+
+start time - Tue Sep 10 11:00:26 2013 - Consolidation Database Practices on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Consolidation Database Practices on dm01db02
+
+start time - Tue Sep 10 11:00:26 2013 - Computer failure prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Computer failure prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:00:26 2013 - Data corruption prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Data corruption prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:00:26 2013 - Logical corruption prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Logical corruption prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:00:26 2013 - Database/Cluster/Site failure prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Database/Cluster/Site failure prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:00:26 2013 - Client failover operational best practices on dm01db02
+
+end time -  Tue Sep 10 11:00:26 2013 - Client failover operational best practices on dm01db02
+
+start time - Tue Sep 10 11:00:30 2013 - SCN Healthcheck Result A Branch on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:31 2013 - SCN Healthcheck Result A Branch on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:31 2013 - SCN Healthcheck Result A Branch on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:31 2013 - SCN Healthcheck Result A Branch on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result B Branch on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result B Branch on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result B Branch on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result B Branch on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result C Branch on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result C Branch on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result C Branch on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:00:35 2013 - SCN Healthcheck Result C Branch on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:00:36 2013 - Verify average ping times to DNS nameserver on dm01db02
+
+end time -  Tue Sep 10 11:00:54 2013 - Verify average ping times to DNS nameserver on dm01db02
+
+start time - Tue Sep 10 11:00:56 2013 - Exadata Critical Issue DB8 on dm01db02
+
+end time -  Tue Sep 10 11:00:56 2013 - Exadata Critical Issue DB8 on dm01db02
+
+start time - Tue Sep 10 11:00:58 2013 - Processes parameter for ASM instance warn branch on dm01db02
+
+end time -  Tue Sep 10 11:00:58 2013 - Processes parameter for ASM instance warn branch on dm01db02
+
+start time - Tue Sep 10 11:00:58 2013 - Branch for MaxStartups setting in sshd_config on dm01db02
+
+end time -  Tue Sep 10 11:00:59 2013 - Branch for MaxStartups setting in sshd_config on dm01db02
+
+start time - Tue Sep 10 11:00:59 2013 - Processes parameter for ASM instance fail branch on dm01db02
+
+end time -  Tue Sep 10 11:00:59 2013 - Processes parameter for ASM instance fail branch on dm01db02
+
+start time - Tue Sep 10 11:00:59 2013 - Processes parameter for ASM instance on dm01db02
+
+end time -  Tue Sep 10 11:00:59 2013 - Processes parameter for ASM instance on dm01db02
+
+start time - Tue Sep 10 11:01:06 2013 - Verify operating system hugepages count satisfies total SGA requirements on dm01db02
+
+end time -  Tue Sep 10 11:01:06 2013 - Verify operating system hugepages count satisfies total SGA requirements on dm01db02
+
+start time - Tue Sep 10 11:01:07 2013 - Database failure prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:01:07 2013 - Database failure prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:01:09 2013 - Is this Exadata? on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:01:09 2013 - Is this Exadata? on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:01:09 2013 - Is this Exadata? on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:01:09 2013 - Is this Exadata? on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:01:10 2013 - Verify no ASM external redundancy diskgroups exist on dm01db02
+
+end time -  Tue Sep 10 11:01:10 2013 - Verify no ASM external redundancy diskgroups exist on dm01db02
+
+start time - Tue Sep 10 11:01:10 2013 - Verify no ASM unprotected templates exist on dm01db02
+
+end time -  Tue Sep 10 11:01:11 2013 - Verify no ASM unprotected templates exist on dm01db02
+
+start time - Tue Sep 10 11:01:12 2013 - Is this Exadata? on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:01:12 2013 - Is this Exadata? on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:01:12 2013 - Is this Exadata? on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:01:12 2013 - Is this Exadata? on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:01:12 2013 - Storage failures prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:01:12 2013 - Storage failures prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:01:13 2013 - Disks without Disk Group on dm01db02
+
+end time -  Tue Sep 10 11:01:13 2013 - Disks without Disk Group on dm01db02
+
+start time - Tue Sep 10 11:01:13 2013 - switch_ip_type_name_mapping_detail.out is created? on dm01db02
+
+end time -  Tue Sep 10 11:01:13 2013 - switch_ip_type_name_mapping_detail.out is created? on dm01db02
+
+start time - Tue Sep 10 11:01:15 2013 - Is this Exadata for network failure? on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:01:15 2013 - Is this Exadata for network failure? on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:01:15 2013 - Is this Exadata for network failure? on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:01:15 2013 - Is this Exadata for network failure? on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:01:15 2013 - Network failure prevention best practices on dm01db02
+
+end time -  Tue Sep 10 11:01:15 2013 - Network failure prevention best practices on dm01db02
+
+start time - Tue Sep 10 11:01:15 2013 - Is this Exadata? on dm01db02 for ccbs database
+
+end time - Tue Sep 10 11:01:16 2013 - Is this Exadata? on dm01db02 for ccbs database
+
+start time - Tue Sep 10 11:01:16 2013 - Is this Exadata? on dm01db02 for fsdb database
+
+end time - Tue Sep 10 11:01:16 2013 - Is this Exadata? on dm01db02 for fsdb database
+
+start time - Tue Sep 10 11:01:16 2013 - Software maintenance best practices on dm01db02
+
+end time -  Tue Sep 10 11:01:16 2013 - Software maintenance best practices on dm01db02
+
+start time - Tue Sep 10 11:01:18 2013 - Verify no ASM corruption is reported on dm01db02
+
+end time -  Tue Sep 10 11:01:18 2013 - Verify no ASM corruption is reported on dm01db02
+
+start time - Tue Sep 10 11:01:18 2013 - Verify vm.min_free_kbytes on dm01db02
+
+end time -  Tue Sep 10 11:01:18 2013 - Verify vm.min_free_kbytes on dm01db02
+

@@ -1,0 +1,7 @@
+export ORACLE_HOME=/u01/app/12.1.0.2/grid
+export PATH=$ORACLE_HOME/bin:$ORACLE_HOME/OPatch:$PATH
+export ORACLE_SID=+ASM1
+alias rasmcmd="rlwrap asmcmd"
+alias rsqlplus="rlwrap sqlplus /nolog"
+alias radrci="rlwrap adrci"
+alias oh='cd $ORACLE_HOME'

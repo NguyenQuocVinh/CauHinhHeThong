@@ -1,0 +1,49 @@
+#CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+#CONFIGURE BACKUP OPTIMIZATION ON;
+#CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+#CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+#CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+#CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+#CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+#CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+#CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+#CONFIGURE MAXSETSIZE TO UNLIMITED;
+#CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+#CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+#CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+#Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+#CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+#CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+
+
+
+#updated 20/8/2014
+# Ngay 1:
+#	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+#	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+# 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+# Ngay 2-15:
+#	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+#	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+#	Delete archived all
+
+# Ngay 16:
+#	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+#	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+# 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+# Ngay 17-31:
+#	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+#	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+#	Delete archived all
+
+run
+{
+	crosscheck backup;
+	delete noprompt obsolete;
+	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+	#backup ngay 16 
+	backup incremental level 0 format '+DATA/RMAN/level0_%D_%T_%U' tag MON_LV0_day16 database plus archivelog;
+	
+	#copy qua /mnt/nfs52100/RMAN/
+	backup copies 2 backupset completed between "sysdate-2" AND "sysdate" format '/mnt/nfs52100/RMAN/level0_%D_%T_%U' tag copy_MON_LV0_day16;
+}

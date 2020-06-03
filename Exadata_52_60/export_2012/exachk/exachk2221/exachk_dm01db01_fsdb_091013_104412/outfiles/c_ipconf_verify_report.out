@@ -1,0 +1,33 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR VERIFY STORAGE SERVER NETWORK CONFIGURATION WITH IPCONF 
+
+
+
+Verifying of Exadata configuration file /opt/oracle.cellos/cell.conf
+Checking NTP server on 172.17.1.253                                                               : FAILED
+Error. Overall status of verification of Exadata configuration file: FAILED
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR VERIFY STORAGE SERVER NETWORK CONFIGURATION WITH IPCONF 
+
+
+
+Verifying of Exadata configuration file /opt/oracle.cellos/cell.conf
+Checking NTP server on 172.17.1.253                                                               : FAILED
+Error. Overall status of verification of Exadata configuration file: FAILED
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR VERIFY STORAGE SERVER NETWORK CONFIGURATION WITH IPCONF 
+
+
+
+Verifying of Exadata configuration file /opt/oracle.cellos/cell.conf
+Checking NTP server on 172.17.1.253                                                               : FAILED
+Error. Overall status of verification of Exadata configuration file: FAILED
+
+
+
+

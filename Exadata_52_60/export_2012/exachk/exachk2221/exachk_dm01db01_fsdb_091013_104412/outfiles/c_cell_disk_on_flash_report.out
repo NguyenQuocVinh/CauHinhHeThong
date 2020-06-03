@@ -1,0 +1,693 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR VERIFY CELLDISK CONFIGURATION ON FLASH MEMORY DEVICES 
+
+
+
+	 name:              	 FD_00_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:37+07:00
+	 deviceName:        	 /dev/sdr
+	 devicePartition:   	 /dev/sdr
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 d54e9893-767b-4d6d-afe8-daa1cdbdba26
+	 interleaving:      	 none
+	 lun:               	 1_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_01_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:38+07:00
+	 deviceName:        	 /dev/sds
+	 devicePartition:   	 /dev/sds
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 42cbe20b-38a0-44a1-a4b4-3645b7951439
+	 interleaving:      	 none
+	 lun:               	 1_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_02_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:38+07:00
+	 deviceName:        	 /dev/sdt
+	 devicePartition:   	 /dev/sdt
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 a2f248ef-6177-43cc-9666-765dcc49ff02
+	 interleaving:      	 none
+	 lun:               	 1_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_03_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:39+07:00
+	 deviceName:        	 /dev/sdu
+	 devicePartition:   	 /dev/sdu
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 c8f476fd-15b4-4d75-8eb2-11fd21046c08
+	 interleaving:      	 none
+	 lun:               	 1_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_04_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:39+07:00
+	 deviceName:        	 /dev/sdz
+	 devicePartition:   	 /dev/sdz
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 cd3f4923-8fc8-4772-9737-e19ffdb42b28
+	 interleaving:      	 none
+	 lun:               	 2_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_05_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:40+07:00
+	 deviceName:        	 /dev/sdaa
+	 devicePartition:   	 /dev/sdaa
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 fc44dc20-8d51-4928-ac73-fcd676dd05dd
+	 interleaving:      	 none
+	 lun:               	 2_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_06_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:41+07:00
+	 deviceName:        	 /dev/sdab
+	 devicePartition:   	 /dev/sdab
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 8f852c14-bd5e-4d75-a8e9-78dfaafae857
+	 interleaving:      	 none
+	 lun:               	 2_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_07_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:41+07:00
+	 deviceName:        	 /dev/sdac
+	 devicePartition:   	 /dev/sdac
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 3f9b54ca-40de-4b6a-97c1-9f9b381dc336
+	 interleaving:      	 none
+	 lun:               	 2_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_08_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:42+07:00
+	 deviceName:        	 /dev/sdn
+	 devicePartition:   	 /dev/sdn
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 87fa836e-fd70-4a73-b0e3-c9495fcf301a
+	 interleaving:      	 none
+	 lun:               	 4_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_09_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:42+07:00
+	 deviceName:        	 /dev/sdo
+	 devicePartition:   	 /dev/sdo
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 14355f3e-6e3f-489f-a28c-bf261c6f0efb
+	 interleaving:      	 none
+	 lun:               	 4_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_10_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:43+07:00
+	 deviceName:        	 /dev/sdp
+	 devicePartition:   	 /dev/sdp
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 f9eff927-8617-46e2-88a0-86341cfa27ff
+	 interleaving:      	 none
+	 lun:               	 4_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_11_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:44+07:00
+	 deviceName:        	 /dev/sdq
+	 devicePartition:   	 /dev/sdq
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 bacd3d1a-14ac-46b4-9e95-50713b60aa0b
+	 interleaving:      	 none
+	 lun:               	 4_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_12_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:44+07:00
+	 deviceName:        	 /dev/sdv
+	 devicePartition:   	 /dev/sdv
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 ad1ac0d2-4f26-4f2c-b6ee-7572e2297e92
+	 interleaving:      	 none
+	 lun:               	 5_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_13_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:45+07:00
+	 deviceName:        	 /dev/sdw
+	 devicePartition:   	 /dev/sdw
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 cf9736d2-9aed-4ff6-87fd-5fdd8c64969b
+	 interleaving:      	 none
+	 lun:               	 5_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_14_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:46+07:00
+	 deviceName:        	 /dev/sdx
+	 devicePartition:   	 /dev/sdx
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 3ecbbdb3-72a5-4d58-acb1-7aef7a53c9ca
+	 interleaving:      	 none
+	 lun:               	 5_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_15_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:46+07:00
+	 deviceName:        	 /dev/sdy
+	 devicePartition:   	 /dev/sdy
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 efebf53a-9604-43c5-b2d7-f7e0b8e0214c
+	 interleaving:      	 none
+	 lun:               	 5_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR VERIFY CELLDISK CONFIGURATION ON FLASH MEMORY DEVICES 
+
+
+
+	 name:              	 FD_00_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:37+07:00
+	 deviceName:        	 /dev/sdr
+	 devicePartition:   	 /dev/sdr
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 2aac6cc3-33fe-48d6-9dee-af581b21fa29
+	 interleaving:      	 none
+	 lun:               	 1_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_01_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:37+07:00
+	 deviceName:        	 /dev/sds
+	 devicePartition:   	 /dev/sds
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 a8ee49f0-c71a-44e6-8426-1c05e0a3ec68
+	 interleaving:      	 none
+	 lun:               	 1_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_02_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:38+07:00
+	 deviceName:        	 /dev/sdt
+	 devicePartition:   	 /dev/sdt
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 02968ec8-b552-4a44-80e5-27871b8f1609
+	 interleaving:      	 none
+	 lun:               	 1_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_03_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:39+07:00
+	 deviceName:        	 /dev/sdu
+	 devicePartition:   	 /dev/sdu
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 89c4613d-f935-4d3f-815a-21bc8e25a38c
+	 interleaving:      	 none
+	 lun:               	 1_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_04_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:39+07:00
+	 deviceName:        	 /dev/sdz
+	 devicePartition:   	 /dev/sdz
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 7cf21c17-31de-4238-b28d-a6bd71ab7c80
+	 interleaving:      	 none
+	 lun:               	 2_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_05_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:40+07:00
+	 deviceName:        	 /dev/sdaa
+	 devicePartition:   	 /dev/sdaa
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 f9666c49-891b-414a-88bb-5830bf2437d5
+	 interleaving:      	 none
+	 lun:               	 2_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_06_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:40+07:00
+	 deviceName:        	 /dev/sdab
+	 devicePartition:   	 /dev/sdab
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 0bb55a31-4b97-4d79-974c-bccedf535ac9
+	 interleaving:      	 none
+	 lun:               	 2_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_07_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:41+07:00
+	 deviceName:        	 /dev/sdac
+	 devicePartition:   	 /dev/sdac
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 df7737f8-5186-47af-814c-e2255ff6d6cf
+	 interleaving:      	 none
+	 lun:               	 2_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_08_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:42+07:00
+	 deviceName:        	 /dev/sdn
+	 devicePartition:   	 /dev/sdn
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 ad18ac22-3f39-4098-a714-a563159afcae
+	 interleaving:      	 none
+	 lun:               	 4_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_09_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:42+07:00
+	 deviceName:        	 /dev/sdo
+	 devicePartition:   	 /dev/sdo
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 0b2c8d3b-149c-4fdc-a0de-47fd450f3ec7
+	 interleaving:      	 none
+	 lun:               	 4_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_10_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:43+07:00
+	 deviceName:        	 /dev/sdp
+	 devicePartition:   	 /dev/sdp
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 5cb436c5-5334-4060-84a8-64f958ea2e36
+	 interleaving:      	 none
+	 lun:               	 4_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_11_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:44+07:00
+	 deviceName:        	 /dev/sdq
+	 devicePartition:   	 /dev/sdq
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 45cd69c2-5e25-448b-84c5-5d0c4887016a
+	 interleaving:      	 none
+	 lun:               	 4_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_12_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:44+07:00
+	 deviceName:        	 /dev/sdv
+	 devicePartition:   	 /dev/sdv
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 51c42a1e-852f-4aec-87fd-3f47c28aa381
+	 interleaving:      	 none
+	 lun:               	 5_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_13_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:45+07:00
+	 deviceName:        	 /dev/sdw
+	 devicePartition:   	 /dev/sdw
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 8e9086dc-50aa-4508-99d9-4d48bb65461f
+	 interleaving:      	 none
+	 lun:               	 5_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_14_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:45+07:00
+	 deviceName:        	 /dev/sdx
+	 devicePartition:   	 /dev/sdx
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 4e40e87f-4e7b-41f2-bd99-791173121822
+	 interleaving:      	 none
+	 lun:               	 5_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_15_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:46+07:00
+	 deviceName:        	 /dev/sdy
+	 devicePartition:   	 /dev/sdy
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 e4747ac0-db5d-4163-ace8-cee3d009567f
+	 interleaving:      	 none
+	 lun:               	 5_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR VERIFY CELLDISK CONFIGURATION ON FLASH MEMORY DEVICES 
+
+
+
+	 name:              	 FD_00_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:37+07:00
+	 deviceName:        	 /dev/sdr
+	 devicePartition:   	 /dev/sdr
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 1c377a15-8927-4a76-bfb4-70f5c4f20d61
+	 interleaving:      	 none
+	 lun:               	 1_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_01_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:38+07:00
+	 deviceName:        	 /dev/sds
+	 devicePartition:   	 /dev/sds
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 9a63f08e-4ab8-410a-80f1-cf560b2fb412
+	 interleaving:      	 none
+	 lun:               	 1_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_02_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:38+07:00
+	 deviceName:        	 /dev/sdt
+	 devicePartition:   	 /dev/sdt
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 6b23597f-135b-4635-a5c8-66bb2864eb42
+	 interleaving:      	 none
+	 lun:               	 1_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_03_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:39+07:00
+	 deviceName:        	 /dev/sdu
+	 devicePartition:   	 /dev/sdu
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 5f9500c3-11ba-48e4-95af-52a1e8b0de45
+	 interleaving:      	 none
+	 lun:               	 1_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_04_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:39+07:00
+	 deviceName:        	 /dev/sdz
+	 devicePartition:   	 /dev/sdz
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 685b723a-dd71-4878-b6fe-64293a5f6ab7
+	 interleaving:      	 none
+	 lun:               	 2_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_05_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:40+07:00
+	 deviceName:        	 /dev/sdaa
+	 devicePartition:   	 /dev/sdaa
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 90f55e80-1772-439c-8c78-9ea9f1917d83
+	 interleaving:      	 none
+	 lun:               	 2_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_06_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:41+07:00
+	 deviceName:        	 /dev/sdab
+	 devicePartition:   	 /dev/sdab
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 76d42c9a-f942-45d7-be98-707c398b3782
+	 interleaving:      	 none
+	 lun:               	 2_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_07_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:41+07:00
+	 deviceName:        	 /dev/sdac
+	 devicePartition:   	 /dev/sdac
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 90a1c180-20a0-4493-9e8e-f3d813de8a3e
+	 interleaving:      	 none
+	 lun:               	 2_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_08_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:42+07:00
+	 deviceName:        	 /dev/sdn
+	 devicePartition:   	 /dev/sdn
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 92ffc7d8-96c9-4f21-b55a-a0f2760db91e
+	 interleaving:      	 none
+	 lun:               	 4_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_09_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:42+07:00
+	 deviceName:        	 /dev/sdo
+	 devicePartition:   	 /dev/sdo
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 7c72150d-e84b-4ddb-a60d-17b8986f9f9a
+	 interleaving:      	 none
+	 lun:               	 4_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_10_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:43+07:00
+	 deviceName:        	 /dev/sdp
+	 devicePartition:   	 /dev/sdp
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 1a53cfe7-3ec7-49eb-ad86-056ae55d6d01
+	 interleaving:      	 none
+	 lun:               	 4_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_11_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:44+07:00
+	 deviceName:        	 /dev/sdq
+	 devicePartition:   	 /dev/sdq
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 91fad12a-81d1-42b2-b5af-2c4a9e447cb4
+	 interleaving:      	 none
+	 lun:               	 4_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_12_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:44+07:00
+	 deviceName:        	 /dev/sdv
+	 devicePartition:   	 /dev/sdv
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 64e6914b-848a-4b42-b229-2729d6306e2d
+	 interleaving:      	 none
+	 lun:               	 5_0
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_13_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:45+07:00
+	 deviceName:        	 /dev/sdw
+	 devicePartition:   	 /dev/sdw
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 9519ab3c-d14f-4f07-a36c-4114fba3ae49
+	 interleaving:      	 none
+	 lun:               	 5_1
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_14_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:46+07:00
+	 deviceName:        	 /dev/sdx
+	 devicePartition:   	 /dev/sdx
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 1560db3a-dfba-49ec-80fc-99c8f08c76c7
+	 interleaving:      	 none
+	 lun:               	 5_2
+	 size:              	 22.875G
+	 status:            	 normal
+
+	 name:              	 FD_15_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:46+07:00
+	 deviceName:        	 /dev/sdy
+	 devicePartition:   	 /dev/sdy
+	 diskType:          	 FlashDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 6242eb15-09cd-468e-849a-72e6c6357280
+	 interleaving:      	 none
+	 lun:               	 5_3
+	 size:              	 22.875G
+	 status:            	 normal
+
+
+
+

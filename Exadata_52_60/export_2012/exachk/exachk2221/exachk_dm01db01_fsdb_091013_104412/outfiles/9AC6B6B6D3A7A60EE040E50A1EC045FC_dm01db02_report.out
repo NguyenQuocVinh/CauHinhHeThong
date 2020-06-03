@@ -1,0 +1,6 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - VERIFY THE DATABASE SERVER INFINIBAND NETWORK IS IN "CONNECTED" MODE. 
+
+
+
+/sys/class/net/ib0/mode:connected
+/sys/class/net/ib1/mode:connected

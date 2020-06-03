@@ -1,0 +1,844 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Mon Jan 14 08:00:01 2013
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 8 G;
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+15> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+16> 
+17> run
+18> {
+19> 	# set default nhu sau:
+20> 	#CONFIGURE CHANNEL DEVICE TYPE DISK format '+RECO/RMAN/%D_%T_%U' MAXPIECESIZE 8G;
+21> 	#CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+22> 
+23> 	backup incremental level 0 format 	'+RECO/RMAN/level0_%D_%T_%U'	tag MONTHLY_LEVEL_0 database;
+24> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+25> 	backup copies 2 archivelog all format 	'+RECO/RMAN/archi_%D_%T_%U','/mnt/rman_ccbs/archi_%D_%T_%U' 	tag 'monthly_arch';
+26> 	backup copies 2 current controlfile format	'+RECO/RMAN/control_%T_%U',	'/mnt/rman_ccbs/control_%D_%T_%U' 	tag 'controlfile';
+27> 	crosscheck backup;
+28> 	# Nhung backup nao la qua han(obsolete) so voi redundancy 2 thi xoa luon
+29> 	delete noprompt obsolete REDUNDANCY 2;
+30> }
+31> 
+Starting backup at 14/01/2013 08:00:02
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=664 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=731 instance=ccbs1 device type=DISK
+channel ORA_DISK_1: starting compressed incremental level 0 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00004 name=+DATA/ccbs/datafile/undotbs2.268.772710867
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+channel ORA_DISK_1: starting piece 1 at 14/01/2013 08:00:13
+channel ORA_DISK_2: starting compressed incremental level 0 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00003 name=+DATA/ccbs/datafile/undotbs1.259.772710847
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+channel ORA_DISK_2: starting piece 1 at 14/01/2013 08:00:16
+channel ORA_DISK_1: finished piece 1 at 14/01/2013 08:16:11
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_1_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 14/01/2013 08:16:11
+channel ORA_DISK_2: finished piece 1 at 14/01/2013 08:18:16
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_1_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 14/01/2013 08:18:16
+channel ORA_DISK_1: finished piece 2 at 14/01/2013 08:32:01
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_2_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 14/01/2013 08:32:01
+channel ORA_DISK_2: finished piece 2 at 14/01/2013 08:35:56
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_2_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 14/01/2013 08:35:56
+channel ORA_DISK_1: finished piece 3 at 14/01/2013 08:47:51
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_3_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 14/01/2013 08:47:51
+channel ORA_DISK_2: finished piece 3 at 14/01/2013 08:53:46
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_3_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 4 at 14/01/2013 08:53:46
+channel ORA_DISK_1: finished piece 4 at 14/01/2013 09:04:01
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_4_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 14/01/2013 09:04:01
+channel ORA_DISK_2: finished piece 4 at 14/01/2013 09:12:07
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_4_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 5 at 14/01/2013 09:12:07
+channel ORA_DISK_1: finished piece 5 at 14/01/2013 09:19:42
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_5_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 6 at 14/01/2013 09:19:42
+channel ORA_DISK_2: finished piece 5 at 14/01/2013 09:30:47
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_5_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 6 at 14/01/2013 09:30:47
+channel ORA_DISK_1: finished piece 6 at 14/01/2013 09:36:02
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_6_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 7 at 14/01/2013 09:36:02
+channel ORA_DISK_2: finished piece 6 at 14/01/2013 09:47:57
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_6_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 7 at 14/01/2013 09:47:57
+channel ORA_DISK_1: finished piece 7 at 14/01/2013 09:51:52
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_7_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 8 at 14/01/2013 09:51:52
+channel ORA_DISK_2: finished piece 7 at 14/01/2013 10:04:37
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_7_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 8 at 14/01/2013 10:04:37
+channel ORA_DISK_1: finished piece 8 at 14/01/2013 10:08:32
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_8_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 9 at 14/01/2013 10:08:32
+channel ORA_DISK_2: finished piece 8 at 14/01/2013 10:21:27
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_8_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 9 at 14/01/2013 10:21:27
+channel ORA_DISK_1: finished piece 9 at 14/01/2013 10:26:22
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_9_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 10 at 14/01/2013 10:26:22
+channel ORA_DISK_2: finished piece 9 at 14/01/2013 10:39:28
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_9_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 10 at 14/01/2013 10:39:28
+channel ORA_DISK_1: finished piece 10 at 14/01/2013 10:43:13
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_10_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 11 at 14/01/2013 10:43:13
+channel ORA_DISK_2: finished piece 10 at 14/01/2013 10:57:58
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_10_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 11 at 14/01/2013 10:57:58
+channel ORA_DISK_1: finished piece 11 at 14/01/2013 10:59:23
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_11_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 12 at 14/01/2013 10:59:23
+channel ORA_DISK_1: finished piece 12 at 14/01/2013 11:15:58
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_12_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 13 at 14/01/2013 11:15:58
+channel ORA_DISK_2: finished piece 11 at 14/01/2013 11:16:13
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_11_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 12 at 14/01/2013 11:16:13
+channel ORA_DISK_1: finished piece 13 at 14/01/2013 11:32:18
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_13_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: starting piece 14 at 14/01/2013 11:32:18
+channel ORA_DISK_2: finished piece 12 at 14/01/2013 11:32:43
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_12_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 13 at 14/01/2013 11:32:43
+channel ORA_DISK_1: finished piece 14 at 14/01/2013 11:44:48
+piece handle=+RECO/rman/level0_14_20130114_usnvckg7_14_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 03:44:35
+channel ORA_DISK_2: finished piece 13 at 14/01/2013 11:47:58
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_13_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 14 at 14/01/2013 11:47:58
+channel ORA_DISK_2: finished piece 14 at 14/01/2013 12:03:24
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_14_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 15 at 14/01/2013 12:03:24
+channel ORA_DISK_2: finished piece 15 at 14/01/2013 12:19:19
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_15_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 16 at 14/01/2013 12:19:19
+channel ORA_DISK_2: finished piece 16 at 14/01/2013 12:34:54
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_16_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 17 at 14/01/2013 12:34:54
+channel ORA_DISK_2: finished piece 17 at 14/01/2013 12:50:29
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_17_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 18 at 14/01/2013 12:50:29
+channel ORA_DISK_2: finished piece 18 at 14/01/2013 13:06:34
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_18_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 19 at 14/01/2013 13:06:34
+channel ORA_DISK_2: finished piece 19 at 14/01/2013 13:22:49
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_19_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 20 at 14/01/2013 13:22:49
+channel ORA_DISK_2: finished piece 20 at 14/01/2013 13:40:15
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_20_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: starting piece 21 at 14/01/2013 13:40:15
+channel ORA_DISK_2: finished piece 21 at 14/01/2013 13:54:00
+piece handle=+RECO/rman/level0_14_20130114_utnvckgd_21_1 tag=MONTHLY_LEVEL_0 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 05:53:44
+Finished backup at 14/01/2013 13:54:00
+
+Starting Control File and SPFILE Autobackup at 14/01/2013 13:54:00
+piece handle=+RECO/rman/c-271141816-20130114-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 14/01/2013 13:54:03
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 14/01/2013 13:54:24
+current log archived
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1938.673.803722393; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1939.671.803723183; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1940.668.803726403; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1941.666.803727495; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1942.665.803728823; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1943.662.803730167; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1944.659.803734665; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1945.656.803737537; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1946.654.803737555; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1947.432.803745285; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1948.740.803750835; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1949.895.803751911; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1950.911.803753001; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1951.1019.803753265; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1952.932.803753641; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_1_seq_1953.948.803753927; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1954.486.803784061; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1955.470.803784087; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1956.648.803812791; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1957.649.803815543; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1958.1002.803822877; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1959.961.803823173; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1960.717.803823587; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1961.297.803823829; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_1_seq_1962.774.803836713; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1963.442.803865965; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1964.889.803870533; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1965.423.803872387; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1966.630.803899795; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1967.629.803899803; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1968.644.803907103; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1969.645.803907457; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1970.901.803917997; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1971.1032.803926063; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1972.621.803927751; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1973.620.803929001; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1974.618.803929853; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1975.617.803931591; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1976.616.803933227; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1977.614.803937063; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1978.610.803944063; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1979.607.803944089; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1980.602.803946133; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1981.622.803946803; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1982.632.803947209; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1983.337.803950955; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1984.524.803951179; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_1_seq_1985.600.803951317; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_1_seq_1986.599.803957509; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_1_seq_1987.597.803998989; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_1_seq_1988.596.803999225; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_1_seq_1989.592.804030067; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_1_seq_1990.590.804030093; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_07/thread_1_seq_1991.603.804071881; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_07/thread_1_seq_1992.794.804115887; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_07/thread_1_seq_1993.583.804115915; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_08/thread_1_seq_1994.452.804202173; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_08/thread_1_seq_1995.576.804202201; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_09/thread_1_seq_1996.578.804263695; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_09/thread_1_seq_1997.750.804288623; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_09/thread_1_seq_1998.569.804288635; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_10/thread_1_seq_1999.571.804306197; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_11/thread_1_seq_2000.633.804416547; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_11/thread_1_seq_2001.634.804433741; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_12/thread_1_seq_2002.637.804515149; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_12/thread_1_seq_2003.641.804547979; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_12/thread_1_seq_2004.996.804547993; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_13/thread_1_seq_2005.954.804634149; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_13/thread_1_seq_2006.766.804634163; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1966.670.803723185; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1967.664.803728825; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1968.655.803737539; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1969.653.803737557; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1970.688.803743189; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1971.689.803745281; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1972.930.803751913; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_03/thread_2_seq_1973.802.803753641; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_2_seq_1974.1009.803784063; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_2_seq_1975.476.803784087; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_2_seq_1976.657.803820871; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_2_seq_1977.984.803821969; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_04/thread_2_seq_1978.791.803823591; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1979.377.803865967; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1980.441.803869427; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1981.962.803870533; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1982.1030.803871643; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1983.761.803871905; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1984.701.803872387; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1985.949.803872711; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1986.636.803892957; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1987.631.803899793; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1988.628.803899805; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1989.754.803917997; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1990.619.803929001; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1991.615.803933227; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1992.609.803944063; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1993.608.803944087; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1994.623.803946805; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_05/thread_2_seq_1995.601.803951181; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_2_seq_1996.598.803985251; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_2_seq_1997.591.804030067; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_06/thread_2_seq_1998.589.804030095; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_07/thread_2_seq_1999.584.804115889; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_07/thread_2_seq_2000.582.804115917; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_08/thread_2_seq_2001.716.804202175; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_08/thread_2_seq_2002.577.804202199; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_09/thread_2_seq_2003.570.804288623; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_09/thread_2_seq_2004.568.804288639; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_11/thread_2_seq_2005.635.804433741; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_12/thread_2_seq_2006.642.804547979; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_12/thread_2_seq_2007.643.804547991; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_13/thread_2_seq_2008.959.804634149; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2013_01_13/thread_2_seq_2009.451.804634161; already backed up 2 time(s)
+channel ORA_DISK_1: starting compressed archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=2 sequence=2010 RECID=3830 STAMP=804693256
+input archived log thread=1 sequence=2007 RECID=3831 STAMP=804693264
+channel ORA_DISK_1: starting piece 1 at 14/01/2013 13:54:29
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=1 sequence=2008 RECID=3833 STAMP=804693266
+input archived log thread=2 sequence=2011 RECID=3832 STAMP=804693265
+channel ORA_DISK_2: starting piece 1 at 14/01/2013 13:54:29
+channel ORA_DISK_2: finished piece 1 at 14/01/2013 13:54:32 with 2 copies and tag MONTHLY_ARCH
+piece handle=+RECO/rman/archi_14_20130114_v0nvd98l_1_1 comment=NONE
+piece handle=/mnt/rman_ccbs/archi_14_20130114_v0nvd98l_1_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:00:03
+channel ORA_DISK_1: finished piece 1 at 14/01/2013 13:59:54 with 2 copies and tag MONTHLY_ARCH
+piece handle=+RECO/rman/archi_14_20130114_uvnvd98k_1_1 comment=NONE
+piece handle=/mnt/rman_ccbs/archi_14_20130114_uvnvd98k_1_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:05:25
+Finished backup at 14/01/2013 13:59:54
+
+Starting backup at 14/01/2013 13:59:54
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+channel ORA_DISK_1: starting compressed full datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_1: starting piece 1 at 14/01/2013 13:59:55
+channel ORA_DISK_1: finished piece 1 at 14/01/2013 13:59:58 with 2 copies and tag CONTROLFILE
+piece handle=+RECO/rman/control_20130114_v1nvd9iq_1_1 comment=NONE
+piece handle=/mnt/rman_ccbs/control_14_20130114_v1nvd9iq_1_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:03
+Finished backup at 14/01/2013 13:59:58
+
+Starting Control File and SPFILE Autobackup at 14/01/2013 13:59:58
+piece handle=+RECO/rman/c-271141816-20130114-01 comment=NONE
+Finished Control File and SPFILE Autobackup at 14/01/2013 14:00:01
+
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_02_20130102_sfnuedmq_1_2 RECID=1696 STAMP=803682012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_02_20130102_sfnuedmq_2_2 RECID=1698 STAMP=803684108
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_02_20130102_sfnuedmq_3_2 RECID=1700 STAMP=803685954
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_02_20130102_sfnuedmq_4_2 RECID=1702 STAMP=803687859
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_02_20130102_sfnuedmq_5_2 RECID=1704 STAMP=803689734
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_02_20130102_sfnuedmq_6_2 RECID=1706 STAMP=803691659
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_7_2 RECID=1708 STAMP=803693515
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_8_2 RECID=1710 STAMP=803695330
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_9_2 RECID=1712 STAMP=803697195
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_10_2 RECID=1714 STAMP=803699051
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_11_2 RECID=1716 STAMP=803700926
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_12_2 RECID=1718 STAMP=803702821
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_13_2 RECID=1720 STAMP=803704727
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_14_2 RECID=1722 STAMP=803706662
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_15_2 RECID=1724 STAMP=803708577
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_16_2 RECID=1726 STAMP=803710583
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_17_2 RECID=1728 STAMP=803712548
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_18_2 RECID=1730 STAMP=803714473
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_19_2 RECID=1732 STAMP=803716489
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_20_2 RECID=1734 STAMP=803718444
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_21_2 RECID=1736 STAMP=803720459
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_22_2 RECID=1738 STAMP=803722535
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_23_2 RECID=1740 STAMP=803724690
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_24_2 RECID=1742 STAMP=803726855
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_25_2 RECID=1744 STAMP=803728991
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_26_2 RECID=1746 STAMP=803731176
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_27_2 RECID=1748 STAMP=803733291
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sfnuedmq_28_2 RECID=1750 STAMP=803735457
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_03_20130103_sjnug3ul_1_1 RECID=1752 STAMP=803737557
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_03_20130103_sjnug3ul_1_2 RECID=1753 STAMP=803737557
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_03_20130103_sknug65o_1_1 RECID=1754 STAMP=803739832
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_03_20130103_sknug65o_1_2 RECID=1755 STAMP=803739832
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_03_20130103_sinug3ul_1_1 RECID=1756 STAMP=803737557
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_03_20130103_sinug3ul_1_2 RECID=1757 STAMP=803737557
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_snnuh22r_1_1 RECID=1761 STAMP=803768414
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_snnuh22r_1_2 RECID=1762 STAMP=803768414
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_sonuh22t_1_1 RECID=1763 STAMP=803768416
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_sonuh22t_2_1 RECID=1765 STAMP=803770780
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_sonuh22t_3_1 RECID=1767 STAMP=803772725
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_sonuh22t_4_1 RECID=1769 STAMP=803774681
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_sonuh22t_5_1 RECID=1771 STAMP=803776696
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_03_20130103_sonuh22t_6_1 RECID=1773 STAMP=803778761
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_04_20130104_sonuh22t_7_1 RECID=1775 STAMP=803780877
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_04_20130104_sonuh22t_8_1 RECID=1777 STAMP=803783012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sonuh22t_1_2 RECID=1764 STAMP=803768416
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sonuh22t_2_2 RECID=1766 STAMP=803770780
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sonuh22t_3_2 RECID=1768 STAMP=803772725
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sonuh22t_4_2 RECID=1770 STAMP=803774681
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sonuh22t_5_2 RECID=1772 STAMP=803776696
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_03_20130103_sonuh22t_6_2 RECID=1774 STAMP=803778761
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_sonuh22t_7_2 RECID=1776 STAMP=803780877
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_sonuh22t_8_2 RECID=1778 STAMP=803783012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_04_20130104_srnuhhcs_1_1 RECID=1780 STAMP=803784092
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_04_20130104_srnuhhcs_1_2 RECID=1781 STAMP=803784092
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_04_20130104_sqnuhhcs_1_1 RECID=1782 STAMP=803784092
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_04_20130104_sqnuhhcs_1_2 RECID=1783 STAMP=803784092
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_04_20130104_sunujmeq_1_1 RECID=1787 STAMP=803854813
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_sunujmeq_1_2 RECID=1788 STAMP=803854813
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_svnujmes_1_2 RECID=1790 STAMP=803854815
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_svnujmes_2_2 RECID=1792 STAMP=803857209
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_svnujmes_3_2 RECID=1794 STAMP=803859224
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_svnujmes_4_2 RECID=1796 STAMP=803861210
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_svnujmes_5_2 RECID=1798 STAMP=803863175
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_04_20130104_svnujmes_6_2 RECID=1800 STAMP=803865120
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_7_2 RECID=1802 STAMP=803867166
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_8_2 RECID=1804 STAMP=803869281
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_9_2 RECID=1806 STAMP=803871207
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_10_2 RECID=1808 STAMP=803873132
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_11_2 RECID=1810 STAMP=803875057
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_12_2 RECID=1812 STAMP=803876933
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_13_2 RECID=1814 STAMP=803878768
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_14_2 RECID=1816 STAMP=803880654
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_15_2 RECID=1818 STAMP=803882519
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_16_2 RECID=1820 STAMP=803884444
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_17_2 RECID=1822 STAMP=803886360
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_18_2 RECID=1824 STAMP=803888255
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_19_2 RECID=1826 STAMP=803890150
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_20_2 RECID=1828 STAMP=803892066
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_21_2 RECID=1830 STAMP=803893991
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_22_2 RECID=1832 STAMP=803895956
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_svnujmes_23_2 RECID=1834 STAMP=803898022
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_05_20130105_t2nul2cv_1_1 RECID=1836 STAMP=803899807
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_05_20130105_t2nul2cv_1_2 RECID=1837 STAMP=803899807
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_05_20130105_t3nul4sg_1_1 RECID=1838 STAMP=803902352
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_05_20130105_t3nul4sg_1_2 RECID=1839 STAMP=803902352
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_05_20130105_t1nul2cu_1_1 RECID=1840 STAMP=803899807
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_05_20130105_t1nul2cu_2_1 RECID=1842 STAMP=803902447
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_05_20130105_t1nul2cu_1_2 RECID=1841 STAMP=803899807
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_05_20130105_t1nul2cu_2_2 RECID=1843 STAMP=803902447
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_05_20130105_t7numaqr_1_1 RECID=1847 STAMP=803941215
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_t7numaqr_1_2 RECID=1848 STAMP=803941215
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_05_20130105_t6numaqq_1_1 RECID=1849 STAMP=803941211
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_05_20130105_t6numaqq_1_2 RECID=1850 STAMP=803941211
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_05_20130105_tanumdks_1_1 RECID=1852 STAMP=803944093
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_05_20130105_tanumdks_1_2 RECID=1853 STAMP=803944093
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_05_20130105_t9numdks_1_1 RECID=1854 STAMP=803944092
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_05_20130105_t9numdks_1_2 RECID=1855 STAMP=803944092
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_06_20130106_tenuov6v_1_1 RECID=1859 STAMP=804027619
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_06_20130106_tenuov6v_1_2 RECID=1860 STAMP=804027619
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_06_20130106_tdnuov6q_1_1 RECID=1861 STAMP=804027616
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_06_20130106_tdnuov6q_1_2 RECID=1862 STAMP=804027616
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_06_20130106_thnup1kg_1_1 RECID=1864 STAMP=804030096
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_06_20130106_thnup1kg_1_2 RECID=1865 STAMP=804030096
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_06_20130106_tgnup1kg_1_1 RECID=1866 STAMP=804030096
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_06_20130106_tgnup1kg_1_2 RECID=1867 STAMP=804030096
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_07_20130107_tlnurjj9_1_1 RECID=1871 STAMP=804114032
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_07_20130107_tlnurjj9_1_2 RECID=1872 STAMP=804114032
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_07_20130107_tknurjir_1_1 RECID=1873 STAMP=804114026
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_07_20130107_tknurjir_1_2 RECID=1874 STAMP=804114026
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_07_20130107_tonurled_1_1 RECID=1876 STAMP=804115917
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_07_20130107_tonurled_1_2 RECID=1877 STAMP=804115917
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_07_20130107_tnnurled_1_1 RECID=1878 STAMP=804115917
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_07_20130107_tnnurled_1_2 RECID=1879 STAMP=804115917
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_08_20130108_tsnuu7ur_1_1 RECID=1883 STAMP=804200415
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_08_20130108_tsnuu7ur_1_2 RECID=1884 STAMP=804200415
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_08_20130108_trnuu7uq_1_1 RECID=1885 STAMP=804200412
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_08_20130108_trnuu7uq_1_2 RECID=1886 STAMP=804200412
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_08_20130108_tvnuu9mq_1_1 RECID=1888 STAMP=804202202
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_08_20130108_tvnuu9mq_1_2 RECID=1889 STAMP=804202202
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_08_20130108_u0nuu9st_1_1 RECID=1890 STAMP=804202397
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_08_20130108_u0nuu9st_1_2 RECID=1891 STAMP=804202397
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_08_20130108_tunuu9mq_1_1 RECID=1892 STAMP=804202202
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_08_20130108_tunuu9mq_1_2 RECID=1893 STAMP=804202202
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_09_20130109_u4nv0sar_1_1 RECID=1897 STAMP=804286814
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_09_20130109_u4nv0sar_1_2 RECID=1898 STAMP=804286814
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_09_20130109_u3nv0saq_1_1 RECID=1899 STAMP=804286812
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_09_20130109_u3nv0saq_1_2 RECID=1900 STAMP=804286812
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_09_20130109_u7nv0u42_1_1 RECID=1902 STAMP=804288642
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_09_20130109_u7nv0u42_1_2 RECID=1903 STAMP=804288642
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_09_20130109_u6nv0u42_1_1 RECID=1904 STAMP=804288642
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_09_20130109_u6nv0u42_1_2 RECID=1905 STAMP=804288642
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_12_20130112_udnv8peq_1_1 RECID=1909 STAMP=804546014
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_12_20130112_udnv8peq_1_2 RECID=1910 STAMP=804546014
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_12_20130112_ucnv8pen_1_1 RECID=1911 STAMP=804546010
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_12_20130112_ucnv8pen_1_2 RECID=1912 STAMP=804546010
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_12_20130112_ufnv8rcq_1_1 RECID=1914 STAMP=804547994
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_12_20130112_ufnv8rcq_1_2 RECID=1915 STAMP=804547994
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_12_20130112_uhnv8s8g_1_1 RECID=1916 STAMP=804548880
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_12_20130112_uhnv8s8g_1_2 RECID=1917 STAMP=804548880
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_12_20130112_ugnv8rcq_1_1 RECID=1918 STAMP=804547994
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_12_20130112_ugnv8rcq_1_2 RECID=1919 STAMP=804547994
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_13_20130113_ulnvbdqo_1_1 RECID=1923 STAMP=804632411
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_13_20130113_ulnvbdqo_1_2 RECID=1924 STAMP=804632411
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level1_13_20130113_uknvbdqn_1_1 RECID=1925 STAMP=804632408
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/level1_13_20130113_uknvbdqn_1_2 RECID=1926 STAMP=804632408
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20130113-00 RECID=1927 STAMP=804634145
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_13_20130113_uonvbfhj_1_1 RECID=1928 STAMP=804634163
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_13_20130113_uonvbfhj_1_2 RECID=1929 STAMP=804634163
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_13_20130113_upnvbfl6_1_1 RECID=1930 STAMP=804634278
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_13_20130113_upnvbfl6_1_2 RECID=1931 STAMP=804634278
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_13_20130113_unnvbfhj_1_1 RECID=1932 STAMP=804634163
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_13_20130113_unnvbfhj_1_2 RECID=1933 STAMP=804634163
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/control_20130113_uqnvbfm0_1_1 RECID=1934 STAMP=804634305
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/control_13_20130113_uqnvbfm0_1_2 RECID=1935 STAMP=804634305
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20130113-01 RECID=1936 STAMP=804634309
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_1_1 RECID=1937 STAMP=804672015
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_2_1 RECID=1938 STAMP=804672971
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_3_1 RECID=1939 STAMP=804673921
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_4_1 RECID=1940 STAMP=804674871
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_5_1 RECID=1941 STAMP=804675842
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_6_1 RECID=1942 STAMP=804676782
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_7_1 RECID=1943 STAMP=804677762
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_8_1 RECID=1944 STAMP=804678712
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_9_1 RECID=1945 STAMP=804679712
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_10_1 RECID=1946 STAMP=804680782
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_11_1 RECID=1947 STAMP=804681793
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_12_1 RECID=1948 STAMP=804682763
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_13_1 RECID=1949 STAMP=804683758
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_usnvckg7_14_1 RECID=1950 STAMP=804684738
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_1_1 RECID=1951 STAMP=804672017
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_2_1 RECID=1952 STAMP=804673096
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_3_1 RECID=1953 STAMP=804674156
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_4_1 RECID=1954 STAMP=804675226
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_5_1 RECID=1955 STAMP=804676327
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_6_1 RECID=1956 STAMP=804677447
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_7_1 RECID=1957 STAMP=804678477
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_8_1 RECID=1958 STAMP=804679477
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_9_1 RECID=1959 STAMP=804680487
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_10_1 RECID=1960 STAMP=804681568
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_11_1 RECID=1961 STAMP=804682678
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_12_1 RECID=1962 STAMP=804683773
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_13_1 RECID=1963 STAMP=804684763
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_14_1 RECID=1964 STAMP=804685678
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_15_1 RECID=1965 STAMP=804686604
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_16_1 RECID=1966 STAMP=804687559
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_17_1 RECID=1967 STAMP=804688494
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_18_1 RECID=1968 STAMP=804689429
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_19_1 RECID=1969 STAMP=804690394
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_20_1 RECID=1970 STAMP=804691369
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/level0_14_20130114_utnvckgd_21_1 RECID=1971 STAMP=804692415
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20130114-00 RECID=1972 STAMP=804693241
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_14_20130114_v0nvd98l_1_1 RECID=1973 STAMP=804693269
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_14_20130114_v0nvd98l_1_2 RECID=1974 STAMP=804693269
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/archi_14_20130114_uvnvd98k_1_1 RECID=1975 STAMP=804693269
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/archi_14_20130114_uvnvd98k_1_2 RECID=1976 STAMP=804693269
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/control_20130114_v1nvd9iq_1_1 RECID=1977 STAMP=804693595
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/rman_ccbs/control_14_20130114_v1nvd9iq_1_2 RECID=1978 STAMP=804693595
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20130114-01 RECID=1979 STAMP=804693599
+Crosschecked 198 objects
+
+
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+Deleting the following obsolete backups and copies:
+Type                 Key    Completion Time    Filename/Handle
+-------------------- ------ ------------------ --------------------
+Backup Set           942    13/01/2013 21:29:05
+  Backup Piece       1927   13/01/2013 21:29:05 +RECO/rman/c-271141816-20130113-00
+Backup Set           946    13/01/2013 21:31:47
+  Backup Piece       1934   13/01/2013 21:31:47 +RECO/rman/control_20130113_uqnvbfm0_1_1
+Backup Set           946    13/01/2013 21:31:47
+  Backup Piece       1935   13/01/2013 21:31:47 /mnt/rman_ccbs/control_13_20130113_uqnvbfm0_1_2
+Backup Set           947    13/01/2013 21:31:50
+  Backup Piece       1936   13/01/2013 21:31:50 +RECO/rman/c-271141816-20130113-01
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20130113-00 RECID=1927 STAMP=804634145
+deleted backup piece
+backup piece handle=+RECO/rman/control_20130113_uqnvbfm0_1_1 RECID=1934 STAMP=804634305
+deleted backup piece
+backup piece handle=/mnt/rman_ccbs/control_13_20130113_uqnvbfm0_1_2 RECID=1935 STAMP=804634305
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20130113-01 RECID=1936 STAMP=804634309
+Deleted 4 objects
+
+
+Recovery Manager complete.

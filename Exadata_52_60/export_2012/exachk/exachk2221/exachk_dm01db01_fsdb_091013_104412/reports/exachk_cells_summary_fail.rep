@@ -1,0 +1,6 @@
+=============================================================
+                    Storage server checks                    
+=============================================================
+Check:- FAIL => Storage Server alerts are not configured to be sent via email
+Check:- FAIL => One or more storage server has stateless alerts with null "examinedby" fields.
+Check:- FAIL => Storage server network should pass ipconf verification checks.

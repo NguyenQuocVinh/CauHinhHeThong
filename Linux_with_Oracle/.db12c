@@ -1,0 +1,19 @@
+export ORACLE_HOME=/u01/app/oracle/product/12.1.0.2/dbhome_1
+export PATH=$ORACLE_HOME/bin:$ORACLE_HOME/OPatch:$PATH
+export ORACLE_SID=CDBMN1
+export ORACLE_UNQNAME=CDBMN
+#khi cai dat bien moi truong nay se show ra trong rman
+export NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI:SS'
+
+alias 	ob='cd /u01/app/oracle/'
+alias	oh='cd $ORACLE_HOME'
+alias	dbs='cd $ORACLE_HOME/dbs'
+
+alias rsqlplus="rlwrap sqlplus '/ as sysdba'"
+alias rimp="rlwrap imp"
+alias rimpdp="rlwrap impdp"
+alias rexp="rlwrap exp"
+alias rexpdp="rlwrap expdp"
+alias rlsnrctl="rlwrap lsnrctl"
+alias rrman="rlwrap rman"
+alias radrci="rlwrap adrci"

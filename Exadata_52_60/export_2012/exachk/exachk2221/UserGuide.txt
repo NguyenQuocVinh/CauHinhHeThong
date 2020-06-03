@@ -1,0 +1,6 @@
+exachk User Guide - Exadata configuration audit tool
+----------------------------------------------------------------------------------
+
+The Exachk User Guide is now distributed as a PDF file with the exachk bundle that is downloaded from MyOracle Support Note 1070954.1
+
+ExachkUserGuide.pdf

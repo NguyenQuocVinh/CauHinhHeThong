@@ -1,0 +1,2110 @@
+---------------------------------------------------------------------------------
+
+Some checks were skipped. Please review /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/exachk_skipped_checks.log for more detail
+
+---------------------------------------------------------------------------------
+
+
+=============================================================
+                    Node name - dm01db01                                
+=============================================================
+
+
+Check:- FAIL => Database parameter DB_BLOCK_CHECKSUM is NOT set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair:-
+
+DB_BLOCK_CHECKSUM = FULL aids in block corruption detection. Enable for primary and standby databases
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+  1 Note: 1302539.1 - Best Practices for Corruption Detection, Prevention, and Automatic Repair - in a Data Guard Configuration - 
+  2 Protect Against Data Corruption - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_db.htm#HABPT4827
+
+
+
+
+Check:- FAIL => Database parameter DB_BLOCK_CHECKSUM is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter _kill_diagnostics_timeout is not set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+Database initialization parameter _kill_diagnostics_timeout = 140 protects from corner case timeouts lower in the stack and prevents instance evictions
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_u_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter _kill_diagnostics_timeout is not set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter _lm_rcvr_hang_allow_time is NOT set to the recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+Database initialization parameter _lm_rcvr_hang_allow_time = 140 protects from corner case timeouts lower in the stack and prevents instance evictions
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_u_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter _lm_rcvr_hang_allow_time is NOT set to the recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => A minimum of two controlfiles are not stored in high redundancy diskgroups for fsdb
+
+
+
+
+
+Check:- WARNING => filesystemio_options is not set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Ensures both async and direct IO are used when accessing filesystems. This improves performance for filesystem I/O (ex: data loads). This does not affect database IO for Exadata because the database is stored in ASM.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+
+
+
+
+Check:- WARNING => filesystemio_options is not set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Some data or temp files are not autoextensible for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+The benefit of having "AUTOEXTEND" on is that applications may avoid out of space errors.
+The impact of verifying that the "AUTOEXTEND" attribute is "ON" is minimal. The impact of setting "AUTOEXTEND" to "ON" varies depending upon if it is done during database creation, file addition to a tablespace, or added to an existing file.
+
+Risk
+
+The risk of running out of space in either the tablespace or diskgroup varies by application and cannot be quantified here. A tablespace that runs out of space will interfere with an application, and a diskgroup running out of space could impact the entire database as well as ASM operations (e.g., rebalance operations).
+
+Action / Repair:
+
+To obtain a list of tablespaces that are not set to "AUTOEXTEND", enter the following sqlplus command logged into the database as sysdba:
+select file_id, file_name, tablespace_name from dba_data_files where autoextensible <>'YES'
+union
+select file_id, file_name, tablespace_name from dba_temp_files where autoextensible <> 'YES'; 
+The output should be:
+no rows selected
+If any rows are returned, investigate and correct the condition.
+NOTE: Configuring "AUTOEXTEND" to "ON" requires comparing space utilization growth projections at the tablespace level to space available in the diskgroups to permit the expected projected growth while retaining sufficient storage space in reserve to account for ASM rebalance operations that occur either as a result of planned operations or component failure. The resulting growth targets are implemented with the "MAXSIZE" attribute that should always be used in conjunction with the "AUTOEXTEND" attribute. The "MAXSIZE" settings should allow for projected growth while minimizing the prospect of depleting a disk group. The "MAXSIZE" settings will vary by customer and a blanket recommendation cannot be given here.
+
+NOTE: When configuring a file for "AUTOEXTEND" to "ON", the size specified for the "NEXT" attribute should cover all disks in the diskgroup to optimize balance. For example, with a 4MB AU size and 168 disks, the size of the "NEXT" attribute should be a multiple of 672M (4*168).
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/9ECBA2152E92F6B1E040E50A1EC00DFB_ccbs_report.out
+
+
+
+
+
+Check:- WARNING => ASM parameter MEMORY_TARGET is NOT set according to recommended value.
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain ASM initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these ASM initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are specific to the ASM instances. Unless otherwise specified, the value is for V2, X2-2 and X2-8 Database Machines. The impact of setting these parameters is minimal.
+
+Risk: 
+
+If the ASM initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+ASM MEMORY_TARGET of 1040M avoids issues with 11.2.0.1 to 11.2.0.2 upgrade. This is the initial deployment setting for Exadata.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/a_v_parameter_asm.out
+
+
+
+
+
+Check:- FAIL => Database parameter DB_LOST_WRITE_PROTECT is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter GLOBAL_NAMES is NOT set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+GLOBAL_NAMES = TRUE is a security optimization
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter GLOBAL_NAMES is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter _file_size_increase_increment is NOT set to the recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+_file_size_increase_increment = 2044M (2143289344 bytes) ensures adequately sized RMAN backup allocations
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_u_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter _file_size_increase_increment is NOT set to the recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter PARALLEL_ADAPTIVE_MULTI_USER is NOT set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Performance impact: PQ degree will be reduced for some queries especially with concurrent 
+workloads.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+set PARALLEL_ADAPTIVE_MULTI_USER to  FALSE.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter PARALLEL_ADAPTIVE_MULTI_USER is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter PARALLEL_THREADS_PER_CPU is NOT set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+PARALLEL_THREADS_PER_CPU = 1 properly accounts for hyper threading
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter PARALLEL_THREADS_PER_CPU is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter OS_AUTHENT_PREFIX is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter USE_LARGE_PAGES is NOT set to recommended value on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Memory savings and reduce paging and swapping.
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+USE_LARGE_PAGES = ONLY ensures the entire SGA is stored in hugepage for Linux based systems only.
+
+Prequisites: Operating system hugepages setting need to be correctly configured and need to be adjusted when another instance is added or dropped or whenever sga sizes change.  See referenced MOS Notes to configure HugePages.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+  1 Note: 401749.1 - Shell Script to Calculate Values Recommended Linux HugePages / HugeTLB - 
+  2 Note: 361323.1 - HugePages on Linux: What It Is... and What It Is Not... - 
+
+
+
+
+Check:- FAIL => Database parameter USE_LARGE_PAGES is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter SQL92_SECURITY is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter CLUSTER_INTERCONNECTS is NOT set to the recommended value for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact:
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized. The parameters are common to all database instances. The impact of setting these parameters is minimal. The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact. 
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair:
+
+Database parameter CLUSTER_INTERCONNECTS should be a colon delimited string of the IP addresses returned from sbin/ifconfig for each cluster_interconnect interface returned by oifcfg.  In the case of X2-2 it is expected that there would only be one interface and therefore one IP address.
+
+This is used to avoid the Clusterware HAIP address; For an X2-8 , the 4 IP addresses should be colon delimited
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/AA53138B0B7E3B86E040E50A1EC07003_dm01db01_report.out
+
+
+
+
+
+Check:- FAIL => Database parameter CLUSTER_INTERCONNECTS is NOT set to the recommended value for fsdb
+
+
+
+
+
+Check:- FAIL => Database parameters log_archive_dest_n with Location attribute are NOT all set to recommended value for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized. The parameters are common to all database instances. The impact of setting these parameters is minimal. The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact. 
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value. 
+
+Action / Repair: 
+
+Ensure if log_archive_dest_n location attribute specification is set to USE_DB_RECOVERY_FILE_DEST similar to 
+
+*.log_archive_dest_1= 'LOCATION=USE_DB_RECOVERY_FILE_DEST'
+
+Do NOT set to a specific diskgroup since fast recovery area auto space management is ignored unless "USE_DB_FILE_RECOVERY_DEST" is explicitly used. This is not  the same as setting it to the equivalent diskgroup name from db_recovery_file_dest parameter
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/AAA5C9B5CD003D01E040E50A1EC05D0D_dm01db01_report.out
+
+
+
+
+
+Check:- FAIL => Database parameter Db_create_online_log_dest_n is not set to recommended value for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized. The parameters are common to all database instances. The impact of setting these parameters is minimal. The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact. 
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value. 
+
+Action / Repair: 
+
+Ensure the db_create_online_log_dest_n is configured for a high redundancy diskgroup
+
+A high redundancy diskgroup optimizes availability.
+
+If a high redundancy disk group is available, use the first high ASM redundancy disk group for all your Online Redo Logs or Standby Redo Logs. Use only one log member to minimize performance impact.
+
+If a high redundancy disk group is not available, multiplex redo log members across DATA and RECO ASM disk groups for additional protection.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/AAA80656B22DB08BE040E50A1EC02222_dm01db01_report.out
+
+
+
+
+
+Check:- FAIL => Database parameter Db_create_online_log_dest_n is not set to recommended value for fsdb
+
+
+
+
+
+Check:- WARNING => Multiple RDBMS instances discovered, observe database consolidation best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+Enhanced stability, scalability and performance
+
+Risk:
+
+Shared resource contention leading to instability, performance degradation or scalability problems.
+
+Action / Repair:
+
+Observe database consolidation best practices in the referenced Note, the "Verify Platform Configuration and Initialization Parameters for Consolidation" section.
+
+If the database consolidation best practices have already been reviewed and observed then this message can be ignored.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/AACE397A971608F0E040E50A1EC03350_dm01db01_report.out
+
+  1 Note: 1274318.1 - Oracle Sun Database Machine X2-2 Setup/Configuration Best Practices (Doc ID 1274318.1) - 
+
+
+
+
+Check:- WARNING => Database parameter DB_BLOCK_CHECKING on PRIMARY is NOT set to the recommended value. for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact:
+
+Intially db_block_checking is set to off due to potential performance impact. Performance testing is particularly important given that overhead is incurred on every block change. Block checking typically causes 1% to 10% overhead, but for update and insert intensive applications (such as Redo Apply at a standby database) the overhead can be much higher. OLTP compressed tables also require additional checks that can result in higher overhead depending on the frequency of updates to those tables. Workload specific testing is required to assess whether the performance overhead is acceptable.
+
+
+Risk:
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair:
+
+Based on performance testing results set the primary or standby database to either medium or full depending on the impact. If performance concerns prevent setting DB_BLOCK_CHECKING to either FULL or MEDIUM at a primary database, then it becomes even more important to enable this at the standby database. This protects the standby database from logical corruption that would be undetected at the primary database.
+For higher data corruption detection and prevention, enable this setting but performance impacts vary per workload.Evaluate performance impact.
+
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/AE071F58E61C18F0E040E50A1EC01EA8_dm01db01_report.out
+
+  1 Note: 1302539.1 - Best Practices for Corruption Detection, Prevention, and Automatic Repair - in a Data Guard Configuration - 
+  2 Protect Against Data Corruption - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_db.htm#HABPT4827
+
+
+
+
+Check:- WARNING => Database parameter DB_BLOCK_CHECKING on PRIMARY is NOT set to the recommended value. for fsdb
+
+
+
+
+
+Check:- FAIL => Flashback on PRIMARY is not configured for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle Flashback Technology enables fast logical failure repair. Oracle recommends that you use automatic undo management with sufficient space to attain your desired undo retention guarantee, enable Oracle Flashback Database, and allocate sufficient space and I/O bandwidth in the fast recovery area.  Application monitoring is required for early detection.  Effective and fast repair comes from leveraging and rehearsing the most common application specific logical failures and using the different flashback features effectively (e.g flashback query, flashback version query, flashback transaction query, flashback transaction, flashback drop, flashback table, and flashback database).
+
+Key HA Benefits:
+
+With application monitoring and rehearsed repair actions with flashback technologies, application downtime can reduce from hours and days to the time to detect the logical inconsistency.
+
+Fast repair for logical failures caused by malicious or accidental DML or DDL operations.
+
+Effect fast point-in-time repair at the appropriate level of granularity: transaction, table, or database.
+ 
+Questions:
+
+Can your application or monitoring infrastructure detect logical inconsistencies?
+
+Is your operations team prepared to use various flashback technologies to repair quickly and efficiently?
+
+Is security practices enforced to prevent unauthorized privileges that can result logical inconsistencies?
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B09D194B9AEF0F10E0431EC0E50ADE87_ccbs_report.out
+
+  1 HABP: Chapter 5.1.4: Enable Flashback Database - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_db.htm#BGBFJGCI
+
+
+
+
+Check:- FAIL => Flashback on PRIMARY is not configured for fsdb
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle Flashback Technology enables fast logical failure repair. Oracle recommends that you use automatic undo management with sufficient space to attain your desired undo retention guarantee, enable Oracle Flashback Database, and allocate sufficient space and I/O bandwidth in the fast recovery area.  Application monitoring is required for early detection.  Effective and fast repair comes from leveraging and rehearsing the most common application specific logical failures and using the different flashback features effectively (e.g flashback query, flashback version query, flashback transaction query, flashback transaction, flashback drop, flashback table, and flashback database).
+
+Key HA Benefits:
+
+With application monitoring and rehearsed repair actions with flashback technologies, application downtime can reduce from hours and days to the time to detect the logical inconsistency.
+
+Fast repair for logical failures caused by malicious or accidental DML or DDL operations.
+
+Effect fast point-in-time repair at the appropriate level of granularity: transaction, table, or database.
+ 
+Questions:
+
+Can your application or monitoring infrastructure detect logical inconsistencies?
+
+Is your operations team prepared to use various flashback technologies to repair quickly and efficiently?
+
+Is security practices enforced to prevent unauthorized privileges that can result logical inconsistencies?
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B09D194B9AEF0F10E0431EC0E50ADE87_fsdb_report.out
+
+  1 HABP: Chapter 5.1.4: Enable Flashback Database - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_db.htm#BGBFJGCI
+
+
+
+
+Check:- INFO => Operational Best Practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Operational best practices are an essential prerequisite to high availability.   The integration of Oracle Maximum Availability Architecture (MAA) operational and configuration best practices with Oracle Exadata Database Machine (Exadata MAA) provides the most comprehensive high availability solution available for the Oracle Database.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B0B22ED1E04418E6E0431EC0E50A2DE3_dm01db01_report.out
+
+  1 HABP: Chapter 2: Operational Prerequisites to Maximizing Availability - http://docs.oracle.com/cd/E11882_01/server.112/e10803/operational_bps.htm#CHDJHADI
+  2 MAA Paper: MAA Best Practices for Oracle Exadata Database Machine - http://www.oracle.com/technetwork/database/features/availability/exadata-maa-131903.pdf
+
+
+
+
+Check:- INFO => Consolidation Database Practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Database consolidation requires additional planning and management to ensure HA requirements are met.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B0B3687F575079F9E0431EC0E50AE277_dm01db01_report.out
+
+  1 Best Practices For Database  Consolidation On Exadata Database  Machine - http://www.oracle.com/technetwork/database/features/availability/exadata-consolidation-522500.pdf
+  2 Oracle Database Cloud - http://www.oracle.com/technetwork/database/database-cloud/index.html
+  3 Note: 1386048.1 - Schema Recovery Options in a Consolidated Environment - 
+  4 Using Oracle Database Resource Manager - http://www.oracle.com/technetwork/database/focus-areas/performance/resource-manager-twp-133705.pdf
+
+
+
+
+Check:- INFO => Computer failure prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle RAC and Oracle Clusterware allow Oracle Database to run any packaged or custom application across a set of clustered servers. This capability provides server side high availability and scalability. If a clustered server fails, then Oracle Database continues running on the surviving servers. When more processing power is needed, you can add another server without interrupting access to data.
+
+Key HA Benefits:
+
+Zero database downtime for node and instance failures.  Application brownout can be zero or seconds compared to minutes and an hour with third party cold cluster failover solutions. 
+
+Oracle RAC and Oracle Clusterware rolling upgrade for most hardware and software changes excluding Oracle RDBMS patch sets and new database releases.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B0B4A0BC085D39D9E0431EC0E50A1ECC_dm01db01_report.out
+
+  1 HABP: Chapter 6: Configuring Oracle Database with Oracle Clusterware - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_cw.htm#CEGJIACG
+  2 HABP: Chapter 7: Configuring Oracle Database with Oracle RAC - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_rac.htm#BHCBFACB
+  3 HABP: Chapter 5: Configuring Oracle Database contains Generic HA practices - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_db.htm#BGBBDBFJ
+
+
+
+
+Check:- INFO => Data corruption prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ The MAA recommended way to achieve the most comprehensive data corruption prevention and detection is to use Oracle Active Data Guard and configure the DB_BLOCK_CHECKING, DB_BLOCK_CHECKSUM, and DB_LOST_WRITE_PROTECT database initialization parameters on the Primary database and any Data Guard and standby databases.
+
+ Key HA Benefits
+<ul>
+<li>Application downtime can be reduced from hours and days to seconds to no downtime.</li>
+ 
+<li>Prevention, quick detection and fast repair of data block corruptions. </li>
+ 
+<li>With Active Data Guard, data block corruptions can be repaired automatically.</li>
+
+</ul>
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B12BD323300C7542E0431EC0E50A15D4_dm01db01_report.out
+
+  1 Note: 1302539.1 - Best Practices for Corruption Detection, Prevention, and Automatic Repair - in a Data Guard Configuration  - 
+  2 HABP: Chapter 5.1.6: Protect Against Data Corruption - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_db.htm#BGBHFDFG
+  3 Note: 1265884.1 - Resolving ORA-752 or ORA-600 [3020] During Standby Recovery - 
+  4 HABP: Chapter 13.2.6: - http://docs.oracle.com/cd/E11882_01/server.112/e10803/outage.htm#BABECCJH
+
+
+
+
+Check:- INFO => Logical corruption prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle Flashback Technology enables fast logical failure repair. Oracle recommends that you use automatic undo management with sufficient space to attain your desired undo retention guarantee, enable Oracle Flashback Database, and allocate sufficient space and I/O bandwidth in the fast recovery area.  Application monitoring is required for early detection.  Effective and fast repair comes from leveraging and rehearsing the most common application specific logical failures and using the different flashback features effectively (e.g flashback query, flashback version query, flashback transaction query, flashback transaction, flashback drop, flashback table, and flashback database).
+
+Key HA Benefits:
+
+With application monitoring and rehearsed repair actions with flashback technologies, application downtime can reduce from hours and days to the time to detect the logical inconsistency.
+
+Fast repair for logical failures caused by malicious or accidental DML or DDL operations.
+
+Effect fast point-in-time repair at the appropriate level of granularity: transaction, table, or database.
+ 
+Questions:
+
+Can your application or monitoring infrastructure detect logical inconsistencies?
+
+Is your operations team prepared to use various flashback technologies to repair quickly and efficiently?
+
+Is security practices enforced to prevent unauthorized privileges that can result logical inconsistencies?
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B12BD323300D7542E0431EC0E50A15D4_dm01db01_report.out
+
+  1 HABP: Chapter 5.1.4: Enable Flashback Database - http://download.oracle.com/docs/cd/E11882_01/server.112/e10803/config_db.htm#BGBFJGCI
+  2 Note: 565535.1 - Flashback Database Best Practices & Performance - 
+  3 HABP: Chapter 13.2.7: Recovering from Human Error (Recovery with Flashback) - http://docs.oracle.com/cd/E11882_01/server.112/e10803/outage.htm
+  4 Oracle® Database Advanced Security Administrator's Guide - http://docs.oracle.com/cd/E11882_01/network.112/e10746/toc.htm
+
+
+
+
+Check:- INFO => Database/Cluster/Site failure prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle 11g and higher Active Data Guard is the real-time data protection and availability solution that eliminates single point of failure by maintaining one or more synchronized physical replicas of the production database. If an unplanned outage of any kind impacts the production database, applications and users can quickly failover to a synchronized standby, minimizing downtime and preventing data loss. An Active Data Guard standby can be used to offload read-only applications, ad-hoc queries, and backups from the primary database or be dual-purposed as a test system at the same time it provides disaster protection. An Active Data Guard standby can also be used to minimize downtime for planned maintenance when upgrading to new Oracle Database patch sets and releases and for select migrations.  
+ 
+For zero data loss protection and fastest recovery time, deploy a local Data Guard standby database with Data Guard Fast-Start Failover and integrated client failover. For protection against outages impacting both the primary and the local standby or the entire data center, or a broad geography, deploy a second Data Guard standby database at a remote location.
+
+Key HA Benefits:
+
+With Oracle 11g release 2 and higher Active Data Guard and real time apply, data block corruptions can be repaired automatically and downtime can be reduced from hours and days of application impact to zero downtime with zero data loss.
+
+With MAA best practices, Data Guard Fast-Start Failover (typically a local standby) and integrated client failover, downtime from database, cluster and site failures can be reduced from hours to days and seconds and minutes.
+
+With remote standby database (Disaster Recovery Site), you have protection from complete site failures.
+
+In all cases, the Active Data Guard instances can be active and used for other activities.
+
+Data Guard can reduce risks and downtime for planned maintenance activities by using Database rolling upgrade with transient logical standby, standby-first patch apply and database migrations.
+
+Active Data Guard provides optimal data protection by using physical replication and comprehensive Oracle validation to maintain an exact byte-for-byte copy of the primary database that can be open read-only to offload reporting, ad-hoc queries and backups. For other advanced replication requirements where read-write access to a replica database is required while it is being synchronized with the primary database see Oracle GoldenGate logical replication.Oracle GoldenGate can be used to support heterogeneous database platforms and database releases, an effective read-write full or subset logical replica and to reduce or eliminate downtime for application, database or system changes. Oracle GoldenGate flexible logical replication solution’s main trade-off is the additional administration for application developer and database administrators.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B12E0F50BB806477E0431EC0E50A0198_dm01db01_report.out
+
+  1 Oracle Data Guard: Disaster  Recovery for Oracle Exadata Database Machine - http://www.oracle.com/technetwork/database/features/availability/maa-wp-dr-dbm-130065.pdf
+  2 Note: 1265700.1 - Oracle Patch Assurance - Data Guard Standby-First Patch Apply - 
+  3 Note: 1302539.1 - Best Practices for Corruption Detection, Prevention, and Automatic Repair - in a Data Guard Configuration - 
+  4 HABP: Chapter 9: Configuring Oracle Data Guard - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_dg.htm
+  5 Goldengate resources - http://www.oracle.com/us/products/middleware/data-integration/resources/index.html
+
+
+
+
+Check:- INFO => Client failover operational best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ A highly available architecture requires the ability of the application tier to transparently fail over to a surviving instance or database advertising the required service. This ensures that applications are generally available or minimally impacted in the event of node failure, instance failure, or database failures.
+
+Oracle listeners can be configured to throttle incoming connections to avoid logon storms after a database node or instance failure.  The connection rate limiter feature in the Oracle Net Listener enables a database administrator (DBA) to limit the number of new connections handled by the listener.
+
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B12E4BFE753547ECE0431EC0E50A6404_dm01db01_report.out
+
+  1 Client Failover Best Practices for Highly Available Oracle Databases: Oracle Database 11g Release 2 - http://www.oracle.com/technetwork/database/features/availability/maa-wp-11gr2-client-failover-173305.pdf
+  2 Oracle WebLogic Server and Highly Available Oracle Databases: Oracle Integrated Maximum Availability Solutions - http://www.oracle.com/technetwork/database/features/availability/wlsdatasourcefordataguard-1534212.pdf
+  3 Net Services Reference Guide: Connection Rate Limiter Parameters - http://docs.oracle.com/cd/E11882_01/network.112/e10835/listener.htm#BGBHDGEI
+  4 HABP: Chapter 11: Configuring Fast Connection Failover - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_fcf.htm#BDCFJEHD
+
+
+
+
+Check:- FAIL => Some bigfile tablespaces do not have non-default maxbytes values set for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+"MAXBYTES" is the SQL attribute that expresses the "MAXSIZE" value that is used in the DDL command to set "AUTOEXTEND" to "ON". By default, for a bigfile tablespace, the value is "3.5184E+13", or "35184372064256". The benefit of having "MAXBYTES" set at a non-default value for "BIGFILE" tablespaces is that a runaway operation or heavy simultaneous use (e.g., temp tablespace) cannot take up all the space in a diskgroup.
+
+The impact of verifying that "MAXBYTES" is set to a non-default value is minimal. The impact of setting the "MAXSIZE" attribute to a non-default value "varies depending upon if it is done during database creation, file addition to a tablespace, or added to an existing file.
+
+Risk
+
+The risk of running out of space in a diskgroup varies by application and cannot be quantified here. A diskgroup running out of space may impact the entire database as well as ASM operations (e.g., rebalance operations).
+
+Action / Repair:
+
+To obtain a list of file numbers and bigfile tablespaces that have the "MAXBYTES" attribute at the default value, enter the following sqlplus command logged into the database as sysdba:
+select file_id, a.tablespace_name, autoextensible, maxbytes
+from (select file_id, tablespace_name, autoextensible, maxbytes from dba_data_files where autoextensible='YES' and maxbytes = 35184372064256) a, (select tablespace_name from dba_tablespaces where bigfile='YES') b
+where a.tablespace_name = b.tablespace_name
+union
+select file_id,a.tablespace_name, autoextensible, maxbytes
+from (select file_id, tablespace_name, autoextensible, maxbytes from dba_temp_files where autoextensible='YES' and maxbytes = 35184372064256) a, (select tablespace_name from dba_tablespaces where bigfile='YES') b
+where a.tablespace_name = b.tablespace_name;
+
+The output should be:no rows returned 
+
+If you see output similar to:
+
+   FILE_ID TABLESPACE_NAME                AUT   MAXBYTES
+---------- ------------------------------ --- ----------
+         1 TEMP                           YES 3.5184E+13
+         3 UNDOTBS1                       YES 3.5184E+13
+         4 UNDOTBS2                       YES 3.5184E+13
+
+Investigate and correct the condition.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B166BC500DA37235E0431EC0E50A94E2_ccbs_report.out
+
+
+
+
+
+Check:- WARNING => fast_start_mttr_target has NOT been changed from default on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+To optimize run time performance for write/redo generation intensive workloads.  Increasing fast_start_mttr_target from the default will reduce checkpoint writes from DBWR processes, making more room for LGWR IO.
+
+Risk:
+
+Performance implications if set too aggressively (lower setting = more aggressive), but a trade-off between performance and availability.  This trade-off and the type of workload needs to be evaluated and a decision made whether the default is needed to meet RTO objectives.  fast_start_mttr_target should be set to the desired RTO (Recovery Time Objective) while still maintaing performance SLAs. So this needs to be evaluated on a case by case basis.
+
+Action / Repair:
+
+Consider increasing fast_start_mttr_target to 300 (five minutes) from the default. The trade-off is that instance recovery will run longer, so if instance recovery is more important than performance, then keep fast_start_mttr_target at the default.
+
+Keep in mind that an application with inadequately sized redo logs will likley not see an affect from this change due to frequent log switches so follow best practices for sizing redo logs.
+
+Considerations for a direct writes in a data warehouse type of application: Even though direct operations aren't using the buffer cache, fast_start_mttr_target is very effective at controlling crash recovery time because it ensures adequate checkpointing for the few buffers that are resident (ex: undo segment headers).
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+
+
+
+
+Check:- WARNING => fast_start_mttr_target has NOT been changed from default on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => ASM processes parameter is not set to recommended value
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact: 
+
+Experience and testing has shown that certain ASM initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these ASM initialization parameters as recommended, known problems may be avoided and performance maximized. The parameters are specific to the ASM instances. Unless otherwise specified, the value is for both X2-2 and X2-8 Database Machines. The impact of setting these parameters is minimal. 
+
+Risk:
+
+If the ASM initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value. 
+
+Action / Repair:
+
+This avoids issues observed when ASM hits max # of processes.
+For < 10 instances per node, set processes=1024
+
+For >= 10 instances per node,set processes using the following formula
+
+MAX((50*MIN(db_instances_per_node+1,11))+(10*MAX(db_instances_per_node-10,0)),1024)
+
+This new formula accommodates the consolidation case where there are a lot of instances per node.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/BF275334967679AFE0431EC0E50A1F62_dm01db01_report.out
+
+
+
+
+
+Check:- WARNING => Shared Server are in use - verify they do not do serial full table scans on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Operating system hugepages count does not satisfy total SGA requirements
+
+Additional information to resolve above problem
+-----------------------------------------------
+  Benefit / Impact:
+
+Properly configuring operating system hugepages on Linux and setting the database initialization parameter "use_large_pages" to "only" results in more efficient use of memory and reduced paging.
+
+The impact of validating that the total current hugepages are greater than or equal to estimated requirements for all currently active SGAs is minimal. The impact of corrective actions will vary depending on the specific configuration, and may require a reboot of the database server.
+
+Risk:
+
+The risk of not correctly configuring operating system hugepages in advance of setting the database initialization parameter "use_large_pages" to "only" is that if not enough huge pages are configured, some databases will not start after you have set the parameter.
+
+Action / Repair:
+
+Pre-requisite: All database instances that are supposed to run concurrently on a database server must be up and running for this check to be accurate.
+
+To verify that the total number of configured hugepages is greater than or equal to the estimated requirements of all currently active SGAs. As the root user copy the following block of commands to a shell script (i.e, /tmp/hugepages_calculation.sh) and execute it.
+
+TOTAL_HUGEPAGES=`grep HugePages_Total /proc/meminfo | cut -d":" -f 2 | sed -e 's/^[ \t]*//;s/[ \t]*$//'`;
+HPG_SZ=`grep Hugepagesize /proc/meminfo | awk '{print $2}'`;
+NUM_PG=0;
+for SEG_BYTES in `ipcs -m | cut -c44-60 | awk '{print $1}' | grep "[0-9][0-9]*"`
+do
+   MIN_PG=`echo "$SEG_BYTES/($HPG_SZ*1024)" | bc -q`;
+   if [ $MIN_PG -gt 0 ]; then
+      NUM_PG=`echo "$NUM_PG+$MIN_PG+1" | bc -q`;
+   fi;
+done;
+if [ $TOTAL_HUGEPAGES -ge $NUM_PG ] 
+  then echo -e "\nSUCCESS:  Total current hugepages ($TOTAL_HUGEPAGES) are greater than or equal to";
+       echo -e "          estimated requirements for all currently active SGAs ($NUM_PG).\n";
+  else echo -e "\nFAILURE:  Total current hugepages ($TOTAL_HUGEPAGES) should be greater than or equal to";
+       echo -e "          estimated requirements for all currently active SGAs ($NUM_PG).\n";
+fi;
+
+The output should be similar to:
+
+SUCCESS:  Total current hugepages (13004) are greater than or equal to
+          estimated requirements for all currently active SGAs (632).
+
+If the output is not "SUCCESS", investigate and correct the condition.
+
+    NOTE: Please refer to the below referenced My Oracle Support notes for additional details on configuring hugepages.
+
+    NOTE: If you have not reviewed the below referenced My Oracle Support notes and followed their guidance BEFORE using the database parameter "use_large_pages=only", this check will pass the environment but you will still not be able to start instances once the configured pool of operating system hugepages have been consumed by instance startups. If that should happen, you will need to change the "use_large_pages" initialization parameter to one of the other values, restart the instance, and follow the instructions in the below referenced My Oracle Support notes. The brute force alternative is to increase the huge page count until the newest instance will start, and then adjust the huge page count after you can see the estimated requirements for all currently active SGAs. 
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CB959908DA08427CE0431EC0E50AB096_dm01db01_report.out
+
+  1 Note: 401749.1 - Shell Script to Calculate Values Recommended Linux HugePages / HugeTLB - 
+  2 Note: 361323.1 - HugePages on Linux: What It Is... and What It Is Not... - 
+  3 Note: 749851.1 - 	HugePages and Oracle Database 11g Automatic Memory Management (AMM) on Linux - 
+
+
+
+
+Check:- FAIL => Table AUD$[FGA_LOG$] should use Automatic Segment Space Management for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+With AUDIT_TRAIL set for database (AUDIT_TRAIL=db), and the AUD$ and FGA_LOG$ tables located in a dictionary segment space managed SYSTEM tablespace, "gc" wait events are sometimes observed during heavy periods of database logon activity. Testing has shown that under such conditions, placing the AUD$ and FGA_LOG$ tables in the SYSAUX tablespace, which uses automatic segment space management, reduces the space related wait events.
+
+The impact of verifying that the AUD$ and FGA_LOG$ tables are in the SYSAUX table space is low. Moving them if they are not located in the SYSAUX does not require an outage, but should be done during a scheduled maintenance period or slow audit record generation window.
+
+Risk:
+
+If AUD$ and FGA_LOG$ tables are not verifed to use automatic segment space management, there is a risk of a performance slowdown during periods of high database login activity.
+
+Action / Repair:
+
+To verify the segment space management policy currently in use by the AUD$ and FGA_LOG$ tables, use the following Sqlplus command:
+
+select t.table_name,ts.segment_space_management from dba_tables t, dba_tablespaces ts where ts.tablespace_name = t.tablespace_name and t.table_name in ('AUD$','FGA_LOG$');
+
+The output should be:
+TABLE_NAME                     SEGMEN
+------------------------------ ------
+FGA_LOG$                       AUTO
+AUD$                           AUTO 
+If one or both of the AUD$ or FGA_LOG$ tables return "MANUAL", use the DBMS_AUDIT_MGMT package to move them to the SYSAUX tablespace:
+
+BEGIN
+DBMS_AUDIT_MGMT.set_audit_trail_location(audit_trail_type => DBMS_AUDIT_MGMT.AUDIT_TRAIL_AUD_STD,--this moves table AUD$ 
+audit_trail_location_value => 'SYSAUX');  
+END;  
+/
+
+BEGIN
+DBMS_AUDIT_MGMT.set_audit_trail_location(audit_trail_type => DBMS_AUDIT_MGMT.AUDIT_TRAIL_FGA_STD,--this moves table FGA_LOG$ 
+audit_trail_location_value => 'SYSAUX');
+END;
+/   
+
+The output should be similar to:
+PL/SQL procedure successfully completed. 
+
+If the output is not as above, investigate and correct the condition.
+NOTE: This "DBMS_AUDIT_MGMT.set_audit_trail" command should be executed as part of the dbca template post processing scripts, but for existing databases, the command can be executed, but since it moves the AUD$ & FGA_LOG$ tables using "alter table ... move" command, it should be executed at a "quiet" time
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CB95A1BF5B1160ACE0431EC0E50A12EE_ccbs_report.out
+
+  1 Use Automatic Segment Space Management - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_db.htm#HABPT4845
+
+
+
+
+Check:- FAIL => Table AUD$[FGA_LOG$] should use Automatic Segment Space Management for fsdb
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+With AUDIT_TRAIL set for database (AUDIT_TRAIL=db), and the AUD$ and FGA_LOG$ tables located in a dictionary segment space managed SYSTEM tablespace, "gc" wait events are sometimes observed during heavy periods of database logon activity. Testing has shown that under such conditions, placing the AUD$ and FGA_LOG$ tables in the SYSAUX tablespace, which uses automatic segment space management, reduces the space related wait events.
+
+The impact of verifying that the AUD$ and FGA_LOG$ tables are in the SYSAUX table space is low. Moving them if they are not located in the SYSAUX does not require an outage, but should be done during a scheduled maintenance period or slow audit record generation window.
+
+Risk:
+
+If AUD$ and FGA_LOG$ tables are not verifed to use automatic segment space management, there is a risk of a performance slowdown during periods of high database login activity.
+
+Action / Repair:
+
+To verify the segment space management policy currently in use by the AUD$ and FGA_LOG$ tables, use the following Sqlplus command:
+
+select t.table_name,ts.segment_space_management from dba_tables t, dba_tablespaces ts where ts.tablespace_name = t.tablespace_name and t.table_name in ('AUD$','FGA_LOG$');
+
+The output should be:
+TABLE_NAME                     SEGMEN
+------------------------------ ------
+FGA_LOG$                       AUTO
+AUD$                           AUTO 
+If one or both of the AUD$ or FGA_LOG$ tables return "MANUAL", use the DBMS_AUDIT_MGMT package to move them to the SYSAUX tablespace:
+
+BEGIN
+DBMS_AUDIT_MGMT.set_audit_trail_location(audit_trail_type => DBMS_AUDIT_MGMT.AUDIT_TRAIL_AUD_STD,--this moves table AUD$ 
+audit_trail_location_value => 'SYSAUX');  
+END;  
+/
+
+BEGIN
+DBMS_AUDIT_MGMT.set_audit_trail_location(audit_trail_type => DBMS_AUDIT_MGMT.AUDIT_TRAIL_FGA_STD,--this moves table FGA_LOG$ 
+audit_trail_location_value => 'SYSAUX');
+END;
+/   
+
+The output should be similar to:
+PL/SQL procedure successfully completed. 
+
+If the output is not as above, investigate and correct the condition.
+NOTE: This "DBMS_AUDIT_MGMT.set_audit_trail" command should be executed as part of the dbca template post processing scripts, but for existing databases, the command can be executed, but since it moves the AUD$ & FGA_LOG$ tables using "alter table ... move" command, it should be executed at a "quiet" time
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CB95A1BF5B1160ACE0431EC0E50A12EE_fsdb_report.out
+
+  1 Use Automatic Segment Space Management - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_db.htm#HABPT4845
+
+
+
+
+Check:- INFO => Database failure prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle database can be configured with best practices that are applicable to all Oracle databases, including single-instance, Oracle RAC databases, Oracle RAC One Node databases, and the primary and standby databases in Oracle Data Guard configurations.
+ 
+ 
+Key HA Benefits:
+<ul>
+<li>Improved recoverability</li>
+<li>Improved stability</li>
+</ul>
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CCAD9345F6447E79E0431EC0E50ABC8C_dm01db01_report.out
+
+  1 Configuring Oracle Database with Oracle Clusterware - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_cw.htm#CEGJIACG
+  2 Configuring Oracle Database - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_db.htm
+
+
+
+
+Check:- WARNING => Database Archivelog Mode should be set to ARCHIVELOG for fsdb
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Running the database in ARCHIVELOG mode and using database FORCE LOGGING mode are prerequisites for database recovery operations. The ARCHIVELOG mode enables online database backup and is necessary to recover the database to a point in time later than what has been restored. Features such as Oracle Data Guard and Flashback Database require that the production database run in ARCHIVELOG mode.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CCAD9945F7797A3FE0431EC0E50A856B_fsdb_report.out
+
+  1 Set the Database ARCHIVELOG Mode and FORCE LOGGING Mode - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_db.htm#HABPT4822
+
+
+
+
+Check:- FAIL => Primary database is NOT protected with Data Guard (standby database) for real-time data protection and availability for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle 11g and higher Active Data Guard is the real-time data protection and availability solution that eliminates single point of failure by maintaining one or more synchronized physical replicas of the production database. If an unplanned outage of any kind impacts the production database, applications and users can quickly failover to a synchronized standby, minimizing downtime and preventing data loss. An Active Data Guard standby can be used to offload read-only applications, ad-hoc queries, and backups from the primary database or be dual-purposed as a test system at the same time it provides disaster protection. An Active Data Guard standby can also be used to minimize downtime for planned maintenance when upgrading to new Oracle Database patch sets and releases and for select migrations.  
+ 
+For zero data loss protection and fastest recovery time, deploy a local Data Guard standby database with Data Guard Fast-Start Failover and integrated client failover. For protection against outages impacting both the primary and the local standby or the entire data center, or a broad geography, deploy a second Data Guard standby database at a remote location.
+
+Key HA Benefits:
+
+With Oracle 11g release 2 and higher Active Data Guard and real time apply, data block corruptions can be repaired automatically and downtime can be reduced from hours and days of application impact to zero downtime with zero data loss.
+
+With MAA best practices, Data Guard Fast-Start Failover (typically a local standby) and integrated client failover, downtime from database, cluster and site failures can be reduced from hours to days and seconds and minutes.
+
+With remote standby database (Disaster Recovery Site), you have protection from complete site failures.
+
+In all cases, the Active Data Guard instances can be active and used for other activities.
+
+Data Guard can reduce risks and downtime for planned maintenance activities by using Database rolling upgrade with transient logical standby, standby-first patch apply and database migrations.
+
+Active Data Guard provides optimal data protection by using physical replication and comprehensive Oracle validation to maintain an exact byte-for-byte copy of the primary database that can be open read-only to offload reporting, ad-hoc queries and backups. For other advanced replication requirements where read-write access to a replica database is required while it is being synchronized with the primary database see Oracle GoldenGate logical replication.Oracle GoldenGate can be used to support heterogeneous database platforms and database releases, an effective read-write full or subset logical replica and to reduce or eliminate downtime for application, database or system changes. Oracle GoldenGate flexible logical replication solution’s main trade-off is the additional administration for application developer and database administrators.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CD4D51B78F692408E0431EC0E50A3077_ccbs_report.out
+
+  1 Oracle Data Guard: Disaster  Recovery for Oracle Exadata Database Machine - http://www.oracle.com/technetwork/database/features/availability/maa-wp-dr-dbm-130065.pdf
+  2 Note: 1265700.1 - Oracle Patch Assurance - Data Guard Standby-First Patch Apply - 
+  3 Note: 1302539.1 - Best Practices for Corruption Detection, Prevention, and Automatic Repair - in a Data Guard Configuration - 
+  4 HABP: Chapter 9: Configuring Oracle Data Guard - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_dg.htm
+  5 Goldengate resources - http://www.oracle.com/us/products/middleware/data-integration/resources/index.html
+
+
+
+
+Check:- FAIL => Primary database is NOT protected with Data Guard (standby database) for real-time data protection and availability for fsdb
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Oracle 11g and higher Active Data Guard is the real-time data protection and availability solution that eliminates single point of failure by maintaining one or more synchronized physical replicas of the production database. If an unplanned outage of any kind impacts the production database, applications and users can quickly failover to a synchronized standby, minimizing downtime and preventing data loss. An Active Data Guard standby can be used to offload read-only applications, ad-hoc queries, and backups from the primary database or be dual-purposed as a test system at the same time it provides disaster protection. An Active Data Guard standby can also be used to minimize downtime for planned maintenance when upgrading to new Oracle Database patch sets and releases and for select migrations.  
+ 
+For zero data loss protection and fastest recovery time, deploy a local Data Guard standby database with Data Guard Fast-Start Failover and integrated client failover. For protection against outages impacting both the primary and the local standby or the entire data center, or a broad geography, deploy a second Data Guard standby database at a remote location.
+
+Key HA Benefits:
+
+With Oracle 11g release 2 and higher Active Data Guard and real time apply, data block corruptions can be repaired automatically and downtime can be reduced from hours and days of application impact to zero downtime with zero data loss.
+
+With MAA best practices, Data Guard Fast-Start Failover (typically a local standby) and integrated client failover, downtime from database, cluster and site failures can be reduced from hours to days and seconds and minutes.
+
+With remote standby database (Disaster Recovery Site), you have protection from complete site failures.
+
+In all cases, the Active Data Guard instances can be active and used for other activities.
+
+Data Guard can reduce risks and downtime for planned maintenance activities by using Database rolling upgrade with transient logical standby, standby-first patch apply and database migrations.
+
+Active Data Guard provides optimal data protection by using physical replication and comprehensive Oracle validation to maintain an exact byte-for-byte copy of the primary database that can be open read-only to offload reporting, ad-hoc queries and backups. For other advanced replication requirements where read-write access to a replica database is required while it is being synchronized with the primary database see Oracle GoldenGate logical replication.Oracle GoldenGate can be used to support heterogeneous database platforms and database releases, an effective read-write full or subset logical replica and to reduce or eliminate downtime for application, database or system changes. Oracle GoldenGate flexible logical replication solution’s main trade-off is the additional administration for application developer and database administrators.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/CD4D51B78F692408E0431EC0E50A3077_fsdb_report.out
+
+  1 Oracle Data Guard: Disaster  Recovery for Oracle Exadata Database Machine - http://www.oracle.com/technetwork/database/features/availability/maa-wp-dr-dbm-130065.pdf
+  2 Note: 1265700.1 - Oracle Patch Assurance - Data Guard Standby-First Patch Apply - 
+  3 Note: 1302539.1 - Best Practices for Corruption Detection, Prevention, and Automatic Repair - in a Data Guard Configuration - 
+  4 HABP: Chapter 9: Configuring Oracle Data Guard - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_dg.htm
+  5 Goldengate resources - http://www.oracle.com/us/products/middleware/data-integration/resources/index.html
+
+
+
+
+Check:- FAIL => Database parameter LOG_BUFFER is NOT set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- WARNING => Redo log file size should be >= 4GB for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ The database machine provides extremely high redo generation rates that may make you consider increasing the log file sizes. Following initial deployment, the online log file sizes should be 4GB each. Any subsequent database (re)creation should maintain this sizing which should be sufficient for almost all write-intensive workloads. Do not increase the online log file size to larger than 32GB unless instructed to do so by Oracle Support.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/C31B975819621D1CE0431EC0E50AC731_ccbs_report.out
+
+
+
+
+
+Check:- WARNING => Redo log file size should be >= 4GB for fsdb
+
+Additional information to resolve above problem
+-----------------------------------------------
+ The database machine provides extremely high redo generation rates that may make you consider increasing the log file sizes. Following initial deployment, the online log file sizes should be 4GB each. Any subsequent database (re)creation should maintain this sizing which should be sufficient for almost all write-intensive workloads. Do not increase the online log file size to larger than 32GB unless instructed to do so by Oracle Support.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/C31B975819621D1CE0431EC0E50AC731_fsdb_report.out
+
+
+
+
+
+Check:- FAIL => No one high redundancy diskgroup configured for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Choose Oracle Automatic Storage Management (ASM) high redundancy for DATA and 
+RECO disk groups for best tolerance from data and storage failures. ASM high redundancy is the ideal recommendation for business critical databases
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B09E9D165FF85A7DE0431EC0E50A348B_ccbs_report.out
+
+
+
+
+
+Check:- FAIL => No one high redundancy diskgroup configured for fsdb
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Choose Oracle Automatic Storage Management (ASM) high redundancy for DATA and 
+RECO disk groups for best tolerance from data and storage failures. ASM high redundancy is the ideal recommendation for business critical databases
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B09E9D165FF85A7DE0431EC0E50A348B_fsdb_report.out
+
+
+
+
+
+Check:- INFO => Storage failures prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ The Oracle Storage Grid is implemented using either Oracle Automatic Storage Management (ASM) and Oracle Exadata Storage Server Software or ASM and third-party storage. The Oracle Storage Grid with Exadata seamlessly supports MAA-related technology, improves performance, provides unlimited I/O scalability, is easy to use and manage, and delivers mission-critical availability and reliability to your enterprise.
+
+A properly configured storage grid eliminates single point of failure for storage components, including disk, disk controller, network connections or switches. The Exadata Database Machine default configuration is an example of a properly configured storage grid.
+
+Key HA Benefits:
+
+Zero database downtime for storage related failures and maintenance. 
+Oracle Grid Infrastructure and ASM rolling upgrade.
+
+Other References:
+
+Oracle® Exadata Storage Server Software User's Guide: Chapter 1: Section: About Oracle ASM for Maximum Availability
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B12D2AE8A6016FF8E0431EC0E50A7194_dm01db01_report.out
+
+  1 Oracle Exadata Database Machine - http://www.oracle.com/exadata/
+  2 HABP Chapter 4: Configuring Storage - http://docs.oracle.com/cd/E11882_01/server.112/e10803/config_storage.htm#CDEGCJGF
+
+
+
+
+Check:- INFO => Network failure prevention best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Redundant client and interconnect network connectivity using components such as dual-ported Quad Data Rate (QDR) Host Channel Adapters (HCAs) and redundant switches to ensure no point of failure in your network topology. Configuring the same redundancy for client access by network bonding is recommended.  Additional servers such as media and ETL servers should also be configured with redundant networks.
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/B0B3687F575279F9E0431EC0E50AE277_dm01db01_report.out
+
+  1 Deploying Oracle Maximum Availability Architecture with Exadata Database Machine - http://www.oracle.com/technetwork/database/features/availability/exadata-maa-131903.pdf
+
+
+
+
+Check:- INFO => Software maintenance best practices
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Proactive hardware and software maintenance helps avoid critical issues and helps maintain the highest stability and availability of your system.  
+
+By running the latest version of exachk, automatic detection occurs for the following:
+<ul>
+<li>Software version mismatches on the system.</li>
+<li>Known critical issues for your specific environment.</li>
+<li>Software releases that are older than recommended versions.</li>
+</ul>
+
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/DC53A23691D2406AE04312C0E50AEED9_dm01db01_report.out
+
+  1 Note: 1461240.1 - Exadata Database Machine Software and Hardware Maintenance Planning Guide - 
+  2 Best Practices For Database Consolidation On Exadata Database Machine - http://www.oracle.com/technetwork/database/features/availability/exadata-consolidation-522500.pdf
+  3 Note: 888828.1 - Database Machine and Exadata Storage Server 11g Release 2 (11.2) Supported Versions - 
+  4 Note: 1262380.1 - Exadata Patching Overview and Patch Testing Guidelines - 
+  5 Note: 1270094.1 - Exadata Critical Issues - 
+
+
+
+
+Check:- FAIL => Database parameter DB_FILES should be set to recommended value. on ccbs1 instance
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Critical
+
+Benefit / Impact: 
+
+Experience and testing has shown that certain database initialization parameters should be set at specific values. These are the best practice values set at deployment time. By setting these database initialization parameters as recommended, known problems may be avoided and performance maximized.
+The parameters are common to all database instances. The impact of setting these parameters is minimal.
+The performance related settings provide guidance to maintain highest stability without sacrificing performance. Changing the default performance settings can be done after careful performance evaluation and clear understanding of the performance impact.
+
+Risk: 
+
+If the database initialization parameters are not set as recommended, a variety of issues may be encountered, depending upon which initialization parameter is not set as recommended, and the actual set value.
+
+Action / Repair: 
+
+DB_FILES=1024 is the recommended value.  The default value (200) is typically too small for most customers. 
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/d_v_parameter_ccbs.out
+
+
+
+
+
+Check:- FAIL => Database parameter DB_FILES should be set to recommended value. on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => Database parameter PROCESSES should be set to recommended value on fsdb1 instance
+
+
+
+
+
+Check:- FAIL => The data files should be recoverable for ccbs
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+When you perform a DML or DDL operation using the NOLOGGING or UNRECOVERABLE clause, database backups made prior to the unrecoverable operation are invalidated and new backups are required. You can specify the SQL ALTER DATABASE or SQL ALTER TABLESPACE statement with the FORCE LOGGING clause to override the NOLOGGING setting; however, this statement will not repair a database that is already invalid.
+
+Risk:
+
+Changes under NOLOGGING will not be available after executing database recovery from a backup made prior to the unrecoverable change.
+
+Action / Repair:
+
+To verify that the data files are recoverable, execute the following Sqlplus command as the userid that owns the oracle home for the database:
+select file#, unrecoverable_time, unrecoverable_change# from v$datafile where unrecoverable_time is not null;
+If there are any unrecoverable actions, the output will be similar to:
+     FILE# UNRECOVER UNRECOVERABLE_CHANGE#
+---------- --------- ---------------------
+        11 14-JAN-13               8530544
+If nologging changes have occurred and the data must be recoverable then a backup of those datafiles that have nologging operations within should be done immediately. Please consult the following sections of the Backup and Recovery User guide for specific steps to resolve files that have unrecoverable changes
+
+The standard best practice is to enable FORCE LOGGING at the database level (ALTER DATABASE FORCE LOGGING;) to ensure that all transactions are recoverable. However, placing the a database in force logging mode for ETL operations can lead to unnecessary database overhead. MAA best practices call for isolating data that does not need to be recoverable. Such data would include:
+
+Data resulting from temporary loads
+Data resulting from transient transformations
+Any non critical data
+
+To reduce unnecessary redo generation, do the following:
+
+Specifiy FORCE LOGGING for all tablespaces that you explicitly wish to protect (ALTERTABLESPACE FORCE LOGGING;)
+Specify NO FORCE LOGGING for those tablespaces that do not need protection (ALTERTABLESPACE NO FORCE LOGGING;).
+Disable force logging at the database level (ALTER DATABASE NO FORCE LOGGING;) otherwise the database level settings will override the tablespace settings.
+
+Once the above is complete, redo logging will function as follows:
+
+Explicit no logging operations on objects in the no logging tablespace will not generate the normal redo (a small amount of redo is always generated for no logging operations to signal that a no logging operation was performed).
+
+All other operations on objects in the no logging tablespace will generate the normal redo.
+Operations performed on objects in the force logging tablespaces always generate normal redo.
+
+Note:-Please seek oracle support assistance to mitigate this problem. Upon their guidance, the following commands could help validate, identify corrupted blocks.
+
+              oracle> dbv file=<data_file_returned_by_above_command> userid=sys/******
+              RMAN> validate check logical database;
+              SQL> select COUNT(*) from v$database_block_corruption;
+
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/DC223BE507001B0AE04313C0E50A359D_ccbs_report.out
+
+  1 Backing Up Database Files with RMAN - http://docs.oracle.com/cd/E11882_01/backup.112/e10642/rcmbckba.htm#i1020015
+  2 Recovering NOLOGGING Tables and Indexes - http://docs.oracle.com/cd/E11882_01/backup.112/e10642/osadvsce.htm#BRADV90047
+
+
+
+
+Check:- FAIL => vm.min_free_kbytes should be set as recommended.
+
+Additional information to resolve above problem
+-----------------------------------------------
+  Benefit / Impact:
+
+Maintaining vm.min_free_kbytes=524288 (512MB) helps a Linux system to reclaim memory faster and avoid LowMem pressure issues which can lead to node eviction or other outage or performance issues.
+
+The impact of verifying vm.min_free_kbytes=524288 is minimal. The impact of adjusting the parameter should include editing the /etc/sysctl.conf file and rebooting the system. It is possible, but not recommended, especially for a system already under LowMem pressure, to modify the setting interactively. However, a reboot should still be performed to make sure the interactive setting is retained through a reboot.
+
+Risk:
+
+Exposure to unexpected node eviction and reboot.
+
+Action / Repair:
+
+To verify that vm.min_free_kbytes is properly set to 524288 execute the following command as the "root" useride on each database server:
+
+MIN_FREE_KBYTES_SYSCTL=`egrep vm.min_free_kbytes /etc/sysctl.conf | awk '{print $3}'`;
+MIN_FREE_KBYTES_MEMORY=`cat /proc/sys/vm/min_free_kbytes`;
+if [ $MIN_FREE_KBYTES_SYSCTL -eq "524288" -a $MIN_FREE_KBYTES_MEMORY -eq "524288" ]
+then
+echo -e "\nSUCCESS: vm.min_free_kbytes is set as recommended:";
+echo -e "in sysctl.conf:   $MIN_FREE_KBYTES_SYSCTL";
+echo -e "in active memory: $MIN_FREE_KBYTES_MEMORY";
+else
+echo -e "\nFAILURE: vm.min_free_kbytes is not set as recommended:";
+echo -e "in sysctl.conf:   $MIN_FREE_KBYTES_SYSCTL";
+echo -e "in active memory: $MIN_FREE_KBYTES_MEMORY";
+fi;
+
+The output should be:
+
+SUCCESS: vm.min_free_kbytes is set as recommended:
+in sysctl.conf:   524288
+in active memory: 524288
+
+If the output is not as expected, investigate and correct the condition. For example if the value is incorrect in /etc/sysctl.conf but current memory matches the incorrect value, simply edit the /etc/sysctl.conf file to include the line "vm.min_free_kbytes = 524288" and reboot the node. 
+ 
+TO REVIEW COLLECTED DATA :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/DCDB11F4CA7C5701E04313C0E50AB5D3_dm01db01_report.out
+
+
+
+=============================================================
+                    Storage server checks                    
+=============================================================
+
+
+Check:- FAIL => Storage Server alerts are not configured to be sent via email
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+Oracle Exadata Storage Servers can send various levels of alerts and clear messages via email or snmp, or both. Sending these messages via email at a minimum helps to ensure that a problem is detected and corrected.
+
+There is little impact to storage server operation to send these messages via email.
+
+Risk:
+
+If the storage servers are not configured to send alerts and clear messages via email at a minimum, there is an increased risk of a problem not being detected in a timely manner.
+
+Action / Repair:
+
+Configure a storage server to send email alerts using the following cellcli command (tailored to your environment):
+
+ALTER CELL smtpServer='mailserver.maildomain.com',           -
+smtpFromAddr='firstname.lastname@maildomain.com',        -
+smtpToAddr='firstname.lastname@maildomain.com',        -
+smtpFrom='Exadata cell', -
+smtpPort='<port for mail server>', -
+smtpUseSSL='TRUE', -
+notificationPolicy='critical,warning,clear',  -
+notificationMethod='mail';
+
+Use the following cellcli command to validate the email configuration by sending a test email:
+
+alter cell validate mail;
+
+    NOTE: The recommended best practice to monitor an Oracle Exadata Database Machine is with Oracle Enterprise Manager (OEM) and the suite of OEM plugins developed for the Oracle Exadata Database Machine. Please reference My Oracle Support (MOS) note 1110675.1 for details. 
+ 
+TO REVIEW COLLECTED DATA FROM DM01CEL03 :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/c_cell_email_alerts_enabled_report.out
+
+
+
+
+
+Check:- FAIL => One or more storage server has stateless alerts with null "examinedby" fields.
+
+Additional information to resolve above problem
+-----------------------------------------------
+ There are two types of alerts maintained in the alerthistory of a storage server, stateful and stateless.
+
+A stateful alert is usually associated with a transient condition, and it will clear itself after that transient condition is corrected.  These alerts age out of the alerthistory after 7 days (default time) once they are set to clear.  Stateful alerts are not examined by this check.
+
+A stateless alert is not cleared automatically.  They will not age out of the alerthistory until the alert is examined and the "examinedby" field set manually to a non-null value, typically the name of the person who reviewed the stateless alert and corrected or otherwise acted upon the information provided.
+
+The corrective action for each stateless alert is found in the "alertaction" field.  The listing below contains the name, alerttype, severity, alertmessage, and alertaction fields for each alert found with "examinedby" set to null.  Follow the recommendations in the "alertaction" field and when the issue is resolved, manually set the "examinedby" field with a command similar to the following (celladmin userid, cellcli utility):
+
+CellCLI> alter alerthistory 1640 examinedby="jdoe"
+Alert 1640 successfully altered
+
+Where jdoe is the name of the person who verified the cause of the stateless alert no longer exists, and the number is the name of the stateless alert.  Note that double quotes are used around the value to be set, but not the name of the stateless alert.
+ 
+TO REVIEW COLLECTED DATA FROM DM01CEL03 :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/c_alerthistory_critical_report.out
+
+
+
+
+
+Check:- FAIL => Storage server network should pass ipconf verification checks.
+
+Additional information to resolve above problem
+-----------------------------------------------
+ Benefit / Impact:
+
+Exadata Storage Server network configuration is maintained in both operating system level configuration files and in Exadata-specific configuration files. The configuration defined in the two sets of files must match. To ensure proper configuration and consistency, network configuration changes to an Exadata Storage Server must be performed with the ipconf utility, as documented in the Oracle Exadata Storage Server Software User's Guide.
+
+The impact of verifying that storage server network configuration is correct and consistent is minimal.
+
+Risk:
+
+If operating system level configuration files and Exadata-specific configuration files are inconsistent, then maintenance activities like software patching may fail, or previous configuration may be restored without warning.
+
+Action / Repair:
+
+To verify operating system level configuration files and Exadata-specific configuration files are consistent, run the following ipconf command as the "root" userid on storage servers:
+
+# /usr/local/bin/ipconf -verify -semantic 
+
+The output should be similar to:
+
+Verifying of Exadata configuration file /opt/oracle.cellos/cell.conf 
+Done. Configuration file /opt/oracle.cellos/cell.conf passed all verification checks 
+
+If the output reports FAILED for any check, investigate to find the root cause, and then use only the ipconf utility to make the necessary corrections to the storage server network configuration. Refer to the Oracle Exadata Storage Server Software User's Guide for details of the ipconf utility. 
+ 
+TO REVIEW COLLECTED DATA FROM DM01CEL03 :- /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/c_ipconf_verify_report.out
+
+
+
+=============================================================
+                    Infiniband switch checks                 
+=============================================================
+
+
+---------------------------------------------------------------------------------
+                      CLUSTERWIDE CHECKS
+---------------------------------------------------------------------------------
+
+Check:- PASS => Master (Rack) Serial Number matches across database servers and storage servers
+
+
+Check:- PASS => Time zone matches for root user across cluster
+
+
+Check:- PASS => Time zone matches for Grid Infrastructure software owner across cluster
+
+
+Check:- PASS => RDBMS software owner UID matches across cluster
+
+
+Check:- PASS => OS Kernel version(uname -r) matches across cluster.
+
+
+Check:- PASS => Public network interface names are the same across cluster
+
+
+Check:- PASS => RDBMS software version matches across cluster.
+
+
+Check:- PASS => Private interconnect interface names are the same across cluster
+
+
+Check:- PASS => Timezone matches for current user across cluster.
+
+
+Check:- PASS => Grid Infrastructure software owner UID matches across cluster
+
+
+Check:- PASS => Clusterware active version matches across cluster.
+
+
+Check:- PASS => Imageinfo version matches across all database and storage servers
+
+
+Check:- PASS => Imageinfo matches across cluster on database servers
+
+Check:- PASS => CRS home has same number of patches installed across the cluster
+Check:- PASS => RDBMS home /u01/app/oracle/product/11.2.0.2/dbhome_1 has same number of patches installed across the cluster
+---------------------------------------------------------------------------------
+=============================================================
+                    Node name - dm01db01                                
+=============================================================
+
+Check:- PASS => All disk groups have allocation unit size set to 4MB
+
+
+Check:- PASS => All disk groups have compatible.rdbms parameter set to recommended values
+
+
+Check:- PASS => All disk groups have CELL.SMART_SCAN_CAPABLE parameter set to true
+
+
+Check:- PASS => All disk groups have compatible.asm parameter set to recommended values
+
+
+Check:- PASS => Database server InfiniBand network is in "connected" mode.
+
+
+Check:- PASS => CSS misscount is set to the recommended value of 60
+
+
+Check:- PASS => Clusterware Home is properly linked with RDS library
+
+
+Check:- PASS => Database Server InfiniBand network MTU size is 65520
+
+
+Check:- PASS => NUMA is OFF at operating system level.
+
+
+Check:- PASS => ASM Version is 11.2.0.2 or higher as expected
+
+
+Check:- PASS => All tablespaces are locally manged tablespace for ccbs
+
+
+Check:- PASS => All tablespaces are locally manged tablespace for fsdb
+
+
+Check:- PASS => A minimum of two controlfiles are stored in high redundancy diskgroups for ccbs
+
+
+Check:- PASS => RDBMS Version is 11.2.0.2 or higher as expected for ccbs
+
+
+Check:- PASS => RDBMS Version is 11.2.0.2 or higher as expected for fsdb
+
+
+Check:- PASS => InfiniBand is the Private Network for Oracle Clusterware Communication
+
+
+Check:- PASS => Database Home is properly linked with RDS library for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+
+Check:- PASS => Oracle RAC Communication is using RDS protocol on Infiniband Network for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+
+Check:- PASS => Free space in root(/) filesystem meets or exceeds recommendation.
+
+
+Check:- PASS => The database server boot device had "Maximum mount count" equal to "-1"
+
+
+Check:- PASS => System model number is correct
+
+
+Check:- PASS => Correct number of FailGroups per ASM DiskGroup are configured
+
+
+Check:- PASS => ASM Audit file destination file count <= 100,000
+
+
+Check:- PASS => RAID controller battery temperature is normal [Database Server]
+
+
+Check:- PASS => Management network is separate from data network
+
+
+Check:- PASS => Shell limit soft nofile for GI is configured according to recommendation in /etc/security/limits.conf
+
+
+Check:- PASS => Shell limit soft nproc for GI is configured according to recommendation
+
+
+Check:- PASS => Shell limit hard nofile for GI is configured according to recommendation
+
+
+Check:- PASS => Shell limit hard nproc for GI is configured according to recommendation in /etc/security/limits.conf
+
+
+Check:- PASS => Shell limit hard nproc for DB is configured according to recommendation
+
+
+Check:- PASS => Shell limit soft nofile for DB is configured according to recommendation
+
+
+Check:- PASS => Shell limit hard nofile for DB is configured according to recommendation
+
+
+Check:- PASS => Shell limit hard stack for DB is configured according to recommendation
+
+
+Check:- PASS => Shell limit soft nproc for DB is configured according to recommendation
+
+
+Check:- PASS => Shell limit hard stack for GI is configured according to recommendation
+
+
+Check:- PASS => NIC bonding mode is not set to Broadcast(3) for public network
+
+
+Check:- PASS => Open files limit (ulimit -n) for current user is set to recommended value >= 65536 or unlimited
+
+
+Check:- PASS => NIC bonding is configured for public network (VIP)
+
+
+Check:- PASS => ohasd Log Ownership is Correct (root root)
+
+
+Check:- PASS => $ORACLE_HOME/bin/oradism setuid bit is set for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+
+Check:- PASS => NIC bonding is configured for interconnect
+
+
+Check:- PASS => $ORACLE_HOME/bin/oradism ownership is root for /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+
+Check:- PASS => crsd/orarootagent_root Log Ownership is Correct (root root)
+
+
+Check:- PASS => SELinux is not being Enforced.
+
+
+Check:- PASS => Number of SCAN listeners is equal to the recommended number of 3.
+
+
+Check:- PASS => SYS.AUDSES$ sequence cache size >= 10,000 for ccbs
+
+
+Check:- PASS => SYS.AUDSES$ sequence cache size >= 10,000 for fsdb
+
+
+Check:- PASS => VKTM is running in real time scheduling class for ccbs
+
+
+Check:- PASS => VKTM is running in real time scheduling class for fsdb
+
+
+Check:- PASS => LMS is running in real time scheduling class for ccbs
+
+
+Check:- PASS => LMS is running in real time scheduling class for fsdb
+
+
+Check:- PASS => NIC bonding mode is not set to Broadcast(3) for cluster interconnect
+
+
+Check:- PASS => GC blocks lost is not occurring for ccbs
+
+
+Check:- PASS => GC blocks lost is not occurring for fsdb
+
+
+Check:- PASS => ORA_CRS_HOME environment variable is not set
+
+
+Check:- PASS => OSWatcher is running
+
+
+Check:- PASS => crsd Log Ownership is Correct (root root)
+
+
+Check:- PASS => All tablespaces are using Automatic segment storage management for ccbs
+
+
+Check:- PASS => All tablespaces are using Automatic segment storage management for fsdb
+
+
+Check:- PASS => SYS.IDGEN1$ sequence cache size >= 1,000 for ccbs
+
+
+Check:- PASS => SYS.IDGEN1$ sequence cache size >= 1,000 for fsdb
+
+
+Check:- PASS => Interconnect is configured on non-routable network addresses
+
+
+Check:- PASS => NTP is running with correct setting
+
+
+Check:- PASS => Remote listener is set to SCAN name for ccbs
+
+
+Check:- PASS => Remote listener is set to SCAN name for fsdb
+
+
+Check:- PASS => ohasd/orarootagent_root Log Ownership is Correct (root root)
+
+
+Check:- PASS => All data and temporary are autoextensible for fsdb
+
+
+Check:- PASS => All voting disks are online
+
+
+Check:- PASS => Local listener init parameter is set to local node VIP for ccbs
+
+
+Check:- PASS => Local listener init parameter is set to local node VIP for fsdb
+
+
+Check:- PASS => Hardware and firmware profile check is successful. [Database Server]
+
+
+Check:- PASS => Verify-topology executes without any errors or warning
+
+
+Check:- PASS => InfiniBand network error counters are zero
+
+
+Check:- PASS => Database server disk controllers use writeback cache
+
+
+Check:- PASS => Oracle ASM Communication is using RDS protocol on Infiniband Network
+
+
+Check:- PASS => Exadata software version supports Automatic Service Request functionality
+
+
+Check:- PASS => All database server logical volumes found had "Maximum mount count" equal to "-1"
+
+
+Check:- PASS => Disk cache policy is set to Disabled on database server
+
+
+Check:- PASS => Database parameter DB_LOST_WRITE_PROTECT is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => Database parameter _ENABLE_NUMA_SUPPORT is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => Database parameter _ENABLE_NUMA_SUPPORT is set to recommended value on fsdb1 instance
+
+
+Check:- PASS => Database parameter OS_AUTHENT_PREFIX is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => Database parameter OPEN_CURSORS is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => Database parameter OPEN_CURSORS is set to recommended value on fsdb1 instance
+
+
+Check:- PASS => Database parameter SQL92_SECURITY is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => Database parameter PARALLEL_EXECUTION_MESSAGE_SIZE is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => Database parameter PARALLEL_EXECUTION_MESSAGE_SIZE is set to recommended value on fsdb1 instance
+
+
+Check:- PASS => ASM parameter CLUSTER_INTERCONNECTS is set to the recommended value
+
+
+Check:- PASS => Database DB_CREATE_FILE_DEST and DB_RECOVERY_FILE_DEST are in different diskgroups for ccbs
+
+
+Check:- PASS => Database DB_CREATE_FILE_DEST and DB_RECOVERY_FILE_DEST are in different diskgroups for fsdb
+
+
+Check:- PASS => Database parameter db_recovery_file_dest_size is set to recommended value for ccbs
+
+
+Check:- PASS => Database parameter db_recovery_file_dest_size is set to recommended value for fsdb
+
+
+Check:- PASS => All InfiniBand network cables are connected
+
+
+Check:- PASS => All Ethernet network cables are connected
+
+
+Check:- PASS => Database parameter COMPATIBLE is set to recommended value for ccbs
+
+
+Check:- PASS => Database parameter COMPATIBLE is set to recommended value for fsdb
+
+
+Check:- PASS => Database parameters log_archive_dest_n with Location attribute are all set to recommended value for fsdb
+
+
+Check:- PASS => ASM griddisk,diskgroup and Failure group mapping is as recommended
+
+
+Check:- PASS => Address Resolution Protocol (ARP) is configured properly on database server.
+
+
+Check:- PASS => RAID controller battery condition is good [Database Server]
+
+
+Check:- PASS => Clusterware is running
+
+
+Check:- PASS => subnet manager is running on an InfiniBand switch
+
+
+Check:- PASS => All bigfile tablespaces have non-default maxbytes values set for fsdb
+
+
+Check:- PASS => Database parameter UNDO_RETENTION on PRIMARY is not null on ccbs1 instance
+
+
+Check:- PASS => Database parameter UNDO_RETENTION on PRIMARY is not null on fsdb1 instance
+
+
+Check:- PASS => SCN Headroom is good BUT see IMPORTANT Details about SCN Headroom /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+
+Check:- PASS => DNS Server ping time is in acceptable range
+
+
+Check:- PASS => RECYCLEBIN on PRIMARY is set to the recommended value on ccbs1 instance
+
+
+Check:- PASS => RECYCLEBIN on PRIMARY is set to the recommended value on fsdb1 instance
+
+
+Check:- PASS => System is not exposed to Exadata Critical Issue DB11 /u01/app/oracle/product/11.2.0.2/dbhome_1
+
+
+Check:- PASS => No reported block corruptions in V$DATABASE_BLOCK_CORRUPTIONS for ccbs
+
+
+Check:- PASS => No reported block corruptions in V$DATABASE_BLOCK_CORRUPTIONS for fsdb
+
+
+Check:- PASS => Shared Servers are not in use on ccbs1 instance
+
+
+Check:- PASS => Database Server Virtual Drive Configuration meets recommendation
+
+
+Check:- PASS => Database Server Physical Drive Configuration meets recommendation
+
+
+Check:- PASS => Database Server Disk Controller Configuration meets recommendation
+
+
+Check:- PASS => Instance is using Automatic Undo Management on ccbs1 instance
+
+
+Check:- PASS => Instance is using Automatic Undo Management on fsdb1 instance
+
+
+Check:- PASS => Database Archivelog Mode is set to ARCHIVELOG for ccbs
+
+
+Check:- PASS => Default temporary tablespace is set for ccbs
+
+
+Check:- PASS => Default temporary tablespace is set for fsdb
+
+
+Check:- PASS => All tablespaces are using Automatic segment storage management for ccbs
+
+
+Check:- PASS => All tablespaces are using Automatic segment storage management for fsdb
+
+
+Check:- PASS => All tablespaces are locally managed tablespace for ccbs
+
+
+Check:- PASS => All tablespaces are locally managed tablespace for fsdb
+
+
+Check:- PASS => Database parameter LOG_BUFFER is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => There are no ASM external redundancy diskgroups.
+
+
+Check:- PASS => There are no ASM unprotected templates.
+
+
+Check:- PASS => The service exachkcfg is not configured to autostart
+
+
+Check:- PASS => No disks found which are not part of any disk group
+
+
+Check:- PASS => The InfiniBand subnet manager is not running on database server
+
+
+Check:- PASS => Database parameter PROCESSES is set to recommended value on ccbs1 instance
+
+
+Check:- PASS => The data files are all recoverable for fsdb
+
+
+Check:- PASS => There was no ASM corruption found.
+
+=============================================================
+                    Storage server checks                    
+=============================================================
+
+Check:- PASS => No Storage Server Memory (ECC) Errors found.
+
+
+Check:- PASS => RAID controller version matches on all storage servers
+
+
+Check:- PASS => No celldisks have status of predictive failure
+
+
+Check:- PASS => All storage server disk controllers use writeback cache
+
+
+Check:- PASS => All storage servers meet or exceed root(/) filesystem free space recommendation
+
+
+Check:- PASS => All Exadata storage server meet system model number requirement
+
+
+Check:- PASS => RAID controller battery temperature is normal [Storage Server]
+
+
+Check:- PASS => OSWatcher is running on all storage servers
+
+
+Check:- PASS => Hardware and firmware profile check is successful on all storage servers.
+
+
+Check:- PASS => Software profile check is successful on all storage servers.
+
+
+Check:- PASS => Ambient temperature is within the recommended range
+
+
+Check:- PASS => Management network is separate from data network on all storage servers
+
+
+Check:- PASS => Disk cache policy is set to Disabled on all storage server
+
+
+Check:- PASS => All Ethernet network cables are connected on all Storage Servers
+
+
+Check:- PASS => All InfiniBand network cables are connected on all Storage Servers
+
+
+Check:- PASS => No Storage Server conventional or flash disks have a performance problem
+
+
+Check:- PASS => imageinfo version matches on all storage servers
+
+
+Check:- PASS => The service exachkcfg is configured to autostart
+
+
+Check:- PASS => RAID controller battery condition is good on all storage servers
+
+
+Check:- PASS => Peripheral component interconnect (PCI) bridge is configured for generation II on all storage servers
+
+
+Check:- PASS => Storage Server Flash Memory is configured as Exadata Smart Flash Cache
+
+
+Check:- PASS => Smart flash log is created on all storage server
+
+
+Check:- PASS => DNS Server ping time is in acceptable range on all storage servers
+
+
+Check:- PASS => The celldisk configuration on disk drives matches Oracle best practices
+
+
+Check:- PASS => The griddisk ASM status matches specification
+
+
+Check:- PASS => The griddisk count matches across all storage servers where a given prefix name exists
+
+
+Check:- PASS => The celldisk configuration on flash memory devices matches Oracle best practices
+
+
+Check:- PASS => Electronic Storage Module (ESM) Lifetime is within specification for all flash cards on all storage servers
+
+
+Check:- PASS => Exadata software version is compatible with Oracle RDBMS software version
+
+
+Check:- PASS => System is not exposed to Exadata Critical Issue EX9
+
+
+Check:- PASS => Release tracking bug matches on all storage servers
+
+
+Check:- PASS => The InfiniBand subnet manager is not running on storage server
+
+=============================================================
+                    Infiniband switch checks                 
+=============================================================
+
+Check:- PASS => HOSTNAME is set in /etc/sysconfig/network on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => HOSTNAME is set in /etc/sysconfig/network on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => NTP configuration has been changed from default on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => NTP configuration has been changed from default on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => sminfo_polling_timeout is set to recommended value of 1000 on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => sminfo_polling_timeout is set to recommended value of 1000 on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => routing_engine is set to recommended value of ftree on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => routing_engine is set to recommended value of ftree on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => log_flags is set to recommended value of 0x03 on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => log_flags is set to recommended value of 0x03 on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => controlled_handover is set to recommended value of TRUE on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => controlled_handover is set to recommended value of TRUE on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => polling_retry_number is set to recommended value of 5 on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => polling_retry_number is set to recommended value of 5 on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => Infiniband switch software version meets the recommendation on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => Infiniband switch software version meets the recommendation on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => Hostname is set in /etc/hosts on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => Hostname is set in /etc/hosts on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => DNS Server ping time is in acceptable range on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => DNS Server ping time is in acceptable range on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => Infiniband switch firmware version is compatible with Exadata software version on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => Infiniband switch firmware version is compatible with Exadata software version on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => sm_priority is set to recommended value on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => sm_priority is set to recommended value on infiniband switch dm01sw-ib2
+
+
+Check:- PASS => Subnet manager daemon is running on infiniband switch dm01sw-ib3
+
+
+Check:- PASS => Subnet manager daemon is running on infiniband switch dm01sw-ib2
+
+Log file is at /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/exachk.log

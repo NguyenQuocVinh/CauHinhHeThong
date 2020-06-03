@@ -1,0 +1,12 @@
+TO REVIEW COLLECTED DATA FOR FSDB FOR LOCALLY MANAGED TABLESPACES 
+
+
+
+
+SYSTEM                         LOCAL                                            
+SYSAUX                         LOCAL                                            
+UNDOTBS1                       LOCAL                                            
+TEMP                           LOCAL                                            
+USERS                          LOCAL                                            
+UNDOTBS2                       LOCAL                                            
+DBFSTS                         LOCAL                                            

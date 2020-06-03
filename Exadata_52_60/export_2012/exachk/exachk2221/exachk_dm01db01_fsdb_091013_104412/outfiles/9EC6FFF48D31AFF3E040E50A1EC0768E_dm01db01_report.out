@@ -1,0 +1,18 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - CRSD/ORAROOTAGENT_ROOT LOG FILE OWNERSHIP 
+
+
+
+total 103788
+-rw-r--r-- 1 root root 10565637 Sep 10 09:11 orarootagent_root.l01
+-rw-r--r-- 1 root root 10566871 Sep  8 18:37 orarootagent_root.l02
+-rw-r--r-- 1 root root 10502971 Sep  7 04:03 orarootagent_root.l03
+-rw-r--r-- 1 root root 10565500 Sep  5 13:41 orarootagent_root.l04
+-rw-r--r-- 1 root root 10566824 Sep  3 23:09 orarootagent_root.l05
+-rw-r--r-- 1 root root 10567754 Sep  2 08:36 orarootagent_root.l06
+-rw-r--r-- 1 root root 10565538 Aug 31 18:02 orarootagent_root.l07
+-rw-r--r-- 1 root root 10567825 Aug 30 03:28 orarootagent_root.l08
+-rw-r--r-- 1 root root 10566289 Aug 28 12:53 orarootagent_root.l09
+-rw-r--r-- 1 root root 10565235 Aug 26 22:18 orarootagent_root.l10
+-rw-r--r-- 1 root root   477040 Sep 10 10:56 orarootagent_root.log
+-rw-r--r-- 1 root root       54 Sep  6 19:34 orarootagent_rootOUT.log
+-rw-r--r-- 1 root root        6 Sep  6 19:45 orarootagent_root.pid

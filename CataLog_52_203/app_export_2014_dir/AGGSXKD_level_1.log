@@ -1,0 +1,50 @@
+
+Recovery Manager: Release 11.2.0.4.0 - Production on Mon Nov 23 16:29:45 2015
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+PL/SQL package SYS.DBMS_BACKUP_RESTORE version 11.02.00.02 in TARGET database is not current
+PL/SQL package SYS.DBMS_RCVMAN version 11.02.00.02 in TARGET database is not current
+connected to target database: AGGSXKD (DBID=711423947)
+connected to recovery catalog database
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 2;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> run
+20> {
+21> 	backup as compressed backupset copies 2 incremental level 1 format '+DATA/rman/AGGSXKD/level1_%D_%T_%U','/mnt/nfs203/AGGSXKD/level1_%D_%T_%U' tag level_1 database plus archivelog delete input;
+22> 	backup copies 2 current controlfile  format '+DATA/rman/AGGSXKD/control_%D_%T_%U','/mnt/nfs203/AGGSXKD/control_%D_%T_%U' tag bk_control_lv1 keep until time 'sysdate+32';
+23> }
+24> 
+
+Starting backup at 23-11-2015 16:29:47
+current log archived
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=1177 instance=AGGSXKD1 device type=DISK
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of backup plus archivelog command at 11/23/2015 16:30:00
+RMAN-06059: expected archived log not found, loss of archived log compromises recoverability
+ORA-19625: error identifying file /u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/arch2_327_893856843.dbf
+ORA-27037: unable to obtain file status
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 3
+
+Recovery Manager complete.

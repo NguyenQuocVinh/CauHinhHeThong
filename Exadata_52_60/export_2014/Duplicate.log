@@ -1,0 +1,1824 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Fri Sep 26 13:24:01 2014
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> connect auxiliary *
+2> run {
+3> allocate channel primar1 type disk;
+4> allocate auxiliary channel standb1 type disk;
+5> duplicate target database for standby from active database 
+6> spfile
+7>   parameter_value_convert 'ccbs','stbyccbs'
+8>   set db_unique_name='stbyccbs'
+9>   set db_file_name_convert= '+DATA/ccbs/datafile/', '/u02/app/oradata/stbyccbs/', '+DATA/ccbs/tempfile/', '/u02/app/oradata/stbyccbs/'
+10>   set log_file_name_convert='+DATA/ccbs/onlinelog/','/u02/app/oradata/stbyccbs/'
+11>   SET cluster_database='false'
+12>   reset REMOTE_LISTENER
+13>   reset local_listener
+14>   set control_files='/u02/app/oradata/stbyccbs/control1.ctl'
+15>   set log_archive_max_processes='5'
+16>   set fal_server='ccbs'
+17>   set standby_file_management='AUTO';
+18> }
+19> 
+connected to auxiliary database: CCBS (not mounted)
+
+using target database control file instead of recovery catalog
+allocated channel: primar1
+channel primar1: SID=274 instance=ccbs1 device type=DISK
+
+allocated channel: standb1
+channel standb1: SID=538 device type=DISK
+
+Starting Duplicate Db at 26/09/2014 13:24:05
+
+contents of Memory Script:
+{
+   backup as copy reuse
+   targetfile  '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/orapwccbs1' auxiliary format 
+ '/u01/app/oracle/product/11.2.0.4/dbhome_1/dbs/orapwstbyccbs'   targetfile 
+ '+DATA/ccbs/spfileccbs.ora' auxiliary format 
+ '/u01/app/oracle/product/11.2.0.4/dbhome_1/dbs/spfilestbyccbs.ora'   ;
+   sql clone "alter system set spfile= ''/u01/app/oracle/product/11.2.0.4/dbhome_1/dbs/spfilestbyccbs.ora''";
+}
+executing Memory Script
+
+Starting backup at 26/09/2014 13:24:05
+Finished backup at 26/09/2014 13:24:08
+
+sql statement: alter system set spfile= ''/u01/app/oracle/product/11.2.0.4/dbhome_1/dbs/spfilestbyccbs.ora''
+
+contents of Memory Script:
+{
+   sql clone "alter system set  audit_file_dest = 
+ ''/u01/app/oracle/admin/stbyccbs/adump'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  log_archive_dest_2 = 
+ ''service=stbystbyccbs async valid_for=(online_logfile,primary_role) db_unique_name=stbyccbs'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  db_unique_name = 
+ ''stbyccbs'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  db_file_name_convert = 
+ ''+DATA/ccbs/datafile/'', ''/u02/app/oradata/stbyccbs/'', ''+DATA/ccbs/tempfile/'', ''/u02/app/oradata/stbyccbs/'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  log_file_name_convert = 
+ ''+DATA/ccbs/onlinelog/'', ''/u02/app/oradata/stbyccbs/'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  cluster_database = 
+ false comment=
+ '''' scope=spfile";
+   sql clone "alter system reset  REMOTE_LISTENER scope=spfile";
+   sql clone "alter system set  control_files = 
+ ''/u02/app/oradata/stbyccbs/control1.ctl'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  log_archive_max_processes = 
+ 5 comment=
+ '''' scope=spfile";
+   sql clone "alter system set  fal_server = 
+ ''ccbs'' comment=
+ '''' scope=spfile";
+   sql clone "alter system set  standby_file_management = 
+ ''AUTO'' comment=
+ '''' scope=spfile";
+   shutdown clone immediate;
+   startup clone nomount;
+}
+executing Memory Script
+
+sql statement: alter system set  audit_file_dest =  ''/u01/app/oracle/admin/stbyccbs/adump'' comment= '''' scope=spfile
+
+sql statement: alter system set  log_archive_dest_2 =  ''service=stbystbyccbs async valid_for=(online_logfile,primary_role) db_unique_name=stbyccbs'' comment= '''' scope=spfile
+
+sql statement: alter system set  db_unique_name =  ''stbyccbs'' comment= '''' scope=spfile
+
+sql statement: alter system set  db_file_name_convert =  ''+DATA/ccbs/datafile/'', ''/u02/app/oradata/stbyccbs/'', ''+DATA/ccbs/tempfile/'', ''/u02/app/oradata/stbyccbs/'' comment= '''' scope=spfile
+
+sql statement: alter system set  log_file_name_convert =  ''+DATA/ccbs/onlinelog/'', ''/u02/app/oradata/stbyccbs/'' comment= '''' scope=spfile
+
+sql statement: alter system set  cluster_database =  false comment= '''' scope=spfile
+
+sql statement: alter system reset  REMOTE_LISTENER scope=spfile
+
+sql statement: alter system set  control_files =  ''/u02/app/oradata/stbyccbs/control1.ctl'' comment= '''' scope=spfile
+
+sql statement: alter system set  log_archive_max_processes =  5 comment= '''' scope=spfile
+
+sql statement: alter system set  fal_server =  ''ccbs'' comment= '''' scope=spfile
+
+sql statement: alter system set  standby_file_management =  ''AUTO'' comment= '''' scope=spfile
+
+Oracle instance shut down
+
+connected to auxiliary database (not started)
+Oracle instance started
+
+Total System Global Area   53447405568 bytes
+
+Fixed Size                     2265864 bytes
+Variable Size               6710889720 bytes
+Database Buffers           46573551616 bytes
+Redo Buffers                 160698368 bytes
+allocated channel: standb1
+channel standb1: SID=1042 device type=DISK
+
+contents of Memory Script:
+{
+   backup as copy current controlfile for standby auxiliary format  '/u02/app/oradata/stbyccbs/control1.ctl';
+}
+executing Memory Script
+
+Starting backup at 26/09/2014 13:24:22
+channel primar1: starting datafile copy
+copying standby control file
+output file name=+RECO/rman/snapcf_ccbs.f tag=TAG20140926T132422 RECID=13 STAMP=859296266
+channel primar1: datafile copy complete, elapsed time: 00:00:25
+Finished backup at 26/09/2014 13:24:47
+
+contents of Memory Script:
+{
+   sql clone 'alter database mount standby database';
+}
+executing Memory Script
+
+sql statement: alter database mount standby database
+
+contents of Memory Script:
+{
+   set newname for tempfile  1 to 
+ "/u02/app/oradata/stbyccbs/temp.508.849368845";
+   set newname for tempfile  2 to 
+ "/u02/app/oradata/stbyccbs/temp.510.849368863";
+   set newname for tempfile  3 to 
+ "/u02/app/oradata/stbyccbs/temp.378.780861295";
+   set newname for tempfile  4 to 
+ "/u02/app/oradata/stbyccbs/temp.379.780861311";
+   set newname for tempfile  5 to 
+ "/u02/app/oradata/stbyccbs/temp.380.780861323";
+   set newname for tempfile  6 to 
+ "/u02/app/oradata/stbyccbs/temp.381.780861335";
+   set newname for tempfile  7 to 
+ "/u02/app/oradata/stbyccbs/temp.382.780861343";
+   set newname for tempfile  8 to 
+ "/u02/app/oradata/stbyccbs/temp.383.780861351";
+   set newname for tempfile  9 to 
+ "/u02/app/oradata/stbyccbs/temp.384.780861361";
+   set newname for tempfile  10 to 
+ "/u02/app/oradata/stbyccbs/temp.385.780861371";
+   set newname for tempfile  11 to 
+ "/u02/app/oradata/stbyccbs/temp.641.849368865";
+   switch clone tempfile all;
+   set newname for datafile  1 to 
+ "/u02/app/oradata/stbyccbs/system.271.772710825";
+   set newname for datafile  2 to 
+ "/u02/app/oradata/stbyccbs/sysaux.258.772710837";
+   set newname for datafile  5 to 
+ "/u02/app/oradata/stbyccbs/users.269.772710879";
+   set newname for datafile  6 to 
+ "/u02/app/oradata/stbyccbs/indx.285.774530247";
+   set newname for datafile  7 to 
+ "/u02/app/oradata/stbyccbs/users.282.774527471";
+   set newname for datafile  8 to 
+ "/u02/app/oradata/stbyccbs/users.283.774527719";
+   set newname for datafile  9 to 
+ "/u02/app/oradata/stbyccbs/indx.286.774530435";
+   set newname for datafile  10 to 
+ "/u02/app/oradata/stbyccbs/indx.287.774530539";
+   set newname for datafile  11 to 
+ "/u02/app/oradata/stbyccbs/tbs_others.288.774531157";
+   set newname for datafile  12 to 
+ "/u02/app/oradata/stbyccbs/tbs_others.289.774531237";
+   set newname for datafile  13 to 
+ "/u02/app/oradata/stbyccbs/indx.290.774541697";
+   set newname for datafile  14 to 
+ "/u02/app/oradata/stbyccbs/indx.291.774541763";
+   set newname for datafile  15 to 
+ "/u02/app/oradata/stbyccbs/indx.292.774541795";
+   set newname for datafile  16 to 
+ "/u02/app/oradata/stbyccbs/indx.293.774541877";
+   set newname for datafile  17 to 
+ "/u02/app/oradata/stbyccbs/indx.294.774541943";
+   set newname for datafile  18 to 
+ "/u02/app/oradata/stbyccbs/indx.295.774541965";
+   set newname for datafile  19 to 
+ "/u02/app/oradata/stbyccbs/indx.296.774541987";
+   set newname for datafile  20 to 
+ "/u02/app/oradata/stbyccbs/users.297.774542019";
+   set newname for datafile  21 to 
+ "/u02/app/oradata/stbyccbs/users.298.774543045";
+   set newname for datafile  22 to 
+ "/u02/app/oradata/stbyccbs/users.299.774543191";
+   set newname for datafile  23 to 
+ "/u02/app/oradata/stbyccbs/users.300.774543249";
+   set newname for datafile  24 to 
+ "/u02/app/oradata/stbyccbs/users.301.774543271";
+   set newname for datafile  25 to 
+ "/u02/app/oradata/stbyccbs/users.302.774543327";
+   set newname for datafile  26 to 
+ "/u02/app/oradata/stbyccbs/users.303.774543375";
+   set newname for datafile  27 to 
+ "/u02/app/oradata/stbyccbs/users.304.774543419";
+   set newname for datafile  28 to 
+ "/u02/app/oradata/stbyccbs/users.305.774543443";
+   set newname for datafile  29 to 
+ "/u02/app/oradata/stbyccbs/users.306.774543465";
+   set newname for datafile  30 to 
+ "/u02/app/oradata/stbyccbs/users.307.774543485";
+   set newname for datafile  31 to 
+ "/u02/app/oradata/stbyccbs/users.308.774543671";
+   set newname for datafile  32 to 
+ "/u02/app/oradata/stbyccbs/users.309.774543697";
+   set newname for datafile  33 to 
+ "/u02/app/oradata/stbyccbs/users.310.775873623";
+   set newname for datafile  34 to 
+ "/u02/app/oradata/stbyccbs/users.311.775873655";
+   set newname for datafile  35 to 
+ "/u02/app/oradata/stbyccbs/users.312.775873715";
+   set newname for datafile  36 to 
+ "/u02/app/oradata/stbyccbs/users.313.775873743";
+   set newname for datafile  37 to 
+ "/u02/app/oradata/stbyccbs/users.314.775996677";
+   set newname for datafile  38 to 
+ "/u02/app/oradata/stbyccbs/users.315.775996699";
+   set newname for datafile  39 to 
+ "/u02/app/oradata/stbyccbs/users.316.775996723";
+   set newname for datafile  40 to 
+ "/u02/app/oradata/stbyccbs/users.317.775996743";
+   set newname for datafile  41 to 
+ "/u02/app/oradata/stbyccbs/users.318.775997657";
+   set newname for datafile  42 to 
+ "/u02/app/oradata/stbyccbs/users.319.775997681";
+   set newname for datafile  43 to 
+ "/u02/app/oradata/stbyccbs/users.320.775997701";
+   set newname for datafile  44 to 
+ "/u02/app/oradata/stbyccbs/users.321.775997721";
+   set newname for datafile  45 to 
+ "/u02/app/oradata/stbyccbs/users.322.775997741";
+   set newname for datafile  46 to 
+ "/u02/app/oradata/stbyccbs/users.323.775997787";
+   set newname for datafile  47 to 
+ "/u02/app/oradata/stbyccbs/users.324.775997821";
+   set newname for datafile  48 to 
+ "/u02/app/oradata/stbyccbs/users.325.775997857";
+   set newname for datafile  49 to 
+ "/u02/app/oradata/stbyccbs/users.326.775997875";
+   set newname for datafile  50 to 
+ "/u02/app/oradata/stbyccbs/users.327.775997915";
+   set newname for datafile  51 to 
+ "/u02/app/oradata/stbyccbs/users.328.775997951";
+   set newname for datafile  52 to 
+ "/u02/app/oradata/stbyccbs/users.329.775998289";
+   set newname for datafile  53 to 
+ "/u02/app/oradata/stbyccbs/users.330.775998311";
+   set newname for datafile  54 to 
+ "/u02/app/oradata/stbyccbs/users.331.775998423";
+   set newname for datafile  55 to 
+ "/u02/app/oradata/stbyccbs/users.332.776000393";
+   set newname for datafile  56 to 
+ "/u02/app/oradata/stbyccbs/users.333.776000415";
+   set newname for datafile  57 to 
+ "/u02/app/oradata/stbyccbs/users.334.776000867";
+   set newname for datafile  58 to 
+ "/u02/app/oradata/stbyccbs/users.335.776001375";
+   set newname for datafile  59 to 
+ "/u02/app/oradata/stbyccbs/tbs_others.336.776001499";
+   set newname for datafile  60 to 
+ "/u02/app/oradata/stbyccbs/tbs_others.337.776001527";
+   set newname for datafile  61 to 
+ "/u02/app/oradata/stbyccbs/gg_data.338.779148549";
+   set newname for datafile  62 to 
+ "/u02/app/oradata/stbyccbs/users.339.780491723";
+   set newname for datafile  63 to 
+ "/u02/app/oradata/stbyccbs/users.340.780491785";
+   set newname for datafile  64 to 
+ "/u02/app/oradata/stbyccbs/users.341.780492153";
+   set newname for datafile  65 to 
+ "/u02/app/oradata/stbyccbs/users.342.780492259";
+   set newname for datafile  66 to 
+ "/u02/app/oradata/stbyccbs/users.343.780492321";
+   set newname for datafile  67 to 
+ "/u02/app/oradata/stbyccbs/users.344.780492429";
+   set newname for datafile  68 to 
+ "/u02/app/oradata/stbyccbs/users.345.780493063";
+   set newname for datafile  69 to 
+ "/u02/app/oradata/stbyccbs/users.346.780493683";
+   set newname for datafile  70 to 
+ "/u02/app/oradata/stbyccbs/users.347.780493719";
+   set newname for datafile  71 to 
+ "/u02/app/oradata/stbyccbs/users.348.780493937";
+   set newname for datafile  72 to 
+ "/u02/app/oradata/stbyccbs/indx.349.780852847";
+   set newname for datafile  73 to 
+ "/u02/app/oradata/stbyccbs/indx.350.780852893";
+   set newname for datafile  74 to 
+ "/u02/app/oradata/stbyccbs/indx.351.780853091";
+   set newname for datafile  75 to 
+ "/u02/app/oradata/stbyccbs/indx.352.780853165";
+   set newname for datafile  76 to 
+ "/u02/app/oradata/stbyccbs/indx.353.780853327";
+   set newname for datafile  77 to 
+ "/u02/app/oradata/stbyccbs/indx.354.780853419";
+   set newname for datafile  78 to 
+ "/u02/app/oradata/stbyccbs/users.355.780853553";
+   set newname for datafile  79 to 
+ "/u02/app/oradata/stbyccbs/users.356.780853583";
+   set newname for datafile  80 to 
+ "/u02/app/oradata/stbyccbs/users.357.780853601";
+   set newname for datafile  81 to 
+ "/u02/app/oradata/stbyccbs/users.358.780853623";
+   set newname for datafile  82 to 
+ "/u02/app/oradata/stbyccbs/users.359.780853645";
+   set newname for datafile  83 to 
+ "/u02/app/oradata/stbyccbs/users.360.780853693";
+   set newname for datafile  84 to 
+ "/u02/app/oradata/stbyccbs/users.361.780853717";
+   set newname for datafile  85 to 
+ "/u02/app/oradata/stbyccbs/users.362.780853743";
+   set newname for datafile  86 to 
+ "/u02/app/oradata/stbyccbs/users.363.780853829";
+   set newname for datafile  87 to 
+ "/u02/app/oradata/stbyccbs/users.364.780853901";
+   set newname for datafile  88 to 
+ "/u02/app/oradata/stbyccbs/users.365.780853919";
+   set newname for datafile  89 to 
+ "/u02/app/oradata/stbyccbs/users.366.780853939";
+   set newname for datafile  90 to 
+ "/u02/app/oradata/stbyccbs/users.367.780853961";
+   set newname for datafile  91 to 
+ "/u02/app/oradata/stbyccbs/users.368.780853979";
+   set newname for datafile  92 to 
+ "/u02/app/oradata/stbyccbs/users.369.780853997";
+   set newname for datafile  93 to 
+ "/u02/app/oradata/stbyccbs/users.370.780854023";
+   set newname for datafile  94 to 
+ "/u02/app/oradata/stbyccbs/users.371.780854093";
+   set newname for datafile  95 to 
+ "/u02/app/oradata/stbyccbs/users.372.780854143";
+   set newname for datafile  96 to 
+ "/u02/app/oradata/stbyccbs/users.373.780854307";
+   set newname for datafile  97 to 
+ "/u02/app/oradata/stbyccbs/users.374.780854327";
+   set newname for datafile  98 to 
+ "/u02/app/oradata/stbyccbs/users.375.780854347";
+   set newname for datafile  99 to 
+ "/u02/app/oradata/stbyccbs/users.376.780854365";
+   set newname for datafile  100 to 
+ "/u02/app/oradata/stbyccbs/users.377.780854429";
+   set newname for datafile  101 to 
+ "/u02/app/oradata/stbyccbs/tbs_others.267.792772437";
+   set newname for datafile  102 to 
+ "/u02/app/oradata/stbyccbs/indx.284.819597493";
+   set newname for datafile  103 to 
+ "/u02/app/oradata/stbyccbs/indx.386.819597557";
+   set newname for datafile  104 to 
+ "/u02/app/oradata/stbyccbs/indx.387.819597647";
+   set newname for datafile  105 to 
+ "/u02/app/oradata/stbyccbs/sysaux.388.822699379";
+   set newname for datafile  106 to 
+ "/u02/app/oradata/stbyccbs/sysaux.389.822699397";
+   set newname for datafile  107 to 
+ "/u02/app/oradata/stbyccbs/sysaux.390.822699669";
+   set newname for datafile  108 to 
+ "/u02/app/oradata/stbyccbs/sysaux.391.822699673";
+   set newname for datafile  109 to 
+ "/u02/app/oradata/stbyccbs/indx.402.843228399";
+   set newname for datafile  110 to 
+ "/u02/app/oradata/stbyccbs/indx.403.843228457";
+   set newname for datafile  111 to 
+ "/u02/app/oradata/stbyccbs/indx.404.843228463";
+   set newname for datafile  112 to 
+ "/u02/app/oradata/stbyccbs/indx.405.843228469";
+   set newname for datafile  113 to 
+ "/u02/app/oradata/stbyccbs/indx.406.843228475";
+   set newname for datafile  114 to 
+ "/u02/app/oradata/stbyccbs/indx.407.843228483";
+   set newname for datafile  115 to 
+ "/u02/app/oradata/stbyccbs/indx.408.843228491";
+   set newname for datafile  116 to 
+ "/u02/app/oradata/stbyccbs/indx.409.843228497";
+   set newname for datafile  117 to 
+ "/u02/app/oradata/stbyccbs/indx.410.843228505";
+   set newname for datafile  118 to 
+ "/u02/app/oradata/stbyccbs/indx.411.843228541";
+   set newname for datafile  119 to 
+ "/u02/app/oradata/stbyccbs/indx.412.843228547";
+   set newname for datafile  120 to 
+ "/u02/app/oradata/stbyccbs/indx.413.843228553";
+   set newname for datafile  121 to 
+ "/u02/app/oradata/stbyccbs/indx.414.843228559";
+   set newname for datafile  122 to 
+ "/u02/app/oradata/stbyccbs/indx.415.843228705";
+   set newname for datafile  123 to 
+ "/u02/app/oradata/stbyccbs/indx.416.843228721";
+   set newname for datafile  124 to 
+ "/u02/app/oradata/stbyccbs/indx.417.843228737";
+   set newname for datafile  125 to 
+ "/u02/app/oradata/stbyccbs/indx.418.843228751";
+   set newname for datafile  126 to 
+ "/u02/app/oradata/stbyccbs/indx.419.843228767";
+   set newname for datafile  127 to 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.455.857385555";
+   set newname for datafile  128 to 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.425.857385591";
+   set newname for datafile  129 to 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.468.857385623";
+   set newname for datafile  130 to 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.426.857385663";
+   set newname for datafile  131 to 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.423.857385961";
+   set newname for datafile  132 to 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.538.857385993";
+   set newname for datafile  133 to 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.516.857386025";
+   set newname for datafile  134 to 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.485.857386063";
+   set newname for datafile  135 to 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.633.857386105";
+   backup as copy reuse
+   datafile  1 auxiliary format 
+ "/u02/app/oradata/stbyccbs/system.271.772710825"   datafile 
+ 2 auxiliary format 
+ "/u02/app/oradata/stbyccbs/sysaux.258.772710837"   datafile 
+ 5 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.269.772710879"   datafile 
+ 6 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.285.774530247"   datafile 
+ 7 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.282.774527471"   datafile 
+ 8 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.283.774527719"   datafile 
+ 9 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.286.774530435"   datafile 
+ 10 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.287.774530539"   datafile 
+ 11 auxiliary format 
+ "/u02/app/oradata/stbyccbs/tbs_others.288.774531157"   datafile 
+ 12 auxiliary format 
+ "/u02/app/oradata/stbyccbs/tbs_others.289.774531237"   datafile 
+ 13 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.290.774541697"   datafile 
+ 14 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.291.774541763"   datafile 
+ 15 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.292.774541795"   datafile 
+ 16 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.293.774541877"   datafile 
+ 17 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.294.774541943"   datafile 
+ 18 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.295.774541965"   datafile 
+ 19 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.296.774541987"   datafile 
+ 20 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.297.774542019"   datafile 
+ 21 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.298.774543045"   datafile 
+ 22 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.299.774543191"   datafile 
+ 23 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.300.774543249"   datafile 
+ 24 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.301.774543271"   datafile 
+ 25 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.302.774543327"   datafile 
+ 26 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.303.774543375"   datafile 
+ 27 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.304.774543419"   datafile 
+ 28 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.305.774543443"   datafile 
+ 29 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.306.774543465"   datafile 
+ 30 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.307.774543485"   datafile 
+ 31 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.308.774543671"   datafile 
+ 32 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.309.774543697"   datafile 
+ 33 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.310.775873623"   datafile 
+ 34 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.311.775873655"   datafile 
+ 35 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.312.775873715"   datafile 
+ 36 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.313.775873743"   datafile 
+ 37 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.314.775996677"   datafile 
+ 38 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.315.775996699"   datafile 
+ 39 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.316.775996723"   datafile 
+ 40 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.317.775996743"   datafile 
+ 41 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.318.775997657"   datafile 
+ 42 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.319.775997681"   datafile 
+ 43 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.320.775997701"   datafile 
+ 44 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.321.775997721"   datafile 
+ 45 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.322.775997741"   datafile 
+ 46 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.323.775997787"   datafile 
+ 47 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.324.775997821"   datafile 
+ 48 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.325.775997857"   datafile 
+ 49 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.326.775997875"   datafile 
+ 50 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.327.775997915"   datafile 
+ 51 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.328.775997951"   datafile 
+ 52 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.329.775998289"   datafile 
+ 53 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.330.775998311"   datafile 
+ 54 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.331.775998423"   datafile 
+ 55 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.332.776000393"   datafile 
+ 56 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.333.776000415"   datafile 
+ 57 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.334.776000867"   datafile 
+ 58 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.335.776001375"   datafile 
+ 59 auxiliary format 
+ "/u02/app/oradata/stbyccbs/tbs_others.336.776001499"   datafile 
+ 60 auxiliary format 
+ "/u02/app/oradata/stbyccbs/tbs_others.337.776001527"   datafile 
+ 61 auxiliary format 
+ "/u02/app/oradata/stbyccbs/gg_data.338.779148549"   datafile 
+ 62 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.339.780491723"   datafile 
+ 63 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.340.780491785"   datafile 
+ 64 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.341.780492153"   datafile 
+ 65 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.342.780492259"   datafile 
+ 66 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.343.780492321"   datafile 
+ 67 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.344.780492429"   datafile 
+ 68 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.345.780493063"   datafile 
+ 69 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.346.780493683"   datafile 
+ 70 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.347.780493719"   datafile 
+ 71 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.348.780493937"   datafile 
+ 72 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.349.780852847"   datafile 
+ 73 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.350.780852893"   datafile 
+ 74 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.351.780853091"   datafile 
+ 75 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.352.780853165"   datafile 
+ 76 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.353.780853327"   datafile 
+ 77 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.354.780853419"   datafile 
+ 78 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.355.780853553"   datafile 
+ 79 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.356.780853583"   datafile 
+ 80 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.357.780853601"   datafile 
+ 81 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.358.780853623"   datafile 
+ 82 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.359.780853645"   datafile 
+ 83 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.360.780853693"   datafile 
+ 84 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.361.780853717"   datafile 
+ 85 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.362.780853743"   datafile 
+ 86 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.363.780853829"   datafile 
+ 87 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.364.780853901"   datafile 
+ 88 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.365.780853919"   datafile 
+ 89 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.366.780853939"   datafile 
+ 90 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.367.780853961"   datafile 
+ 91 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.368.780853979"   datafile 
+ 92 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.369.780853997"   datafile 
+ 93 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.370.780854023"   datafile 
+ 94 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.371.780854093"   datafile 
+ 95 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.372.780854143"   datafile 
+ 96 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.373.780854307"   datafile 
+ 97 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.374.780854327"   datafile 
+ 98 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.375.780854347"   datafile 
+ 99 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.376.780854365"   datafile 
+ 100 auxiliary format 
+ "/u02/app/oradata/stbyccbs/users.377.780854429"   datafile 
+ 101 auxiliary format 
+ "/u02/app/oradata/stbyccbs/tbs_others.267.792772437"   datafile 
+ 102 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.284.819597493"   datafile 
+ 103 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.386.819597557"   datafile 
+ 104 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.387.819597647"   datafile 
+ 105 auxiliary format 
+ "/u02/app/oradata/stbyccbs/sysaux.388.822699379"   datafile 
+ 106 auxiliary format 
+ "/u02/app/oradata/stbyccbs/sysaux.389.822699397"   datafile 
+ 107 auxiliary format 
+ "/u02/app/oradata/stbyccbs/sysaux.390.822699669"   datafile 
+ 108 auxiliary format 
+ "/u02/app/oradata/stbyccbs/sysaux.391.822699673"   datafile 
+ 109 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.402.843228399"   datafile 
+ 110 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.403.843228457"   datafile 
+ 111 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.404.843228463"   datafile 
+ 112 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.405.843228469"   datafile 
+ 113 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.406.843228475"   datafile 
+ 114 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.407.843228483"   datafile 
+ 115 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.408.843228491"   datafile 
+ 116 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.409.843228497"   datafile 
+ 117 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.410.843228505"   datafile 
+ 118 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.411.843228541"   datafile 
+ 119 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.412.843228547"   datafile 
+ 120 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.413.843228553"   datafile 
+ 121 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.414.843228559"   datafile 
+ 122 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.415.843228705"   datafile 
+ 123 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.416.843228721"   datafile 
+ 124 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.417.843228737"   datafile 
+ 125 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.418.843228751"   datafile 
+ 126 auxiliary format 
+ "/u02/app/oradata/stbyccbs/indx.419.843228767"   datafile 
+ 127 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.455.857385555"   datafile 
+ 128 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.425.857385591"   datafile 
+ 129 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.468.857385623"   datafile 
+ 130 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs1_02.426.857385663"   datafile 
+ 131 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.423.857385961"   datafile 
+ 132 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.538.857385993"   datafile 
+ 133 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.516.857386025"   datafile 
+ 134 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.485.857386063"   datafile 
+ 135 auxiliary format 
+ "/u02/app/oradata/stbyccbs/undotbs2_02.633.857386105"   ;
+   sql 'alter system archive log current';
+}
+executing Memory Script
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+renamed tempfile 1 to /u02/app/oradata/stbyccbs/temp.508.849368845 in control file
+renamed tempfile 2 to /u02/app/oradata/stbyccbs/temp.510.849368863 in control file
+renamed tempfile 3 to /u02/app/oradata/stbyccbs/temp.378.780861295 in control file
+renamed tempfile 4 to /u02/app/oradata/stbyccbs/temp.379.780861311 in control file
+renamed tempfile 5 to /u02/app/oradata/stbyccbs/temp.380.780861323 in control file
+renamed tempfile 6 to /u02/app/oradata/stbyccbs/temp.381.780861335 in control file
+renamed tempfile 7 to /u02/app/oradata/stbyccbs/temp.382.780861343 in control file
+renamed tempfile 8 to /u02/app/oradata/stbyccbs/temp.383.780861351 in control file
+renamed tempfile 9 to /u02/app/oradata/stbyccbs/temp.384.780861361 in control file
+renamed tempfile 10 to /u02/app/oradata/stbyccbs/temp.385.780861371 in control file
+renamed tempfile 11 to /u02/app/oradata/stbyccbs/temp.641.849368865 in control file
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+executing command: SET NEWNAME
+
+Starting backup at 26/09/2014 13:24:58
+channel primar1: starting datafile copy
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+output file name=/u02/app/oradata/stbyccbs/sysaux.258.772710837 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:59:16
+channel primar1: starting datafile copy
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+output file name=/u02/app/oradata/stbyccbs/sysaux.388.822699379 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:52:05
+channel primar1: starting datafile copy
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+output file name=/u02/app/oradata/stbyccbs/sysaux.389.822699397 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:48:56
+channel primar1: starting datafile copy
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+output file name=/u02/app/oradata/stbyccbs/sysaux.390.822699669 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:52:05
+channel primar1: starting datafile copy
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+output file name=/u02/app/oradata/stbyccbs/sysaux.391.822699673 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:49:46
+channel primar1: starting datafile copy
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+output file name=/u02/app/oradata/stbyccbs/undotbs1_02.455.857385555 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:46:16
+channel primar1: starting datafile copy
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+output file name=/u02/app/oradata/stbyccbs/undotbs1_02.425.857385591 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:48:05
+channel primar1: starting datafile copy
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+output file name=/u02/app/oradata/stbyccbs/undotbs1_02.468.857385623 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:51:16
+channel primar1: starting datafile copy
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+output file name=/u02/app/oradata/stbyccbs/undotbs1_02.426.857385663 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:50:55
+channel primar1: starting datafile copy
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+output file name=/u02/app/oradata/stbyccbs/undotbs2_02.423.857385961 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:52:16
+channel primar1: starting datafile copy
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+output file name=/u02/app/oradata/stbyccbs/undotbs2_02.538.857385993 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:51:36
+channel primar1: starting datafile copy
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+output file name=/u02/app/oradata/stbyccbs/undotbs2_02.516.857386025 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:51:35
+channel primar1: starting datafile copy
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+output file name=/u02/app/oradata/stbyccbs/undotbs2_02.485.857386063 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:51:26
+channel primar1: starting datafile copy
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+output file name=/u02/app/oradata/stbyccbs/undotbs2_02.633.857386105 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:57:06
+channel primar1: starting datafile copy
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+output file name=/u02/app/oradata/stbyccbs/system.271.772710825 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:41:55
+channel primar1: starting datafile copy
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+output file name=/u02/app/oradata/stbyccbs/gg_data.338.779148549 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:37:56
+channel primar1: starting datafile copy
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+output file name=/u02/app/oradata/stbyccbs/users.269.772710879 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:55
+channel primar1: starting datafile copy
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+output file name=/u02/app/oradata/stbyccbs/indx.285.774530247 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+output file name=/u02/app/oradata/stbyccbs/users.282.774527471 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+output file name=/u02/app/oradata/stbyccbs/users.283.774527719 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+output file name=/u02/app/oradata/stbyccbs/indx.286.774530435 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+output file name=/u02/app/oradata/stbyccbs/indx.287.774530539 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+output file name=/u02/app/oradata/stbyccbs/tbs_others.288.774531157 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+output file name=/u02/app/oradata/stbyccbs/tbs_others.289.774531237 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+output file name=/u02/app/oradata/stbyccbs/indx.290.774541697 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+output file name=/u02/app/oradata/stbyccbs/indx.291.774541763 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:41:56
+channel primar1: starting datafile copy
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+output file name=/u02/app/oradata/stbyccbs/indx.292.774541795 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+output file name=/u02/app/oradata/stbyccbs/indx.293.774541877 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:36
+channel primar1: starting datafile copy
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+output file name=/u02/app/oradata/stbyccbs/indx.294.774541943 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+output file name=/u02/app/oradata/stbyccbs/indx.295.774541965 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+output file name=/u02/app/oradata/stbyccbs/indx.296.774541987 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:36
+channel primar1: starting datafile copy
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+output file name=/u02/app/oradata/stbyccbs/users.297.774542019 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+output file name=/u02/app/oradata/stbyccbs/users.298.774543045 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:36
+channel primar1: starting datafile copy
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+output file name=/u02/app/oradata/stbyccbs/users.299.774543191 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+output file name=/u02/app/oradata/stbyccbs/users.300.774543249 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+output file name=/u02/app/oradata/stbyccbs/users.301.774543271 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:36
+channel primar1: starting datafile copy
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+output file name=/u02/app/oradata/stbyccbs/users.302.774543327 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+output file name=/u02/app/oradata/stbyccbs/users.303.774543375 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+output file name=/u02/app/oradata/stbyccbs/users.304.774543419 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+output file name=/u02/app/oradata/stbyccbs/users.305.774543443 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+output file name=/u02/app/oradata/stbyccbs/users.306.774543465 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+output file name=/u02/app/oradata/stbyccbs/users.307.774543485 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:45
+channel primar1: starting datafile copy
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+output file name=/u02/app/oradata/stbyccbs/users.308.774543671 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:32:56
+channel primar1: starting datafile copy
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+output file name=/u02/app/oradata/stbyccbs/users.309.774543697 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:55
+channel primar1: starting datafile copy
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+output file name=/u02/app/oradata/stbyccbs/users.310.775873623 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+output file name=/u02/app/oradata/stbyccbs/users.311.775873655 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+output file name=/u02/app/oradata/stbyccbs/users.312.775873715 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:25
+channel primar1: starting datafile copy
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+output file name=/u02/app/oradata/stbyccbs/users.313.775873743 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:32:15
+channel primar1: starting datafile copy
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+output file name=/u02/app/oradata/stbyccbs/users.314.775996677 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:33:35
+channel primar1: starting datafile copy
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+output file name=/u02/app/oradata/stbyccbs/users.315.775996699 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:33:56
+channel primar1: starting datafile copy
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+output file name=/u02/app/oradata/stbyccbs/users.316.775996723 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:34:05
+channel primar1: starting datafile copy
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+output file name=/u02/app/oradata/stbyccbs/users.317.775996743 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:34:16
+channel primar1: starting datafile copy
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+output file name=/u02/app/oradata/stbyccbs/users.318.775997657 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+output file name=/u02/app/oradata/stbyccbs/users.319.775997681 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+output file name=/u02/app/oradata/stbyccbs/users.320.775997701 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+output file name=/u02/app/oradata/stbyccbs/users.321.775997721 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+output file name=/u02/app/oradata/stbyccbs/users.322.775997741 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+output file name=/u02/app/oradata/stbyccbs/users.323.775997787 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+output file name=/u02/app/oradata/stbyccbs/users.324.775997821 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:36:56
+channel primar1: starting datafile copy
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+output file name=/u02/app/oradata/stbyccbs/users.325.775997857 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:45
+channel primar1: starting datafile copy
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+output file name=/u02/app/oradata/stbyccbs/users.326.775997875 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+output file name=/u02/app/oradata/stbyccbs/users.327.775997915 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:56
+channel primar1: starting datafile copy
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+output file name=/u02/app/oradata/stbyccbs/users.328.775997951 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+output file name=/u02/app/oradata/stbyccbs/users.329.775998289 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+output file name=/u02/app/oradata/stbyccbs/users.330.775998311 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+output file name=/u02/app/oradata/stbyccbs/users.331.775998423 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+output file name=/u02/app/oradata/stbyccbs/users.332.776000393 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+output file name=/u02/app/oradata/stbyccbs/users.333.776000415 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+output file name=/u02/app/oradata/stbyccbs/users.334.776000867 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+output file name=/u02/app/oradata/stbyccbs/users.335.776001375 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+output file name=/u02/app/oradata/stbyccbs/tbs_others.336.776001499 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+output file name=/u02/app/oradata/stbyccbs/tbs_others.337.776001527 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:42:25
+channel primar1: starting datafile copy
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+output file name=/u02/app/oradata/stbyccbs/users.339.780491723 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+output file name=/u02/app/oradata/stbyccbs/users.340.780491785 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+output file name=/u02/app/oradata/stbyccbs/users.341.780492153 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+output file name=/u02/app/oradata/stbyccbs/users.342.780492259 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+output file name=/u02/app/oradata/stbyccbs/users.343.780492321 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+output file name=/u02/app/oradata/stbyccbs/users.344.780492429 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+output file name=/u02/app/oradata/stbyccbs/users.345.780493063 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+output file name=/u02/app/oradata/stbyccbs/users.346.780493683 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+output file name=/u02/app/oradata/stbyccbs/users.347.780493719 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+output file name=/u02/app/oradata/stbyccbs/users.348.780493937 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+output file name=/u02/app/oradata/stbyccbs/indx.349.780852847 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+output file name=/u02/app/oradata/stbyccbs/indx.350.780852893 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+output file name=/u02/app/oradata/stbyccbs/indx.351.780853091 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+output file name=/u02/app/oradata/stbyccbs/indx.352.780853165 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+output file name=/u02/app/oradata/stbyccbs/indx.353.780853327 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+output file name=/u02/app/oradata/stbyccbs/indx.354.780853419 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:35
+channel primar1: starting datafile copy
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+output file name=/u02/app/oradata/stbyccbs/users.355.780853553 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:36
+channel primar1: starting datafile copy
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+output file name=/u02/app/oradata/stbyccbs/users.356.780853583 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:15
+channel primar1: starting datafile copy
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+output file name=/u02/app/oradata/stbyccbs/users.357.780853601 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+output file name=/u02/app/oradata/stbyccbs/users.358.780853623 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+output file name=/u02/app/oradata/stbyccbs/users.359.780853645 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:35
+channel primar1: starting datafile copy
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+output file name=/u02/app/oradata/stbyccbs/users.360.780853693 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:55
+channel primar1: starting datafile copy
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+output file name=/u02/app/oradata/stbyccbs/users.361.780853717 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:33:25
+channel primar1: starting datafile copy
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+output file name=/u02/app/oradata/stbyccbs/users.362.780853743 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:32:16
+channel primar1: starting datafile copy
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+output file name=/u02/app/oradata/stbyccbs/users.363.780853829 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+output file name=/u02/app/oradata/stbyccbs/users.364.780853901 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:55
+channel primar1: starting datafile copy
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+output file name=/u02/app/oradata/stbyccbs/users.365.780853919 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+output file name=/u02/app/oradata/stbyccbs/users.366.780853939 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+output file name=/u02/app/oradata/stbyccbs/users.367.780853961 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:36
+channel primar1: starting datafile copy
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+output file name=/u02/app/oradata/stbyccbs/users.368.780853979 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+output file name=/u02/app/oradata/stbyccbs/users.369.780853997 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+output file name=/u02/app/oradata/stbyccbs/users.370.780854023 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+output file name=/u02/app/oradata/stbyccbs/users.371.780854093 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:34:25
+channel primar1: starting datafile copy
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+output file name=/u02/app/oradata/stbyccbs/users.372.780854143 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:33:36
+channel primar1: starting datafile copy
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+output file name=/u02/app/oradata/stbyccbs/users.373.780854307 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+output file name=/u02/app/oradata/stbyccbs/users.374.780854327 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+output file name=/u02/app/oradata/stbyccbs/users.375.780854347 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:31:05
+channel primar1: starting datafile copy
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+output file name=/u02/app/oradata/stbyccbs/users.376.780854365 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:36
+channel primar1: starting datafile copy
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+output file name=/u02/app/oradata/stbyccbs/users.377.780854429 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+output file name=/u02/app/oradata/stbyccbs/tbs_others.267.792772437 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+output file name=/u02/app/oradata/stbyccbs/indx.284.819597493 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+output file name=/u02/app/oradata/stbyccbs/indx.386.819597557 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+output file name=/u02/app/oradata/stbyccbs/indx.387.819597647 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+output file name=/u02/app/oradata/stbyccbs/indx.415.843228705 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:25
+channel primar1: starting datafile copy
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+output file name=/u02/app/oradata/stbyccbs/indx.416.843228721 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:30:26
+channel primar1: starting datafile copy
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+output file name=/u02/app/oradata/stbyccbs/indx.417.843228737 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:37:15
+channel primar1: starting datafile copy
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+output file name=/u02/app/oradata/stbyccbs/indx.418.843228751 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:35:56
+channel primar1: starting datafile copy
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+output file name=/u02/app/oradata/stbyccbs/indx.419.843228767 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:33:14
+channel primar1: starting datafile copy
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+output file name=/u02/app/oradata/stbyccbs/indx.402.843228399 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:13:05
+channel primar1: starting datafile copy
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+output file name=/u02/app/oradata/stbyccbs/indx.403.843228457 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:12:25
+channel primar1: starting datafile copy
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+output file name=/u02/app/oradata/stbyccbs/indx.404.843228463 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:26
+channel primar1: starting datafile copy
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+output file name=/u02/app/oradata/stbyccbs/indx.405.843228469 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:35
+channel primar1: starting datafile copy
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+output file name=/u02/app/oradata/stbyccbs/indx.406.843228475 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:15
+channel primar1: starting datafile copy
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+output file name=/u02/app/oradata/stbyccbs/indx.407.843228483 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:13:45
+channel primar1: starting datafile copy
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+output file name=/u02/app/oradata/stbyccbs/indx.408.843228491 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:14:35
+channel primar1: starting datafile copy
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+output file name=/u02/app/oradata/stbyccbs/indx.409.843228497 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:18
+channel primar1: starting datafile copy
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+output file name=/u02/app/oradata/stbyccbs/indx.410.843228505 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:15
+channel primar1: starting datafile copy
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+output file name=/u02/app/oradata/stbyccbs/indx.411.843228541 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:15
+channel primar1: starting datafile copy
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+output file name=/u02/app/oradata/stbyccbs/indx.412.843228547 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:15
+channel primar1: starting datafile copy
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+output file name=/u02/app/oradata/stbyccbs/indx.413.843228553 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:15:05
+channel primar1: starting datafile copy
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+output file name=/u02/app/oradata/stbyccbs/indx.414.843228559 tag=TAG20140926T132500
+channel primar1: datafile copy complete, elapsed time: 00:16:25
+Finished backup at 29/09/2014 12:19:43
+
+sql statement: alter system archive log current
+
+contents of Memory Script:
+{
+   switch clone datafile all;
+}
+executing Memory Script
+
+datafile 1 switched to datafile copy
+input datafile copy RECID=13 STAMP=859552332 file name=/u02/app/oradata/stbyccbs/system.271.772710825
+datafile 2 switched to datafile copy
+input datafile copy RECID=14 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/sysaux.258.772710837
+datafile 5 switched to datafile copy
+input datafile copy RECID=15 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/users.269.772710879
+datafile 6 switched to datafile copy
+input datafile copy RECID=16 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.285.774530247
+datafile 7 switched to datafile copy
+input datafile copy RECID=17 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/users.282.774527471
+datafile 8 switched to datafile copy
+input datafile copy RECID=18 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/users.283.774527719
+datafile 9 switched to datafile copy
+input datafile copy RECID=19 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.286.774530435
+datafile 10 switched to datafile copy
+input datafile copy RECID=20 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.287.774530539
+datafile 11 switched to datafile copy
+input datafile copy RECID=21 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/tbs_others.288.774531157
+datafile 12 switched to datafile copy
+input datafile copy RECID=22 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/tbs_others.289.774531237
+datafile 13 switched to datafile copy
+input datafile copy RECID=23 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.290.774541697
+datafile 14 switched to datafile copy
+input datafile copy RECID=24 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.291.774541763
+datafile 15 switched to datafile copy
+input datafile copy RECID=25 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.292.774541795
+datafile 16 switched to datafile copy
+input datafile copy RECID=26 STAMP=859552333 file name=/u02/app/oradata/stbyccbs/indx.293.774541877
+datafile 17 switched to datafile copy
+input datafile copy RECID=27 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/indx.294.774541943
+datafile 18 switched to datafile copy
+input datafile copy RECID=28 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/indx.295.774541965
+datafile 19 switched to datafile copy
+input datafile copy RECID=29 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/indx.296.774541987
+datafile 20 switched to datafile copy
+input datafile copy RECID=30 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.297.774542019
+datafile 21 switched to datafile copy
+input datafile copy RECID=31 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.298.774543045
+datafile 22 switched to datafile copy
+input datafile copy RECID=32 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.299.774543191
+datafile 23 switched to datafile copy
+input datafile copy RECID=33 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.300.774543249
+datafile 24 switched to datafile copy
+input datafile copy RECID=34 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.301.774543271
+datafile 25 switched to datafile copy
+input datafile copy RECID=35 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.302.774543327
+datafile 26 switched to datafile copy
+input datafile copy RECID=36 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.303.774543375
+datafile 27 switched to datafile copy
+input datafile copy RECID=37 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.304.774543419
+datafile 28 switched to datafile copy
+input datafile copy RECID=38 STAMP=859552334 file name=/u02/app/oradata/stbyccbs/users.305.774543443
+datafile 29 switched to datafile copy
+input datafile copy RECID=39 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.306.774543465
+datafile 30 switched to datafile copy
+input datafile copy RECID=40 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.307.774543485
+datafile 31 switched to datafile copy
+input datafile copy RECID=41 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.308.774543671
+datafile 32 switched to datafile copy
+input datafile copy RECID=42 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.309.774543697
+datafile 33 switched to datafile copy
+input datafile copy RECID=43 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.310.775873623
+datafile 34 switched to datafile copy
+input datafile copy RECID=44 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.311.775873655
+datafile 35 switched to datafile copy
+input datafile copy RECID=45 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.312.775873715
+datafile 36 switched to datafile copy
+input datafile copy RECID=46 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.313.775873743
+datafile 37 switched to datafile copy
+input datafile copy RECID=47 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.314.775996677
+datafile 38 switched to datafile copy
+input datafile copy RECID=48 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.315.775996699
+datafile 39 switched to datafile copy
+input datafile copy RECID=49 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.316.775996723
+datafile 40 switched to datafile copy
+input datafile copy RECID=50 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.317.775996743
+datafile 41 switched to datafile copy
+input datafile copy RECID=51 STAMP=859552335 file name=/u02/app/oradata/stbyccbs/users.318.775997657
+datafile 42 switched to datafile copy
+input datafile copy RECID=52 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.319.775997681
+datafile 43 switched to datafile copy
+input datafile copy RECID=53 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.320.775997701
+datafile 44 switched to datafile copy
+input datafile copy RECID=54 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.321.775997721
+datafile 45 switched to datafile copy
+input datafile copy RECID=55 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.322.775997741
+datafile 46 switched to datafile copy
+input datafile copy RECID=56 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.323.775997787
+datafile 47 switched to datafile copy
+input datafile copy RECID=57 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.324.775997821
+datafile 48 switched to datafile copy
+input datafile copy RECID=58 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.325.775997857
+datafile 49 switched to datafile copy
+input datafile copy RECID=59 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.326.775997875
+datafile 50 switched to datafile copy
+input datafile copy RECID=60 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.327.775997915
+datafile 51 switched to datafile copy
+input datafile copy RECID=61 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.328.775997951
+datafile 52 switched to datafile copy
+input datafile copy RECID=62 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.329.775998289
+datafile 53 switched to datafile copy
+input datafile copy RECID=63 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.330.775998311
+datafile 54 switched to datafile copy
+input datafile copy RECID=64 STAMP=859552336 file name=/u02/app/oradata/stbyccbs/users.331.775998423
+datafile 55 switched to datafile copy
+input datafile copy RECID=65 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.332.776000393
+datafile 56 switched to datafile copy
+input datafile copy RECID=66 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.333.776000415
+datafile 57 switched to datafile copy
+input datafile copy RECID=67 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.334.776000867
+datafile 58 switched to datafile copy
+input datafile copy RECID=68 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.335.776001375
+datafile 59 switched to datafile copy
+input datafile copy RECID=69 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/tbs_others.336.776001499
+datafile 60 switched to datafile copy
+input datafile copy RECID=70 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/tbs_others.337.776001527
+datafile 61 switched to datafile copy
+input datafile copy RECID=71 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/gg_data.338.779148549
+datafile 62 switched to datafile copy
+input datafile copy RECID=72 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.339.780491723
+datafile 63 switched to datafile copy
+input datafile copy RECID=73 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.340.780491785
+datafile 64 switched to datafile copy
+input datafile copy RECID=74 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.341.780492153
+datafile 65 switched to datafile copy
+input datafile copy RECID=75 STAMP=859552337 file name=/u02/app/oradata/stbyccbs/users.342.780492259
+datafile 66 switched to datafile copy
+input datafile copy RECID=76 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/users.343.780492321
+datafile 67 switched to datafile copy
+input datafile copy RECID=77 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/users.344.780492429
+datafile 68 switched to datafile copy
+input datafile copy RECID=78 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/users.345.780493063
+datafile 69 switched to datafile copy
+input datafile copy RECID=79 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/users.346.780493683
+datafile 70 switched to datafile copy
+input datafile copy RECID=80 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/users.347.780493719
+datafile 71 switched to datafile copy
+input datafile copy RECID=81 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/users.348.780493937
+datafile 72 switched to datafile copy
+input datafile copy RECID=82 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/indx.349.780852847
+datafile 73 switched to datafile copy
+input datafile copy RECID=83 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/indx.350.780852893
+datafile 74 switched to datafile copy
+input datafile copy RECID=84 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/indx.351.780853091
+datafile 75 switched to datafile copy
+input datafile copy RECID=85 STAMP=859552338 file name=/u02/app/oradata/stbyccbs/indx.352.780853165
+datafile 76 switched to datafile copy
+input datafile copy RECID=86 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/indx.353.780853327
+datafile 77 switched to datafile copy
+input datafile copy RECID=87 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/indx.354.780853419
+datafile 78 switched to datafile copy
+input datafile copy RECID=88 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/users.355.780853553
+datafile 79 switched to datafile copy
+input datafile copy RECID=89 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/users.356.780853583
+datafile 80 switched to datafile copy
+input datafile copy RECID=90 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/users.357.780853601
+datafile 81 switched to datafile copy
+input datafile copy RECID=91 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/users.358.780853623
+datafile 82 switched to datafile copy
+input datafile copy RECID=92 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/users.359.780853645
+datafile 83 switched to datafile copy
+input datafile copy RECID=93 STAMP=859552339 file name=/u02/app/oradata/stbyccbs/users.360.780853693
+datafile 84 switched to datafile copy
+input datafile copy RECID=94 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.361.780853717
+datafile 85 switched to datafile copy
+input datafile copy RECID=95 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.362.780853743
+datafile 86 switched to datafile copy
+input datafile copy RECID=96 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.363.780853829
+datafile 87 switched to datafile copy
+input datafile copy RECID=97 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.364.780853901
+datafile 88 switched to datafile copy
+input datafile copy RECID=98 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.365.780853919
+datafile 89 switched to datafile copy
+input datafile copy RECID=99 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.366.780853939
+datafile 90 switched to datafile copy
+input datafile copy RECID=100 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.367.780853961
+datafile 91 switched to datafile copy
+input datafile copy RECID=101 STAMP=859552340 file name=/u02/app/oradata/stbyccbs/users.368.780853979
+datafile 92 switched to datafile copy
+input datafile copy RECID=102 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.369.780853997
+datafile 93 switched to datafile copy
+input datafile copy RECID=103 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.370.780854023
+datafile 94 switched to datafile copy
+input datafile copy RECID=104 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.371.780854093
+datafile 95 switched to datafile copy
+input datafile copy RECID=105 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.372.780854143
+datafile 96 switched to datafile copy
+input datafile copy RECID=106 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.373.780854307
+datafile 97 switched to datafile copy
+input datafile copy RECID=107 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.374.780854327
+datafile 98 switched to datafile copy
+input datafile copy RECID=108 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.375.780854347
+datafile 99 switched to datafile copy
+input datafile copy RECID=109 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.376.780854365
+datafile 100 switched to datafile copy
+input datafile copy RECID=110 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/users.377.780854429
+datafile 101 switched to datafile copy
+input datafile copy RECID=111 STAMP=859552341 file name=/u02/app/oradata/stbyccbs/tbs_others.267.792772437
+datafile 102 switched to datafile copy
+input datafile copy RECID=112 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/indx.284.819597493
+datafile 103 switched to datafile copy
+input datafile copy RECID=113 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/indx.386.819597557
+datafile 104 switched to datafile copy
+input datafile copy RECID=114 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/indx.387.819597647
+datafile 105 switched to datafile copy
+input datafile copy RECID=115 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/sysaux.388.822699379
+datafile 106 switched to datafile copy
+input datafile copy RECID=116 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/sysaux.389.822699397
+datafile 107 switched to datafile copy
+input datafile copy RECID=117 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/sysaux.390.822699669
+datafile 108 switched to datafile copy
+input datafile copy RECID=118 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/sysaux.391.822699673
+datafile 109 switched to datafile copy
+input datafile copy RECID=119 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/indx.402.843228399
+datafile 110 switched to datafile copy
+input datafile copy RECID=120 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/indx.403.843228457
+datafile 111 switched to datafile copy
+input datafile copy RECID=121 STAMP=859552342 file name=/u02/app/oradata/stbyccbs/indx.404.843228463
+datafile 112 switched to datafile copy
+input datafile copy RECID=122 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.405.843228469
+datafile 113 switched to datafile copy
+input datafile copy RECID=123 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.406.843228475
+datafile 114 switched to datafile copy
+input datafile copy RECID=124 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.407.843228483
+datafile 115 switched to datafile copy
+input datafile copy RECID=125 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.408.843228491
+datafile 116 switched to datafile copy
+input datafile copy RECID=126 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.409.843228497
+datafile 117 switched to datafile copy
+input datafile copy RECID=127 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.410.843228505
+datafile 118 switched to datafile copy
+input datafile copy RECID=128 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.411.843228541
+datafile 119 switched to datafile copy
+input datafile copy RECID=129 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.412.843228547
+datafile 120 switched to datafile copy
+input datafile copy RECID=130 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.413.843228553
+datafile 121 switched to datafile copy
+input datafile copy RECID=131 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.414.843228559
+datafile 122 switched to datafile copy
+input datafile copy RECID=132 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.415.843228705
+datafile 123 switched to datafile copy
+input datafile copy RECID=133 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.416.843228721
+datafile 124 switched to datafile copy
+input datafile copy RECID=134 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.417.843228737
+datafile 125 switched to datafile copy
+input datafile copy RECID=135 STAMP=859552343 file name=/u02/app/oradata/stbyccbs/indx.418.843228751
+datafile 126 switched to datafile copy
+input datafile copy RECID=136 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/indx.419.843228767
+datafile 127 switched to datafile copy
+input datafile copy RECID=137 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs1_02.455.857385555
+datafile 128 switched to datafile copy
+input datafile copy RECID=138 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs1_02.425.857385591
+datafile 129 switched to datafile copy
+input datafile copy RECID=139 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs1_02.468.857385623
+datafile 130 switched to datafile copy
+input datafile copy RECID=140 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs1_02.426.857385663
+datafile 131 switched to datafile copy
+input datafile copy RECID=141 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs2_02.423.857385961
+datafile 132 switched to datafile copy
+input datafile copy RECID=142 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs2_02.538.857385993
+datafile 133 switched to datafile copy
+input datafile copy RECID=143 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs2_02.516.857386025
+datafile 134 switched to datafile copy
+input datafile copy RECID=144 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs2_02.485.857386063
+datafile 135 switched to datafile copy
+input datafile copy RECID=145 STAMP=859552344 file name=/u02/app/oradata/stbyccbs/undotbs2_02.633.857386105
+Finished Duplicate Db at 29/09/2014 13:06:19
+released channel: primar1
+released channel: standb1
+
+Recovery Manager complete.

@@ -1,0 +1,12 @@
+status=30
+cluster=NO
+PARALLEL=1
+logfile=static.log  
+dumpfile=static_%U 
+filesize=4G directory=DPUMP_DIR
+SCHEMAS=(HCM_QLN_COMMON,HCM_QLN_DATA,DATA,MEDIATION,BCSS,BILLING,VTSG,SMS)  
+INCLUDE=TABLE:"IN (SELECT TABLE_NAME 
+		   FROM DBA_TABLES 
+		   WHERE (TABLE_NAME not LIKE '%20%') and (TABLE_NAME not LIKE '%TMP%') and (TABLE_NAME not LIKE '%_LUU') and (TABLE_NAME not LIKE '%_LUU_%')
+			and (TABLE_NAME not LIKE '%TEMP%') and (TABLE_NAME not LIKE 'BKUP_%') and (TABLE_NAME not LIKE '%_BK')
+		   )"

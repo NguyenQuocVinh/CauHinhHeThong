@@ -1,0 +1,1166 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Tue Mar 31 21:00:01 2015
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> #	backup incremental level 1 copies 2 format '+DATA/RMAN/level1_%D_%T_%U','/mnt/nfs52100/RMAN/level1_%D_%T_%U' tag MON_LV1_17_31 
+41> #  database include current controlfile;
+42> backup incremental level 1 format '+DATA/RMAN/level1_%D_%T_%U' tag MON_LV1_17_31 database include current controlfile;
+43> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+44> #	backup as compressed backupset copies 2 archivelog all format '+DATA/RMAN/archi_%D_%T_%U','/u03/rman_ccbs_ftp5/RMAN/archi_%D_%T_%U'
+45> #  tag monthly_arch_17_31 delete input;
+46> 	backup as compressed backupset archivelog all format '+DATA/RMAN/archi_%D_%T_%U'  tag monthly_arch_17_31 delete input;
+47> }
+48> 
+Starting backup at 31/03/2015 21:00:03
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=715 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=786 instance=ccbs1 device type=DISK
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00136 name=+DATA/ccbs/datafile/users.711.870969071
+input datafile file number=00139 name=+DATA/ccbs/datafile/indx.704.870969125
+input datafile file number=00142 name=+DATA/ccbs/datafile/indx.700.870969205
+input datafile file number=00145 name=+DATA/ccbs/datafile/gg_data.762.870969269
+input datafile file number=00148 name=+DATA/ccbs/datafile/undotbs2_02.932.870969393
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+channel ORA_DISK_1: starting piece 1 at 31/03/2015 21:00:13
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+input datafile file number=00003 name=+DATA/ccbs/datafile/system.709.870969027
+input datafile file number=00137 name=+DATA/ccbs/datafile/users.713.870969093
+input datafile file number=00140 name=+DATA/ccbs/datafile/indx.708.870969149
+input datafile file number=00143 name=+DATA/ccbs/datafile/users.763.870969217
+input datafile file number=00146 name=+DATA/ccbs/datafile/undotbs1_02.930.870969365
+input datafile file number=00149 name=+DATA/ccbs/datafile/undotbs2_02.933.870969415
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_2: starting piece 1 at 31/03/2015 21:00:14
+channel ORA_DISK_1: finished piece 1 at 31/03/2015 21:08:09
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_1_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 31/03/2015 21:08:09
+channel ORA_DISK_2: finished piece 1 at 31/03/2015 21:08:09
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_1_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 31/03/2015 21:08:09
+channel ORA_DISK_1: finished piece 2 at 31/03/2015 21:16:04
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_2_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 31/03/2015 21:16:04
+channel ORA_DISK_2: finished piece 2 at 31/03/2015 21:16:07
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_2_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 31/03/2015 21:16:07
+channel ORA_DISK_1: finished piece 3 at 31/03/2015 21:23:42
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_3_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 31/03/2015 21:23:42
+channel ORA_DISK_2: finished piece 3 at 31/03/2015 21:24:07
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_3_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 4 at 31/03/2015 21:24:07
+channel ORA_DISK_1: finished piece 4 at 31/03/2015 21:31:22
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_4_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 31/03/2015 21:31:22
+channel ORA_DISK_2: finished piece 4 at 31/03/2015 21:32:07
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_4_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 5 at 31/03/2015 21:32:07
+channel ORA_DISK_1: finished piece 5 at 31/03/2015 21:39:02
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_5_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 6 at 31/03/2015 21:39:02
+channel ORA_DISK_2: finished piece 5 at 31/03/2015 21:40:07
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_5_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 6 at 31/03/2015 21:40:07
+channel ORA_DISK_1: finished piece 6 at 31/03/2015 21:46:52
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_6_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 7 at 31/03/2015 21:46:52
+channel ORA_DISK_2: finished piece 6 at 31/03/2015 21:48:07
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_6_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 7 at 31/03/2015 21:48:07
+channel ORA_DISK_1: finished piece 7 at 31/03/2015 21:54:42
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_7_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 8 at 31/03/2015 21:54:42
+channel ORA_DISK_2: finished piece 7 at 31/03/2015 21:55:57
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_7_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 8 at 31/03/2015 21:55:57
+channel ORA_DISK_1: finished piece 8 at 31/03/2015 22:02:22
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_8_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 9 at 31/03/2015 22:02:22
+channel ORA_DISK_2: finished piece 8 at 31/03/2015 22:03:57
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_8_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 9 at 31/03/2015 22:03:57
+channel ORA_DISK_1: finished piece 9 at 31/03/2015 22:10:13
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_9_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 10 at 31/03/2015 22:10:13
+channel ORA_DISK_2: finished piece 9 at 31/03/2015 22:12:18
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_9_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 10 at 31/03/2015 22:12:18
+channel ORA_DISK_1: finished piece 10 at 31/03/2015 22:17:53
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_10_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 11 at 31/03/2015 22:17:53
+channel ORA_DISK_2: finished piece 10 at 31/03/2015 22:20:18
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_10_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 11 at 31/03/2015 22:20:18
+channel ORA_DISK_1: finished piece 11 at 31/03/2015 22:25:23
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_11_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 12 at 31/03/2015 22:25:23
+channel ORA_DISK_2: finished piece 11 at 31/03/2015 22:28:28
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_11_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 12 at 31/03/2015 22:28:28
+channel ORA_DISK_1: finished piece 12 at 31/03/2015 22:33:03
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_12_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 13 at 31/03/2015 22:33:03
+channel ORA_DISK_2: finished piece 12 at 31/03/2015 22:36:28
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_12_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 13 at 31/03/2015 22:36:28
+channel ORA_DISK_1: finished piece 13 at 31/03/2015 22:40:53
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_13_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 14 at 31/03/2015 22:40:53
+channel ORA_DISK_2: finished piece 13 at 31/03/2015 22:44:38
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_13_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 14 at 31/03/2015 22:44:38
+channel ORA_DISK_1: finished piece 14 at 31/03/2015 22:48:53
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_14_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 15 at 31/03/2015 22:48:53
+channel ORA_DISK_2: finished piece 14 at 31/03/2015 22:52:18
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_14_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 15 at 31/03/2015 22:52:18
+channel ORA_DISK_1: finished piece 15 at 31/03/2015 22:56:23
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_15_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 16 at 31/03/2015 22:56:23
+channel ORA_DISK_2: finished piece 15 at 31/03/2015 23:00:08
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_15_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 16 at 31/03/2015 23:00:08
+channel ORA_DISK_1: finished piece 16 at 31/03/2015 23:03:43
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_16_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 17 at 31/03/2015 23:03:43
+channel ORA_DISK_2: finished piece 16 at 31/03/2015 23:07:48
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_16_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 17 at 31/03/2015 23:07:48
+channel ORA_DISK_1: finished piece 17 at 31/03/2015 23:11:03
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_17_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 18 at 31/03/2015 23:11:03
+channel ORA_DISK_2: finished piece 17 at 31/03/2015 23:15:38
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_17_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 18 at 31/03/2015 23:15:38
+channel ORA_DISK_1: finished piece 18 at 31/03/2015 23:18:33
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_18_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 19 at 31/03/2015 23:18:33
+channel ORA_DISK_2: finished piece 18 at 31/03/2015 23:23:19
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_18_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 19 at 31/03/2015 23:23:19
+channel ORA_DISK_1: finished piece 19 at 31/03/2015 23:26:24
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_19_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 20 at 31/03/2015 23:26:24
+channel ORA_DISK_2: finished piece 19 at 31/03/2015 23:30:19
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_19_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 20 at 31/03/2015 23:30:19
+channel ORA_DISK_1: finished piece 20 at 31/03/2015 23:33:14
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_20_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 21 at 31/03/2015 23:33:14
+channel ORA_DISK_2: finished piece 20 at 31/03/2015 23:37:09
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_20_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 21 at 31/03/2015 23:37:09
+channel ORA_DISK_1: finished piece 21 at 31/03/2015 23:40:04
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_21_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 22 at 31/03/2015 23:40:04
+channel ORA_DISK_2: finished piece 21 at 31/03/2015 23:44:09
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_21_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 22 at 31/03/2015 23:44:09
+channel ORA_DISK_1: finished piece 22 at 31/03/2015 23:47:04
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_22_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 23 at 31/03/2015 23:47:04
+channel ORA_DISK_2: finished piece 22 at 31/03/2015 23:51:29
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_22_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 23 at 31/03/2015 23:51:29
+channel ORA_DISK_1: finished piece 23 at 31/03/2015 23:54:24
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_23_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 24 at 31/03/2015 23:54:24
+channel ORA_DISK_2: finished piece 23 at 31/03/2015 23:58:39
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_23_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 24 at 31/03/2015 23:58:39
+channel ORA_DISK_1: finished piece 24 at 01/04/2015 00:01:44
+piece handle=+DATA/rman/level1_31_20150331_iiq382qs_24_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 25 at 01/04/2015 00:01:44
+channel ORA_DISK_2: finished piece 24 at 01/04/2015 00:05:39
+piece handle=+DATA/rman/level1_31_20150331_ijq382qt_24_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 25 at 01/04/2015 00:05:39
+channel ORA_DISK_1: finished piece 25 at 01/04/2015 00:09:04
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_25_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 26 at 01/04/2015 00:09:04
+channel ORA_DISK_2: finished piece 25 at 01/04/2015 00:12:29
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_25_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 26 at 01/04/2015 00:12:29
+channel ORA_DISK_1: finished piece 26 at 01/04/2015 00:15:54
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_26_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 27 at 01/04/2015 00:15:54
+channel ORA_DISK_2: finished piece 26 at 01/04/2015 00:19:19
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_26_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 27 at 01/04/2015 00:19:19
+channel ORA_DISK_1: finished piece 27 at 01/04/2015 00:23:04
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_27_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 28 at 01/04/2015 00:23:04
+channel ORA_DISK_2: finished piece 27 at 01/04/2015 00:26:29
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_27_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 28 at 01/04/2015 00:26:29
+channel ORA_DISK_1: finished piece 28 at 01/04/2015 00:31:04
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_28_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 29 at 01/04/2015 00:31:04
+channel ORA_DISK_2: finished piece 28 at 01/04/2015 00:33:50
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_28_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 29 at 01/04/2015 00:33:50
+channel ORA_DISK_1: finished piece 29 at 01/04/2015 00:38:35
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_29_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 30 at 01/04/2015 00:38:35
+channel ORA_DISK_2: finished piece 29 at 01/04/2015 00:41:10
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_29_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 30 at 01/04/2015 00:41:10
+channel ORA_DISK_2: finished piece 30 at 01/04/2015 00:48:35
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_30_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 31 at 01/04/2015 00:48:35
+channel ORA_DISK_1: finished piece 30 at 01/04/2015 00:52:00
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_30_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 31 at 01/04/2015 00:52:00
+channel ORA_DISK_2: finished piece 31 at 01/04/2015 00:55:35
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_31_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 32 at 01/04/2015 00:55:35
+channel ORA_DISK_1: finished piece 31 at 01/04/2015 01:01:00
+piece handle=+DATA/rman/level1_01_20150401_iiq382qs_31_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 04:00:47
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00004 name=+DATA/ccbs/datafile/system.714.870969047
+input datafile file number=00138 name=+DATA/ccbs/datafile/users.715.870969105
+input datafile file number=00141 name=+DATA/ccbs/datafile/indx.707.870969167
+input datafile file number=00144 name=+DATA/ccbs/datafile/tbs_others.645.870969247
+input datafile file number=00147 name=+DATA/ccbs/datafile/undotbs1_02.931.870969377
+input datafile file number=00151 name=+DATA/ccbs/datafile/tbs_others.975.875279887
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+input datafile file number=00150 name=+DATA/ccbs/datafile/tbs_others.1094.873913903
+channel ORA_DISK_1: starting piece 1 at 01/04/2015 01:01:02
+channel ORA_DISK_2: finished piece 32 at 01/04/2015 01:02:37
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_32_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 33 at 01/04/2015 01:02:37
+channel ORA_DISK_1: finished piece 1 at 01/04/2015 01:08:32
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_1_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 01/04/2015 01:08:32
+channel ORA_DISK_2: finished piece 33 at 01/04/2015 01:09:37
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_33_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 34 at 01/04/2015 01:09:37
+channel ORA_DISK_1: finished piece 2 at 01/04/2015 01:15:42
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_2_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 01/04/2015 01:15:42
+channel ORA_DISK_2: finished piece 34 at 01/04/2015 01:16:47
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_34_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 35 at 01/04/2015 01:16:47
+channel ORA_DISK_1: finished piece 3 at 01/04/2015 01:22:52
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_3_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 01/04/2015 01:22:52
+channel ORA_DISK_2: finished piece 35 at 01/04/2015 01:24:07
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_35_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 36 at 01/04/2015 01:24:07
+channel ORA_DISK_1: finished piece 4 at 01/04/2015 01:30:03
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_4_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 01/04/2015 01:30:03
+channel ORA_DISK_2: finished piece 36 at 01/04/2015 01:31:38
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_36_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 37 at 01/04/2015 01:31:38
+channel ORA_DISK_1: finished piece 5 at 01/04/2015 01:37:23
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_5_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 6 at 01/04/2015 01:37:23
+channel ORA_DISK_2: finished piece 37 at 01/04/2015 01:39:08
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_37_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 38 at 01/04/2015 01:39:08
+channel ORA_DISK_1: finished piece 6 at 01/04/2015 01:44:53
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_6_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 7 at 01/04/2015 01:44:53
+channel ORA_DISK_2: finished piece 38 at 01/04/2015 01:46:38
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_38_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 39 at 01/04/2015 01:46:38
+channel ORA_DISK_1: finished piece 7 at 01/04/2015 01:52:23
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_7_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 8 at 01/04/2015 01:52:23
+channel ORA_DISK_2: finished piece 39 at 01/04/2015 01:54:08
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_39_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 40 at 01/04/2015 01:54:08
+channel ORA_DISK_1: finished piece 8 at 01/04/2015 01:59:53
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_8_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 9 at 01/04/2015 01:59:53
+channel ORA_DISK_2: finished piece 40 at 01/04/2015 02:01:28
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_40_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 41 at 01/04/2015 02:01:28
+channel ORA_DISK_1: finished piece 9 at 01/04/2015 02:07:13
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_9_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 10 at 01/04/2015 02:07:13
+channel ORA_DISK_2: finished piece 41 at 01/04/2015 02:08:58
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_41_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 42 at 01/04/2015 02:08:58
+channel ORA_DISK_1: finished piece 10 at 01/04/2015 02:14:43
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_10_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 11 at 01/04/2015 02:14:43
+channel ORA_DISK_2: finished piece 42 at 01/04/2015 02:16:18
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_42_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 43 at 01/04/2015 02:16:18
+channel ORA_DISK_1: finished piece 11 at 01/04/2015 02:22:13
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_11_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 12 at 01/04/2015 02:22:13
+channel ORA_DISK_2: finished piece 43 at 01/04/2015 02:23:38
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_43_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 44 at 01/04/2015 02:23:38
+channel ORA_DISK_1: finished piece 12 at 01/04/2015 02:29:53
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_12_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 13 at 01/04/2015 02:29:53
+channel ORA_DISK_2: finished piece 44 at 01/04/2015 02:30:58
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_44_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 45 at 01/04/2015 02:30:58
+channel ORA_DISK_1: finished piece 13 at 01/04/2015 02:37:23
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_13_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 14 at 01/04/2015 02:37:23
+channel ORA_DISK_2: finished piece 45 at 01/04/2015 02:38:28
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_45_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 46 at 01/04/2015 02:38:28
+channel ORA_DISK_1: finished piece 14 at 01/04/2015 02:45:03
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_14_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 15 at 01/04/2015 02:45:03
+channel ORA_DISK_2: finished piece 46 at 01/04/2015 02:46:08
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_46_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 47 at 01/04/2015 02:46:08
+channel ORA_DISK_1: finished piece 15 at 01/04/2015 02:52:54
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_15_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 16 at 01/04/2015 02:52:54
+channel ORA_DISK_2: finished piece 47 at 01/04/2015 02:53:39
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_47_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 48 at 01/04/2015 02:53:39
+channel ORA_DISK_1: finished piece 16 at 01/04/2015 03:00:34
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_16_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 17 at 01/04/2015 03:00:34
+channel ORA_DISK_2: finished piece 48 at 01/04/2015 03:01:09
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_48_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 49 at 01/04/2015 03:01:09
+channel ORA_DISK_1: finished piece 17 at 01/04/2015 03:07:54
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_17_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 18 at 01/04/2015 03:07:54
+channel ORA_DISK_2: finished piece 49 at 01/04/2015 03:08:39
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_49_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 50 at 01/04/2015 03:08:39
+channel ORA_DISK_1: finished piece 18 at 01/04/2015 03:15:14
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_18_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 19 at 01/04/2015 03:15:14
+channel ORA_DISK_2: finished piece 50 at 01/04/2015 03:16:09
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_50_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 51 at 01/04/2015 03:16:09
+channel ORA_DISK_1: finished piece 19 at 01/04/2015 03:22:34
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_19_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 20 at 01/04/2015 03:22:34
+channel ORA_DISK_2: finished piece 51 at 01/04/2015 03:24:09
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_51_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 52 at 01/04/2015 03:24:09
+channel ORA_DISK_1: finished piece 20 at 01/04/2015 03:30:04
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_20_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 21 at 01/04/2015 03:30:04
+channel ORA_DISK_2: finished piece 52 at 01/04/2015 03:32:09
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_52_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 53 at 01/04/2015 03:32:09
+channel ORA_DISK_1: finished piece 21 at 01/04/2015 03:37:54
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_21_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 22 at 01/04/2015 03:37:54
+channel ORA_DISK_2: finished piece 53 at 01/04/2015 03:40:19
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_53_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 54 at 01/04/2015 03:40:19
+channel ORA_DISK_1: finished piece 22 at 01/04/2015 03:44:54
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_22_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 23 at 01/04/2015 03:44:54
+channel ORA_DISK_2: finished piece 54 at 01/04/2015 03:48:59
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_54_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 55 at 01/04/2015 03:48:59
+channel ORA_DISK_1: finished piece 23 at 01/04/2015 03:51:54
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_23_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 24 at 01/04/2015 03:51:54
+channel ORA_DISK_2: finished piece 55 at 01/04/2015 03:56:39
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_55_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 56 at 01/04/2015 03:56:39
+channel ORA_DISK_1: finished piece 24 at 01/04/2015 03:59:04
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_24_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 25 at 01/04/2015 03:59:04
+channel ORA_DISK_2: finished piece 56 at 01/04/2015 04:04:19
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_56_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 57 at 01/04/2015 04:04:19
+channel ORA_DISK_1: finished piece 25 at 01/04/2015 04:06:35
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_25_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 26 at 01/04/2015 04:06:35
+channel ORA_DISK_2: finished piece 57 at 01/04/2015 04:12:10
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_57_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 58 at 01/04/2015 04:12:10
+channel ORA_DISK_1: finished piece 26 at 01/04/2015 04:14:05
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_26_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 27 at 01/04/2015 04:14:05
+channel ORA_DISK_2: finished piece 58 at 01/04/2015 04:20:00
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_58_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 59 at 01/04/2015 04:20:00
+channel ORA_DISK_1: finished piece 27 at 01/04/2015 04:21:25
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_27_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 28 at 01/04/2015 04:21:25
+channel ORA_DISK_2: finished piece 59 at 01/04/2015 04:25:30
+piece handle=+DATA/rman/level1_01_20150401_ijq382qt_59_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 07:25:16
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_2: starting piece 1 at 01/04/2015 04:25:33
+channel ORA_DISK_2: finished piece 1 at 01/04/2015 04:25:36
+piece handle=+DATA/rman/level1_01_20150401_ilq38stq_1_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:00:03
+channel ORA_DISK_1: finished piece 28 at 01/04/2015 04:28:18
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_28_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 29 at 01/04/2015 04:28:18
+channel ORA_DISK_1: finished piece 29 at 01/04/2015 04:35:13
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_29_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 30 at 01/04/2015 04:35:13
+channel ORA_DISK_1: finished piece 30 at 01/04/2015 04:42:28
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_30_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 31 at 01/04/2015 04:42:28
+channel ORA_DISK_1: finished piece 31 at 01/04/2015 04:50:03
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_31_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 32 at 01/04/2015 04:50:03
+channel ORA_DISK_1: finished piece 32 at 01/04/2015 04:57:38
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_32_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 33 at 01/04/2015 04:57:38
+channel ORA_DISK_1: finished piece 33 at 01/04/2015 05:05:03
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_33_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 34 at 01/04/2015 05:05:03
+channel ORA_DISK_1: finished piece 34 at 01/04/2015 05:12:08
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_34_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 35 at 01/04/2015 05:12:08
+channel ORA_DISK_1: finished piece 35 at 01/04/2015 05:19:23
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_35_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 36 at 01/04/2015 05:19:23
+channel ORA_DISK_1: finished piece 36 at 01/04/2015 05:26:38
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_36_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 37 at 01/04/2015 05:26:38
+channel ORA_DISK_1: finished piece 37 at 01/04/2015 05:34:04
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_37_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 38 at 01/04/2015 05:34:04
+channel ORA_DISK_1: finished piece 38 at 01/04/2015 05:41:39
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_38_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 39 at 01/04/2015 05:41:39
+channel ORA_DISK_1: finished piece 39 at 01/04/2015 05:49:04
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_39_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 40 at 01/04/2015 05:49:04
+channel ORA_DISK_1: finished piece 40 at 01/04/2015 05:56:29
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_40_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 41 at 01/04/2015 05:56:29
+channel ORA_DISK_1: finished piece 41 at 01/04/2015 06:04:04
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_41_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 42 at 01/04/2015 06:04:04
+channel ORA_DISK_1: finished piece 42 at 01/04/2015 06:11:39
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_42_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 43 at 01/04/2015 06:11:39
+channel ORA_DISK_1: finished piece 43 at 01/04/2015 06:19:14
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_43_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 44 at 01/04/2015 06:19:14
+channel ORA_DISK_1: finished piece 44 at 01/04/2015 06:26:29
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_44_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 45 at 01/04/2015 06:26:29
+channel ORA_DISK_1: finished piece 45 at 01/04/2015 06:33:44
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_45_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 46 at 01/04/2015 06:33:44
+channel ORA_DISK_1: finished piece 46 at 01/04/2015 06:41:09
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_46_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 47 at 01/04/2015 06:41:09
+channel ORA_DISK_1: finished piece 47 at 01/04/2015 06:48:44
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_47_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 48 at 01/04/2015 06:48:44
+channel ORA_DISK_1: finished piece 48 at 01/04/2015 06:56:29
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_48_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 49 at 01/04/2015 06:56:29
+channel ORA_DISK_1: finished piece 49 at 01/04/2015 07:03:54
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_49_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 50 at 01/04/2015 07:03:55
+channel ORA_DISK_1: finished piece 50 at 01/04/2015 07:11:20
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_50_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 51 at 01/04/2015 07:11:20
+channel ORA_DISK_1: finished piece 51 at 01/04/2015 07:19:05
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_51_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 52 at 01/04/2015 07:19:05
+channel ORA_DISK_1: finished piece 52 at 01/04/2015 07:27:00
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_52_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 53 at 01/04/2015 07:27:00
+channel ORA_DISK_1: finished piece 53 at 01/04/2015 07:35:05
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_53_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 54 at 01/04/2015 07:35:05
+channel ORA_DISK_1: finished piece 54 at 01/04/2015 07:43:20
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_54_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 55 at 01/04/2015 07:43:20
+channel ORA_DISK_1: finished piece 55 at 01/04/2015 07:51:35
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_55_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 56 at 01/04/2015 07:51:35
+channel ORA_DISK_1: finished piece 56 at 01/04/2015 07:59:40
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_56_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 57 at 01/04/2015 07:59:40
+channel ORA_DISK_1: finished piece 57 at 01/04/2015 08:07:15
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_57_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 58 at 01/04/2015 08:07:15
+channel ORA_DISK_1: finished piece 58 at 01/04/2015 08:14:40
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_58_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 59 at 01/04/2015 08:14:40
+channel ORA_DISK_1: finished piece 59 at 01/04/2015 08:19:35
+piece handle=+DATA/rman/level1_01_20150401_ikq38guc_59_1 tag=MON_LV1_17_31 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 07:18:33
+Finished backup at 01/04/2015 08:19:35
+
+Starting Control File and SPFILE Autobackup at 01/04/2015 08:19:36
+piece handle=+RECO/rman/c-271141816-20150401-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 01/04/2015 08:19:39
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 01/04/2015 08:19:48
+current log archived
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21518.1911.875405603; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21519.3440.875437073; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21520.2360.875437091; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21521.627.875438289; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21522.2619.875444559; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21523.1808.875458389; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21524.3955.875482175; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21525.1369.875482183; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_28/thread_1_seq_21526.3478.875568419; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_28/thread_1_seq_21527.3505.875568429; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21528.4226.875577907; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21529.1205.875578023; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21530.2969.875614185; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21531.3902.875627023; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21532.538.875632147; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21533.4242.875649905; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21534.856.875654915; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21535.3533.875654921; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21536.4173.875664135; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21537.3216.875664971; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21538.3264.875691471; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21539.4289.875696669; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21540.3749.875697755; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21541.3785.875699751; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21542.3793.875701481; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21543.2176.875702865; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21544.1845.875709683; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21545.2364.875713255; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21546.3262.875716755; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21547.2712.875718371; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21548.3258.875741561; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21549.2505.875741571; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_26/thread_2_seq_17857.1830.875395745; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17858.548.875437135; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17859.338.875456485; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17860.1315.875482215; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17861.1520.875482225; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_28/thread_2_seq_17862.3144.875522471; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_28/thread_2_seq_17863.1444.875568459; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_28/thread_2_seq_17864.1464.875568471; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17865.3809.875614227; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17866.1333.875649949; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17867.4029.875654959; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17868.2842.875654963; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17869.3139.875665013; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17870.3055.875696271; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17871.2132.875696595; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17872.3315.875696709; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17873.2348.875697771; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17874.3769.875699783; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17875.3773.875701551; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17876.3797.875702895; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17877.2154.875704323; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17878.3596.875704467; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17879.2685.875709723; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17880.2716.875716789; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17881.3386.875718421; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17882.1881.875726523; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17883.2537.875741605; already backed up 1 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17884.3184.875741613; already backed up 1 time(s)
+channel ORA_DISK_1: starting compressed archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=1 sequence=21550 RECID=58822 STAMP=875788737
+input archived log thread=2 sequence=17885 RECID=58821 STAMP=875779262
+input archived log thread=2 sequence=17886 RECID=58824 STAMP=875789157
+input archived log thread=1 sequence=21551 RECID=58823 STAMP=875788926
+input archived log thread=1 sequence=21552 RECID=58825 STAMP=875789116
+input archived log thread=1 sequence=21553 RECID=58826 STAMP=875789311
+input archived log thread=2 sequence=17887 RECID=58828 STAMP=875789720
+input archived log thread=1 sequence=21554 RECID=58827 STAMP=875789500
+input archived log thread=1 sequence=21555 RECID=58829 STAMP=875789689
+input archived log thread=1 sequence=21556 RECID=58830 STAMP=875790023
+input archived log thread=2 sequence=17888 RECID=58831 STAMP=875821082
+input archived log thread=1 sequence=21557 RECID=58833 STAMP=875834341
+input archived log thread=2 sequence=17889 RECID=58832 STAMP=875829990
+input archived log thread=2 sequence=17890 RECID=58834 STAMP=875835423
+input archived log thread=1 sequence=21558 RECID=58836 STAMP=875835469
+input archived log thread=2 sequence=17891 RECID=58835 STAMP=875835472
+input archived log thread=2 sequence=17892 RECID=58837 STAMP=875835521
+input archived log thread=2 sequence=17893 RECID=58838 STAMP=875835572
+input archived log thread=1 sequence=21559 RECID=58840 STAMP=875836948
+input archived log thread=2 sequence=17894 RECID=58839 STAMP=875835696
+input archived log thread=2 sequence=17895 RECID=58842 STAMP=875837035
+input archived log thread=1 sequence=21560 RECID=58841 STAMP=875836966
+input archived log thread=1 sequence=21561 RECID=58843 STAMP=875837000
+input archived log thread=1 sequence=21562 RECID=58844 STAMP=875837019
+input archived log thread=2 sequence=17896 RECID=58846 STAMP=875838931
+input archived log thread=1 sequence=21563 RECID=58845 STAMP=875837171
+input archived log thread=1 sequence=21564 RECID=58847 STAMP=875838900
+input archived log thread=1 sequence=21565 RECID=58848 STAMP=875839011
+input archived log thread=2 sequence=17897 RECID=58850 STAMP=875840173
+input archived log thread=1 sequence=21566 RECID=58849 STAMP=875839308
+input archived log thread=1 sequence=21567 RECID=58851 STAMP=875840142
+input archived log thread=1 sequence=21568 RECID=58852 STAMP=875840305
+input archived log thread=2 sequence=17898 RECID=58854 STAMP=875840502
+input archived log thread=1 sequence=21569 RECID=58853 STAMP=875840391
+input archived log thread=1 sequence=21570 RECID=58855 STAMP=875840477
+input archived log thread=1 sequence=21571 RECID=58856 STAMP=875840588
+input archived log thread=2 sequence=17899 RECID=58858 STAMP=875840891
+input archived log thread=1 sequence=21572 RECID=58857 STAMP=875840713
+input archived log thread=1 sequence=21573 RECID=58859 STAMP=875840859
+channel ORA_DISK_1: starting piece 1 at 01/04/2015 08:19:53
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=1 sequence=21574 RECID=58860 STAMP=875841061
+input archived log thread=2 sequence=17900 RECID=58862 STAMP=875841276
+input archived log thread=1 sequence=21575 RECID=58861 STAMP=875841202
+input archived log thread=1 sequence=21576 RECID=58863 STAMP=875841260
+input archived log thread=1 sequence=21577 RECID=58864 STAMP=875841342
+input archived log thread=2 sequence=17901 RECID=58866 STAMP=875841699
+input archived log thread=1 sequence=21578 RECID=58865 STAMP=875841492
+input archived log thread=1 sequence=21579 RECID=58867 STAMP=875841668
+input archived log thread=1 sequence=21580 RECID=58868 STAMP=875841909
+input archived log thread=2 sequence=17902 RECID=58870 STAMP=875842279
+input archived log thread=1 sequence=21581 RECID=58869 STAMP=875841981
+input archived log thread=1 sequence=21582 RECID=58871 STAMP=875842248
+input archived log thread=1 sequence=21583 RECID=58872 STAMP=875842545
+input archived log thread=2 sequence=17903 RECID=58874 STAMP=875842843
+input archived log thread=1 sequence=21584 RECID=58873 STAMP=875842599
+input archived log thread=1 sequence=21585 RECID=58875 STAMP=875842812
+input archived log thread=1 sequence=21586 RECID=58876 STAMP=875843000
+input archived log thread=2 sequence=17904 RECID=58878 STAMP=875843492
+input archived log thread=1 sequence=21587 RECID=58877 STAMP=875843096
+input archived log thread=1 sequence=21588 RECID=58879 STAMP=875843461
+input archived log thread=1 sequence=21589 RECID=58880 STAMP=875843654
+input archived log thread=2 sequence=17905 RECID=58882 STAMP=875844011
+input archived log thread=1 sequence=21590 RECID=58881 STAMP=875843915
+input archived log thread=1 sequence=21591 RECID=58883 STAMP=875843981
+input archived log thread=1 sequence=21592 RECID=58884 STAMP=875844086
+input archived log thread=2 sequence=17906 RECID=58886 STAMP=875852709
+input archived log thread=1 sequence=21593 RECID=58885 STAMP=875852181
+input archived log thread=1 sequence=21594 RECID=58887 STAMP=875852676
+input archived log thread=1 sequence=21595 RECID=58888 STAMP=875853662
+input archived log thread=2 sequence=17907 RECID=58890 STAMP=875853829
+input archived log thread=1 sequence=21596 RECID=58889 STAMP=875853705
+input archived log thread=1 sequence=21597 RECID=58891 STAMP=875853798
+input archived log thread=1 sequence=21598 RECID=58892 STAMP=875853967
+input archived log thread=2 sequence=17908 RECID=58894 STAMP=875854589
+input archived log thread=1 sequence=21599 RECID=58893 STAMP=875854516
+input archived log thread=1 sequence=21600 RECID=58895 STAMP=875854559
+input archived log thread=1 sequence=21601 RECID=58896 STAMP=875855416
+input archived log thread=2 sequence=17909 RECID=58898 STAMP=875866537
+input archived log thread=1 sequence=21602 RECID=58897 STAMP=875858217
+input archived log thread=1 sequence=21603 RECID=58899 STAMP=875866501
+input archived log thread=1 sequence=21604 RECID=58900 STAMP=875866681
+input archived log thread=2 sequence=17910 RECID=58901 STAMP=875866823
+channel ORA_DISK_2: starting piece 1 at 01/04/2015 08:19:54
+channel ORA_DISK_1: finished piece 1 at 01/04/2015 08:27:19
+piece handle=+DATA/rman/archi_01_20150401_inq39al9_1_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 01/04/2015 08:27:19
+channel ORA_DISK_2: finished piece 1 at 01/04/2015 08:27:19
+piece handle=+DATA/rman/archi_01_20150401_ioq39al9_1_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 01/04/2015 08:27:19
+channel ORA_DISK_1: finished piece 2 at 01/04/2015 08:34:34
+piece handle=+DATA/rman/archi_01_20150401_inq39al9_2_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 01/04/2015 08:34:34
+channel ORA_DISK_2: finished piece 2 at 01/04/2015 08:34:41
+piece handle=+DATA/rman/archi_01_20150401_ioq39al9_2_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 01/04/2015 08:34:41
+channel ORA_DISK_1: finished piece 3 at 01/04/2015 08:41:46
+piece handle=+DATA/rman/archi_01_20150401_inq39al9_3_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 01/04/2015 08:41:46
+channel ORA_DISK_2: finished piece 3 at 01/04/2015 08:41:46
+piece handle=+DATA/rman/archi_01_20150401_ioq39al9_3_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_2: starting piece 4 at 01/04/2015 08:41:46
+channel ORA_DISK_2: finished piece 4 at 01/04/2015 08:46:31
+piece handle=+DATA/rman/archi_01_20150401_ioq39al9_4_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:26:37
+channel ORA_DISK_2: deleting archived log(s)
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21574.1076.875841049 thread=1 sequence=21574
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17900.3969.875841277 thread=2 sequence=17900
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21575.991.875841189 thread=1 sequence=21575
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21576.696.875841231 thread=1 sequence=21576
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21577.1612.875841327 thread=1 sequence=21577
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17901.414.875841699 thread=2 sequence=17901
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21578.3964.875841477 thread=1 sequence=21578
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21579.3876.875841657 thread=1 sequence=21579
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21580.2844.875841897 thread=1 sequence=21580
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17902.4263.875842279 thread=2 sequence=17902
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21581.3836.875841969 thread=1 sequence=21581
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21582.1071.875842237 thread=1 sequence=21582
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21583.2075.875842533 thread=1 sequence=21583
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17903.3129.875842843 thread=2 sequence=17903
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21584.3885.875842587 thread=1 sequence=21584
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21585.3906.875842801 thread=1 sequence=21585
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21586.2337.875842987 thread=1 sequence=21586
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17904.3494.875843491 thread=2 sequence=17904
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21587.3300.875843083 thread=1 sequence=21587
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21588.3372.875843449 thread=1 sequence=21588
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21589.3019.875843641 thread=1 sequence=21589
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17905.2651.875844011 thread=2 sequence=17905
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21590.976.875843903 thread=1 sequence=21590
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21591.3939.875843969 thread=1 sequence=21591
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21592.2473.875844075 thread=1 sequence=21592
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17906.3960.875852709 thread=2 sequence=17906
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21593.3585.875852169 thread=1 sequence=21593
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21594.2918.875852665 thread=1 sequence=21594
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21595.3096.875853651 thread=1 sequence=21595
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17907.2460.875853829 thread=2 sequence=17907
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21596.2551.875853693 thread=1 sequence=21596
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21597.3081.875853785 thread=1 sequence=21597
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21598.4016.875853955 thread=1 sequence=21598
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17908.3205.875854589 thread=2 sequence=17908
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21599.3897.875854505 thread=1 sequence=21599
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21600.3154.875854547 thread=1 sequence=21600
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21601.1764.875855405 thread=1 sequence=21601
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17909.3530.875866535 thread=2 sequence=17909
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21602.2315.875858205 thread=1 sequence=21602
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21603.3823.875866489 thread=1 sequence=21603
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21604.4064.875866669 thread=1 sequence=21604
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17910.721.875866823 thread=2 sequence=17910
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=1 sequence=21605 RECID=58902 STAMP=875866787
+input archived log thread=1 sequence=21606 RECID=58904 STAMP=875866790
+input archived log thread=2 sequence=17911 RECID=58903 STAMP=875866790
+channel ORA_DISK_2: starting piece 1 at 01/04/2015 08:46:32
+channel ORA_DISK_2: finished piece 1 at 01/04/2015 08:47:07
+piece handle=+DATA/rman/archi_01_20150401_ipq39c78_1_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:00:35
+channel ORA_DISK_2: deleting archived log(s)
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21605.4037.875866781 thread=1 sequence=21605
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21606.1610.875866789 thread=1 sequence=21606
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17911.1182.875866789 thread=2 sequence=17911
+channel ORA_DISK_2: deleting archived log(s)
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21518.1911.875405603 thread=1 sequence=21518
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21519.3440.875437073 thread=1 sequence=21519
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21520.2360.875437091 thread=1 sequence=21520
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21521.627.875438289 thread=1 sequence=21521
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21522.2619.875444559 thread=1 sequence=21522
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21523.1808.875458389 thread=1 sequence=21523
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21524.3955.875482175 thread=1 sequence=21524
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_1_seq_21525.1369.875482183 thread=1 sequence=21525
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_28/thread_1_seq_21526.3478.875568419 thread=1 sequence=21526
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_28/thread_1_seq_21527.3505.875568429 thread=1 sequence=21527
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21528.4226.875577907 thread=1 sequence=21528
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21529.1205.875578023 thread=1 sequence=21529
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21530.2969.875614185 thread=1 sequence=21530
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21531.3902.875627023 thread=1 sequence=21531
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21532.538.875632147 thread=1 sequence=21532
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21533.4242.875649905 thread=1 sequence=21533
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21534.856.875654915 thread=1 sequence=21534
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_1_seq_21535.3533.875654921 thread=1 sequence=21535
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21536.4173.875664135 thread=1 sequence=21536
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21537.3216.875664971 thread=1 sequence=21537
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21538.3264.875691471 thread=1 sequence=21538
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21539.4289.875696669 thread=1 sequence=21539
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21540.3749.875697755 thread=1 sequence=21540
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21541.3785.875699751 thread=1 sequence=21541
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21542.3793.875701481 thread=1 sequence=21542
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21543.2176.875702865 thread=1 sequence=21543
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21544.1845.875709683 thread=1 sequence=21544
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21545.2364.875713255 thread=1 sequence=21545
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21546.3262.875716755 thread=1 sequence=21546
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21547.2712.875718371 thread=1 sequence=21547
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21548.3258.875741561 thread=1 sequence=21548
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_1_seq_21549.2505.875741571 thread=1 sequence=21549
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_26/thread_2_seq_17857.1830.875395745 thread=2 sequence=17857
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17858.548.875437135 thread=2 sequence=17858
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17859.338.875456485 thread=2 sequence=17859
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17860.1315.875482215 thread=2 sequence=17860
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_27/thread_2_seq_17861.1520.875482225 thread=2 sequence=17861
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_28/thread_2_seq_17862.3144.875522471 thread=2 sequence=17862
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_28/thread_2_seq_17863.1444.875568459 thread=2 sequence=17863
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_28/thread_2_seq_17864.1464.875568471 thread=2 sequence=17864
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17865.3809.875614227 thread=2 sequence=17865
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17866.1333.875649949 thread=2 sequence=17866
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17867.4029.875654959 thread=2 sequence=17867
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_29/thread_2_seq_17868.2842.875654963 thread=2 sequence=17868
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17869.3139.875665013 thread=2 sequence=17869
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17870.3055.875696271 thread=2 sequence=17870
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17871.2132.875696595 thread=2 sequence=17871
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17872.3315.875696709 thread=2 sequence=17872
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17873.2348.875697771 thread=2 sequence=17873
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17874.3769.875699783 thread=2 sequence=17874
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17875.3773.875701551 thread=2 sequence=17875
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17876.3797.875702895 thread=2 sequence=17876
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17877.2154.875704323 thread=2 sequence=17877
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17878.3596.875704467 thread=2 sequence=17878
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17879.2685.875709723 thread=2 sequence=17879
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17880.2716.875716789 thread=2 sequence=17880
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17881.3386.875718421 thread=2 sequence=17881
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17882.1881.875726523 thread=2 sequence=17882
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17883.2537.875741605 thread=2 sequence=17883
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_30/thread_2_seq_17884.3184.875741613 thread=2 sequence=17884
+channel ORA_DISK_1: finished piece 4 at 01/04/2015 08:48:07
+piece handle=+DATA/rman/archi_01_20150401_inq39al9_4_1 tag=MONTHLY_ARCH_17_31 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:28:14
+channel ORA_DISK_1: deleting archived log(s)
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21550.2442.875788727 thread=1 sequence=21550
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17885.4277.875779251 thread=2 sequence=17885
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17886.4212.875789147 thread=2 sequence=17886
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21551.2846.875788915 thread=1 sequence=21551
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21552.4236.875789105 thread=1 sequence=21552
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21553.4109.875789299 thread=1 sequence=21553
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17887.3968.875789721 thread=2 sequence=17887
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21554.4128.875789489 thread=1 sequence=21554
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21555.1040.875789677 thread=1 sequence=21555
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21556.4248.875790017 thread=1 sequence=21556
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17888.3929.875821071 thread=2 sequence=17888
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21557.2663.875834329 thread=1 sequence=21557
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17889.4079.875829979 thread=2 sequence=17889
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17890.2462.875835411 thread=2 sequence=17890
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_1_seq_21558.556.875835467 thread=1 sequence=21558
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17891.1004.875835459 thread=2 sequence=17891
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17892.4224.875835507 thread=2 sequence=17892
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17893.437.875835559 thread=2 sequence=17893
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21559.1176.875836935 thread=1 sequence=21559
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_03_31/thread_2_seq_17894.1140.875835685 thread=2 sequence=17894
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17895.3534.875837027 thread=2 sequence=17895
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21560.3334.875836953 thread=1 sequence=21560
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21561.2940.875836987 thread=1 sequence=21561
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21562.2776.875837007 thread=1 sequence=21562
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17896.4032.875838931 thread=2 sequence=17896
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21563.4101.875837159 thread=1 sequence=21563
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21564.4000.875838889 thread=1 sequence=21564
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21565.4033.875838999 thread=1 sequence=21565
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17897.2611.875840173 thread=2 sequence=17897
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21566.1967.875839289 thread=1 sequence=21566
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21567.3192.875840129 thread=1 sequence=21567
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21568.3927.875840293 thread=1 sequence=21568
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17898.3933.875840501 thread=2 sequence=17898
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21569.3946.875840379 thread=1 sequence=21569
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21570.2495.875840457 thread=1 sequence=21570
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21571.2820.875840575 thread=1 sequence=21571
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_2_seq_17899.1987.875840891 thread=2 sequence=17899
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21572.3579.875840701 thread=1 sequence=21572
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2015_04_01/thread_1_seq_21573.678.875840849 thread=1 sequence=21573
+Finished backup at 01/04/2015 08:48:08
+
+Starting Control File and SPFILE Autobackup at 01/04/2015 08:48:08
+piece handle=+RECO/rman/c-271141816-20150401-01 comment=NONE
+Finished Control File and SPFILE Autobackup at 01/04/2015 08:48:11
+
+Recovery Manager complete.

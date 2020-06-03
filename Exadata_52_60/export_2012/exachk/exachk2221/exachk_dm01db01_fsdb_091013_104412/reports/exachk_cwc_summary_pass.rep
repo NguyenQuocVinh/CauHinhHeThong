@@ -1,0 +1,21 @@
+
+
+---------------------------------------------------------------------------------
+                      CLUSTERWIDE CHECKS
+---------------------------------------------------------------------------------
+Check:- PASS => Master (Rack) Serial Number matches across database servers and storage servers
+Check:- PASS => Time zone matches for root user across cluster
+Check:- PASS => Time zone matches for Grid Infrastructure software owner across cluster
+Check:- PASS => RDBMS software owner UID matches across cluster
+Check:- PASS => OS Kernel version(uname -r) matches across cluster.
+Check:- PASS => Public network interface names are the same across cluster
+Check:- PASS => RDBMS software version matches across cluster.
+Check:- PASS => Private interconnect interface names are the same across cluster
+Check:- PASS => Timezone matches for current user across cluster.
+Check:- PASS => Grid Infrastructure software owner UID matches across cluster
+Check:- PASS => Clusterware active version matches across cluster.
+Check:- PASS => Imageinfo version matches across all database and storage servers
+Check:- PASS => Imageinfo matches across cluster on database servers
+Check:- PASS => CRS home has same number of patches installed across the cluster
+Check:- PASS => RDBMS home /u01/app/oracle/product/11.2.0.2/dbhome_1 has same number of patches installed across the cluster
+---------------------------------------------------------------------------------

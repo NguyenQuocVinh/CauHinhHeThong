@@ -1,0 +1,6 @@
+status=30
+cluster=N
+logfile=fga_audit.log  
+dumpfile=fga_audit_%U 
+filesize=4G directory=DPUMP_DIR
+tables=export_ccbs.FGA_AUDIT_TMP

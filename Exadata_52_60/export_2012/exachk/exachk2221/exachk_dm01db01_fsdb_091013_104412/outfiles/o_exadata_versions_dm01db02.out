@@ -1,0 +1,28 @@
+
+
+<b><u>Clusterware and RDBMS software version</b></u>
+
+dm01db02.CRS_ACTIVE_VERSION = 11.2.0.2.0
+dm01db02.ccbs.INSTANCE_VERSION = 112020
+dm01db02.fsdb.INSTANCE_VERSION = 112020
+
+
+<b><u>Clusterware home(/u01/app/11.2.0.2/grid) patch inventory</b></u>
+Patch  13396479     : applied on Thu Apr 05 09:36:07 ICT 2012
+Patch  13603787     : applied on Thu Apr 05 09:34:26 ICT 2012
+Patch  13603796     : applied on Thu Apr 05 09:36:31 ICT 2012
+Patch Description:  "Exadata Database Recommended Patch (CRS) : 11.2.0.2.15 (13396479) "
+Patch Description:  "Exadata Database Recommended Patch (Database) : 11.2.0.2.15 (13603787)"
+Patch Description:  "Exadata Database Recommended Patch (Diskmon) : 11.2.0.2.15 (13603796)"
+
+<b><u>Exadata Server software version</b></u>
+version:11.2.2.4.2.111221
+
+<b><u>Infiniband HCA firmware version</b></u>
+Firmware version: 2.7.8130
+
+<b><u>OpenFabrics Enterprise Distribution (OFED) Software version</b></u>
+1.5.1
+
+<b><u>Operating system and Kernel version</b></u>
+Red Hat Enterprise Linux Server release 5.5 (Tikanga) kernel=2.6.18-238.12.2.0.2.el5

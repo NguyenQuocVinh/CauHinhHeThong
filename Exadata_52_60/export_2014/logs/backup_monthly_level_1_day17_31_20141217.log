@@ -1,0 +1,396 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Wed Dec 17 21:00:01 2014
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> 	backup incremental level 1 copies 2 format '+DATA/RMAN/level1_%D_%T_%U','/mnt/nfs52100/RMAN/level1_%D_%T_%U' tag MONTHLY_LEVEL_1 
+41>   database include current controlfile;
+42> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+43> 	backup as compressed backupset copies 2 archivelog all format '+DATA/RMAN/archi_%D_%T_%U','/u03/rman_ccbs_ftp5/RMAN/archi_%D_%T_%U'
+44>   tag monthly_arch delete input;
+45> }
+46> 
+Starting backup at 17/12/2014 21:00:02
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=1453 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=1530 instance=ccbs1 device type=DISK
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+channel ORA_DISK_1: starting piece 1 at 17/12/2014 21:00:12
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_2: starting piece 1 at 17/12/2014 21:00:13
+channel ORA_DISK_1: finished piece 1 at 17/12/2014 21:28:29 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_17_20141217_mmpqdums_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mmpqdums_1_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:28:17
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+channel ORA_DISK_1: starting piece 1 at 17/12/2014 21:28:30
+channel ORA_DISK_2: finished piece 1 at 17/12/2014 21:30:35 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_17_20141217_mnpqdums_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mnpqdums_1_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:30:22
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_2: starting piece 1 at 17/12/2014 21:30:38
+channel ORA_DISK_2: finished piece 1 at 17/12/2014 21:30:53 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_17_20141217_mppqe0fr_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mppqe0fr_1_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:00:15
+channel ORA_DISK_1: finished piece 1 at 17/12/2014 21:55:23 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_17_20141217_mopqe0bt_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mopqe0bt_1_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:26:53
+Finished backup at 17/12/2014 21:55:23
+
+Starting Control File and SPFILE Autobackup at 17/12/2014 21:55:24
+piece handle=+RECO/rman/c-271141816-20141217-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 17/12/2014 21:55:27
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 17/12/2014 21:55:40
+current log archived
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+skipping archived log file +RECO/ccbs/archivelog/2014_12_15/thread_1_seq_19365.3919.866410953; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2014_12_15/thread_2_seq_15856.340.866410961; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2014_12_15/thread_2_seq_15857.496.866410973; already backed up 2 time(s)
+channel ORA_DISK_1: starting compressed archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=1 sequence=19366 RECID=54262 STAMP=866422843
+input archived log thread=2 sequence=15858 RECID=54267 STAMP=866451778
+input archived log thread=1 sequence=19367 RECID=54264 STAMP=866448693
+input archived log thread=1 sequence=19368 RECID=54269 STAMP=866455569
+input archived log thread=2 sequence=15859 RECID=54273 STAMP=866459806
+input archived log thread=1 sequence=19369 RECID=54270 STAMP=866455748
+input archived log thread=1 sequence=19370 RECID=54275 STAMP=866460591
+input archived log thread=2 sequence=15860 RECID=54279 STAMP=866460817
+input archived log thread=1 sequence=19371 RECID=54276 STAMP=866460658
+input archived log thread=1 sequence=19372 RECID=54280 STAMP=866460807
+input archived log thread=1 sequence=19373 RECID=54282 STAMP=866461411
+input archived log thread=2 sequence=15861 RECID=54288 STAMP=866473693
+input archived log thread=1 sequence=19374 RECID=54284 STAMP=866461558
+input archived log thread=1 sequence=19375 RECID=54287 STAMP=866473673
+input archived log thread=1 sequence=19376 RECID=54290 STAMP=866473806
+input archived log thread=2 sequence=15862 RECID=54295 STAMP=866475171
+input archived log thread=1 sequence=19377 RECID=54292 STAMP=866473986
+input archived log thread=1 sequence=19378 RECID=54296 STAMP=866475160
+input archived log thread=1 sequence=19379 RECID=54298 STAMP=866475307
+input archived log thread=2 sequence=15863 RECID=54304 STAMP=866481984
+input archived log thread=1 sequence=19380 RECID=54300 STAMP=866476517
+input archived log thread=1 sequence=19381 RECID=54305 STAMP=866481972
+input archived log thread=1 sequence=19382 RECID=54309 STAMP=866487709
+input archived log thread=2 sequence=15864 RECID=54308 STAMP=866487723
+input archived log thread=1 sequence=19383 RECID=54311 STAMP=866490879
+input archived log thread=2 sequence=15865 RECID=54315 STAMP=866494066
+input archived log thread=1 sequence=19384 RECID=54312 STAMP=866493842
+input archived log thread=1 sequence=19385 RECID=54316 STAMP=866494056
+input archived log thread=1 sequence=19386 RECID=54318 STAMP=866495787
+channel ORA_DISK_1: starting piece 1 at 17/12/2014 21:55:43
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=2 sequence=15866 RECID=54323 STAMP=866505752
+input archived log thread=1 sequence=19387 RECID=54321 STAMP=866496984
+input archived log thread=1 sequence=19388 RECID=54324 STAMP=866505742
+input archived log thread=1 sequence=19389 RECID=54326 STAMP=866505921
+input archived log thread=2 sequence=15867 RECID=54331 STAMP=866543755
+input archived log thread=1 sequence=19390 RECID=54328 STAMP=866505995
+input archived log thread=1 sequence=19391 RECID=54335 STAMP=866544889
+input archived log thread=2 sequence=15868 RECID=54332 STAMP=866544821
+input archived log thread=2 sequence=15869 RECID=54334 STAMP=866544908
+input archived log thread=2 sequence=15870 RECID=54337 STAMP=866544995
+input archived log thread=1 sequence=19392 RECID=54340 STAMP=866545334
+input archived log thread=2 sequence=15871 RECID=54345 STAMP=866546387
+input archived log thread=1 sequence=19393 RECID=54343 STAMP=866546303
+input archived log thread=1 sequence=19394 RECID=54346 STAMP=866546374
+input archived log thread=1 sequence=19395 RECID=54347 STAMP=866546449
+input archived log thread=2 sequence=15872 RECID=54352 STAMP=866558321
+input archived log thread=1 sequence=19396 RECID=54350 STAMP=866553602
+input archived log thread=1 sequence=19397 RECID=54357 STAMP=866559740
+input archived log thread=2 sequence=15873 RECID=54354 STAMP=866559645
+input archived log thread=2 sequence=15874 RECID=54358 STAMP=866559763
+input archived log thread=2 sequence=15875 RECID=54359 STAMP=866559811
+input archived log thread=1 sequence=19398 RECID=54364 STAMP=866560383
+input archived log thread=2 sequence=15876 RECID=54363 STAMP=866560323
+input archived log thread=2 sequence=15877 RECID=54366 STAMP=866560413
+input archived log thread=2 sequence=15878 RECID=54369 STAMP=866560902
+input archived log thread=1 sequence=19399 RECID=54373 STAMP=866584540
+input archived log thread=2 sequence=15879 RECID=54372 STAMP=866584558
+input archived log thread=2 sequence=15880 RECID=54375 STAMP=866584560
+input archived log thread=1 sequence=19400 RECID=54374 STAMP=866584540
+channel ORA_DISK_2: starting piece 1 at 17/12/2014 21:55:43
+channel ORA_DISK_1: finished piece 1 at 17/12/2014 22:16:39 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_17_20141217_mrpqe1uv_1_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_17_20141217_mrpqe1uv_1_2 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 17/12/2014 22:16:39
+channel ORA_DISK_2: finished piece 1 at 17/12/2014 22:16:39 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_17_20141217_mspqe1uv_1_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_17_20141217_mspqe1uv_1_2 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 17/12/2014 22:16:39
+channel ORA_DISK_1: finished piece 2 at 17/12/2014 22:36:44 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_17_20141217_mrpqe1uv_2_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_17_20141217_mrpqe1uv_2_2 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 17/12/2014 22:36:44
+channel ORA_DISK_2: finished piece 2 at 17/12/2014 22:36:44 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_17_20141217_mspqe1uv_2_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_17_20141217_mspqe1uv_2_2 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 17/12/2014 22:36:44
+channel ORA_DISK_2: finished piece 3 at 17/12/2014 22:54:29 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_17_20141217_mspqe1uv_3_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_17_20141217_mspqe1uv_3_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:58:46
+channel ORA_DISK_2: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15866.1184.866505749 RECID=54323 STAMP=866505752
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19387.3570.866496973 RECID=54321 STAMP=866496984
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19388.2609.866505729 RECID=54324 STAMP=866505742
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19389.3032.866505909 RECID=54326 STAMP=866505921
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15867.4254.866543743 RECID=54331 STAMP=866543755
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19390.793.866505983 RECID=54328 STAMP=866505995
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19391.3289.866544871 RECID=54335 STAMP=866544889
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15868.2323.866544807 RECID=54332 STAMP=866544821
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15869.3997.866544889 RECID=54334 STAMP=866544908
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15870.2258.866544983 RECID=54337 STAMP=866544995
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19392.4021.866545321 RECID=54340 STAMP=866545334
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15871.4059.866546381 RECID=54345 STAMP=866546387
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19393.3016.866546291 RECID=54343 STAMP=866546303
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19394.826.866546361 RECID=54346 STAMP=866546374
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19395.3295.866546435 RECID=54347 STAMP=866546449
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15872.611.866558309 RECID=54352 STAMP=866558321
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19396.1119.866553591 RECID=54350 STAMP=866553602
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19397.2645.866559733 RECID=54357 STAMP=866559740
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15873.2989.866559633 RECID=54354 STAMP=866559645
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15874.3820.866559749 RECID=54358 STAMP=866559763
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15875.710.866559799 RECID=54359 STAMP=866559811
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19398.1122.866560383 RECID=54364 STAMP=866560383
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15876.2838.866560311 RECID=54363 STAMP=866560323
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15877.3646.866560401 RECID=54366 STAMP=866560413
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15878.3314.866560891 RECID=54369 STAMP=866560902
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19399.3188.866584531 RECID=54373 STAMP=866584540
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15879.406.866584549 RECID=54372 STAMP=866584558
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_2_seq_15880.788.866584561 thread=2 sequence=15880
+archived log file name=+RECO/ccbs/archivelog/2014_12_17/thread_1_seq_19400.3875.866584541 RECID=54374 STAMP=866584540
+channel ORA_DISK_2: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2014_12_15/thread_1_seq_19365.3919.866410953 RECID=54258 STAMP=866410952
+archived log file name=+RECO/ccbs/archivelog/2014_12_15/thread_2_seq_15856.340.866410961 RECID=54257 STAMP=866410971
+archived log file name=+RECO/ccbs/archivelog/2014_12_15/thread_2_seq_15857.496.866410973 RECID=54259 STAMP=866410972
+channel ORA_DISK_1: finished piece 3 at 17/12/2014 22:54:52 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_17_20141217_mrpqe1uv_3_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_17_20141217_mrpqe1uv_3_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:59:09
+channel ORA_DISK_1: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19366.1973.866422833 RECID=54262 STAMP=866422843
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15858.266.866451767 RECID=54267 STAMP=866451778
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19367.3507.866448681 RECID=54264 STAMP=866448693
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19368.3883.866455557 RECID=54269 STAMP=866455569
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15859.3907.866459793 RECID=54273 STAMP=866459806
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19369.3134.866455737 RECID=54270 STAMP=866455748
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19370.787.866460579 RECID=54275 STAMP=866460591
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15860.3918.866460817 RECID=54279 STAMP=866460817
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19371.483.866460647 RECID=54276 STAMP=866460658
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19372.675.866460797 RECID=54280 STAMP=866460807
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19373.395.866461399 RECID=54282 STAMP=866461411
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15861.2282.866473681 RECID=54288 STAMP=866473693
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19374.4105.866461547 RECID=54284 STAMP=866461558
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19375.3069.866473661 RECID=54287 STAMP=866473673
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19376.1210.866473795 RECID=54290 STAMP=866473806
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15862.3982.866475171 RECID=54295 STAMP=866475171
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19377.889.866473975 RECID=54292 STAMP=866473986
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19378.1945.866475149 RECID=54296 STAMP=866475160
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19379.4020.866475297 RECID=54298 STAMP=866475307
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15863.1169.866481981 RECID=54304 STAMP=866481984
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19380.540.866476503 RECID=54300 STAMP=866476517
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19381.2111.866481959 RECID=54305 STAMP=866481972
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19382.3656.866487701 RECID=54309 STAMP=866487709
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15864.3029.866487723 RECID=54308 STAMP=866487723
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19383.3917.866490869 RECID=54311 STAMP=866490879
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_2_seq_15865.680.866494065 RECID=54315 STAMP=866494066
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19384.3652.866493831 RECID=54312 STAMP=866493842
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19385.3131.866494045 RECID=54316 STAMP=866494056
+archived log file name=+RECO/ccbs/archivelog/2014_12_16/thread_1_seq_19386.3397.866495775 RECID=54318 STAMP=866495787
+Finished backup at 17/12/2014 22:54:59
+
+Starting Control File and SPFILE Autobackup at 17/12/2014 22:54:59
+piece handle=+RECO/rman/c-271141816-20141217-01 comment=NONE
+Finished Control File and SPFILE Autobackup at 17/12/2014 22:55:03
+
+Recovery Manager complete.

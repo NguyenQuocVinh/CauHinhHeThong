@@ -1,0 +1,54 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR CONFIGURE STORAGE SERVER ALERTS TO BE SENT VIA EMAIL 
+
+
+
+	 notificationMethod:	 mail,snmp
+	 notificationPolicy:	 critical,warning,clear
+	 smtpFrom:          	 "VNPT HCM DB Sun Oracle DB Machine"
+	 smtpFromAddr:      	 exadata.ccbs@gmail.com
+	 smtpPort:          	 587
+	 smtpPwd:           	 ******
+	 smtpServer:        	 smtp.gmail.com
+	 smtpToAddr:        	 baobnh@yahoo.com,,jk2002cup@yahoo.com,,lmhuy@yahoo.com,,toannlp@neo.com.vn
+	 smtpUser:          	 
+	 smtpUseSSL:        	 FALSE
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR CONFIGURE STORAGE SERVER ALERTS TO BE SENT VIA EMAIL 
+
+
+
+	 notificationMethod:	 mail,snmp
+	 notificationPolicy:	 critical,warning,clear
+	 smtpFrom:          	 "VNPT HCM DB Sun Oracle DB Machine"
+	 smtpFromAddr:      	 exadata.ccbs@gmail.com
+	 smtpPort:          	 587
+	 smtpPwd:           	 ******
+	 smtpServer:        	 smtp.gmail.com
+	 smtpToAddr:        	 baobnh@yahoo.com,,jk2002cup@yahoo.com,,lmhuy@yahoo.com,,toannlp@neo.com.vn
+	 smtpUser:          	 
+	 smtpUseSSL:        	 FALSE
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR CONFIGURE STORAGE SERVER ALERTS TO BE SENT VIA EMAIL 
+
+
+
+	 notificationMethod:	 mail,snmp
+	 notificationPolicy:	 critical,warning,clear
+	 smtpFrom:          	 "VNPT HCM DB Sun Oracle DB Machine"
+	 smtpFromAddr:      	 exadata.ccbs@gmail.com
+	 smtpPort:          	 587
+	 smtpPwd:           	 ******
+	 smtpServer:        	 smtp.gmail.com
+	 smtpToAddr:        	 baobnh@yahoo.com,,jk2002cup@yahoo.com,,lmhuy@yahoo.com,,toannlp@neo.com.vn
+	 smtpUser:          	 
+	 smtpUseSSL:        	 FALSE
+
+
+
+

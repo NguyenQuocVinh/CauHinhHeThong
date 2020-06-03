@@ -1,0 +1,11 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR VERIFY IMAGEINFO ON DATABASE SERVER TO COMPARE SYSTEMWIDE 
+
+
+
+
+Kernel version: 2.6.18-238.12.2.0.2.el5 #1 SMP Tue Jun 28 05:21:19 EDT 2011 x86_64
+Image version: 11.2.2.4.2.111221
+Image activated: 2012-04-04 22:27:20 +0700
+Image status: success
+System partition on device: /dev/mapper/VGExaDb-LVDbSys1
+

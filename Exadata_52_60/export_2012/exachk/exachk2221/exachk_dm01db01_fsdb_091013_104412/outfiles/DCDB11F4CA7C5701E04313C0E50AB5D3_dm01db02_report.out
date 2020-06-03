@@ -1,0 +1,8 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - VERIFY VM.MIN_FREE_KBYTES 
+
+
+
+
+FAILURE: vm.min_free_kbytes is not set as recommended:
+in sysctl.conf: 
+in active memory: 51200

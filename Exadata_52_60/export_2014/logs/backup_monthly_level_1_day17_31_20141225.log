@@ -1,0 +1,692 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Thu Dec 25 21:00:01 2014
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> 	backup incremental level 1 copies 2 format '+DATA/RMAN/level1_%D_%T_%U','/mnt/nfs52100/RMAN/level1_%D_%T_%U' tag MONTHLY_LEVEL_1 
+41>   database include current controlfile;
+42> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+43> 	backup as compressed backupset copies 2 archivelog all format '+DATA/RMAN/archi_%D_%T_%U','/u03/rman_ccbs_ftp5/RMAN/archi_%D_%T_%U'
+44>   tag monthly_arch delete input;
+45> }
+46> 
+Starting backup at 25/12/2014 21:00:02
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=309 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=404 instance=ccbs1 device type=DISK
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+channel ORA_DISK_1: starting piece 1 at 25/12/2014 21:00:15
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_2: starting piece 1 at 25/12/2014 21:00:30
+RMAN-03009: failure of backup command on ORA_DISK_2 channel at 12/25/2014 21:01:25
+ORA-19502: write error on file "/mnt/nfs52100/RMAN/level1_25_20141225_nupr31mv_1_2", block number 13825 (block size=8192)
+ORA-27072: File I/O error
+Linux-x86_64 Error: 5: Input/output error
+Additional information: 4
+Additional information: 13825
+Additional information: -1
+ORA-19502: write error on file "/mnt/nfs52100/RMAN/level1_25_20141225_nupr31mv_1_2", block number 13825 (block size=8192)
+channel ORA_DISK_2 disabled, job failed on it will be run on another channel
+channel ORA_DISK_1: finished piece 1 at 25/12/2014 21:23:30 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_ntpr31ms_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_ntpr31ms_1_2 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 25/12/2014 21:23:30
+channel ORA_DISK_1: finished piece 2 at 25/12/2014 21:28:25 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_ntpr31ms_2_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_ntpr31ms_2_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:28:10
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_1: starting piece 1 at 25/12/2014 21:28:26
+channel ORA_DISK_1: finished piece 1 at 25/12/2014 21:46:51 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_nvpr33bp_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_nvpr33bp_1_2 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 25/12/2014 21:46:51
+channel ORA_DISK_1: finished piece 2 at 25/12/2014 21:59:26 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_nvpr33bp_2_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_nvpr33bp_2_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:31:00
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+channel ORA_DISK_1: starting piece 1 at 25/12/2014 21:59:28
+channel ORA_DISK_1: finished piece 1 at 25/12/2014 22:15:13 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_o0pr355v_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_o0pr355v_1_2 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 25/12/2014 22:15:13
+channel ORA_DISK_1: finished piece 2 at 25/12/2014 22:38:38 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_o0pr355v_2_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_o0pr355v_2_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:39:10
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_1: starting piece 1 at 25/12/2014 22:38:41
+channel ORA_DISK_1: finished piece 1 at 25/12/2014 22:38:44 with 2 copies and tag MONTHLY_LEVEL_1
+piece handle=+DATA/rman/level1_25_20141225_o1pr37fe_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_25_20141225_o1pr37fe_1_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:03
+Finished backup at 25/12/2014 22:38:44
+
+Starting Control File and SPFILE Autobackup at 25/12/2014 22:38:44
+piece handle=+RECO/rman/c-271141816-20141225-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 25/12/2014 22:38:47
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 25/12/2014 22:38:54
+current log archived
+using channel ORA_DISK_1
+skipping archived log file +RECO/ccbs/archivelog/2014_12_20/thread_1_seq_19419.3917.866842795; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2014_12_20/thread_2_seq_15893.889.866842809; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2014_12_20/thread_2_seq_15894.3656.866842815; already backed up 2 time(s)
+channel ORA_DISK_1: starting compressed archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=2 sequence=15895 RECID=54447 STAMP=866851640
+input archived log thread=1 sequence=19420 RECID=54444 STAMP=866851505
+input archived log thread=1 sequence=19421 RECID=54448 STAMP=866851630
+input archived log thread=1 sequence=19422 RECID=54451 STAMP=866912399
+input archived log thread=2 sequence=15896 RECID=54452 STAMP=866918647
+input archived log thread=1 sequence=19423 RECID=54456 STAMP=866926595
+input archived log thread=2 sequence=15897 RECID=54453 STAMP=866918648
+input archived log thread=1 sequence=19424 RECID=54457 STAMP=866926595
+input archived log thread=2 sequence=15898 RECID=54458 STAMP=866926595
+input archived log thread=1 sequence=19425 RECID=54460 STAMP=866926601
+input archived log thread=1 sequence=19426 RECID=54461 STAMP=866926601
+input archived log thread=2 sequence=15899 RECID=54459 STAMP=866926598
+input archived log thread=2 sequence=15900 RECID=54464 STAMP=866927253
+input archived log thread=1 sequence=19427 RECID=54462 STAMP=866927228
+input archived log thread=1 sequence=19428 RECID=54463 STAMP=866927231
+input archived log thread=1 sequence=19429 RECID=54465 STAMP=866968365
+input archived log thread=2 sequence=15901 RECID=54467 STAMP=866968590
+input archived log thread=1 sequence=19430 RECID=54466 STAMP=866968451
+input archived log thread=1 sequence=19431 RECID=54468 STAMP=866968575
+input archived log thread=1 sequence=19432 RECID=54469 STAMP=866968747
+input archived log thread=2 sequence=15902 RECID=54471 STAMP=866969170
+input archived log thread=1 sequence=19433 RECID=54470 STAMP=866968876
+input archived log thread=1 sequence=19434 RECID=54472 STAMP=866969159
+input archived log thread=1 sequence=19435 RECID=54473 STAMP=866969296
+input archived log thread=2 sequence=15903 RECID=54475 STAMP=866969985
+input archived log thread=1 sequence=19436 RECID=54474 STAMP=866969707
+input archived log thread=1 sequence=19437 RECID=54476 STAMP=866969975
+input archived log thread=1 sequence=19438 RECID=54477 STAMP=866970144
+input archived log thread=2 sequence=15904 RECID=54479 STAMP=866970320
+input archived log thread=1 sequence=19439 RECID=54478 STAMP=866970251
+input archived log thread=1 sequence=19440 RECID=54480 STAMP=866970309
+input archived log thread=1 sequence=19441 RECID=54481 STAMP=866970409
+input archived log thread=2 sequence=15905 RECID=54483 STAMP=866971027
+input archived log thread=1 sequence=19442 RECID=54482 STAMP=866970826
+input archived log thread=1 sequence=19443 RECID=54484 STAMP=866971015
+input archived log thread=1 sequence=19444 RECID=54486 STAMP=866979215
+input archived log thread=2 sequence=15906 RECID=54485 STAMP=866977515
+input archived log thread=2 sequence=15907 RECID=54488 STAMP=866987148
+input archived log thread=1 sequence=19445 RECID=54487 STAMP=866983192
+input archived log thread=1 sequence=19446 RECID=54489 STAMP=866987130
+input archived log thread=1 sequence=19447 RECID=54490 STAMP=867013481
+input archived log thread=2 sequence=15908 RECID=54491 STAMP=867017140
+input archived log thread=1 sequence=19448 RECID=54492 STAMP=867024129
+input archived log thread=2 sequence=15909 RECID=54494 STAMP=867024402
+input archived log thread=1 sequence=19449 RECID=54493 STAMP=867024305
+input archived log thread=1 sequence=19450 RECID=54495 STAMP=867024388
+input archived log thread=1 sequence=19451 RECID=54497 STAMP=867078490
+input archived log thread=2 sequence=15910 RECID=54496 STAMP=867071997
+input archived log thread=2 sequence=15911 RECID=54499 STAMP=867079488
+input archived log thread=1 sequence=19452 RECID=54498 STAMP=867078994
+input archived log thread=1 sequence=19453 RECID=54500 STAMP=867079474
+input archived log thread=1 sequence=19454 RECID=54501 STAMP=867079688
+input archived log thread=2 sequence=15912 RECID=54503 STAMP=867079877
+input archived log thread=1 sequence=19455 RECID=54502 STAMP=867079735
+input archived log thread=1 sequence=19456 RECID=54504 STAMP=867079867
+input archived log thread=1 sequence=19457 RECID=54505 STAMP=867080186
+input archived log thread=2 sequence=15913 RECID=54507 STAMP=867082890
+input archived log thread=1 sequence=19458 RECID=54506 STAMP=867080900
+input archived log thread=1 sequence=19459 RECID=54508 STAMP=867082878
+input archived log thread=1 sequence=19460 RECID=54509 STAMP=867083430
+input archived log thread=2 sequence=15914 RECID=54511 STAMP=867091480
+input archived log thread=1 sequence=19461 RECID=54510 STAMP=867087189
+channel ORA_DISK_1: starting piece 1 at 25/12/2014 22:39:00
+channel ORA_DISK_1: finished piece 1 at 25/12/2014 22:52:36 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o3pr37g4_1_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o3pr37g4_1_2 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 25/12/2014 22:52:36
+channel ORA_DISK_1: finished piece 2 at 25/12/2014 23:06:21 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o3pr37g4_2_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o3pr37g4_2_2 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 25/12/2014 23:06:21
+channel ORA_DISK_1: finished piece 3 at 25/12/2014 23:19:56 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o3pr37g4_3_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o3pr37g4_3_2 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 25/12/2014 23:19:56
+channel ORA_DISK_1: finished piece 4 at 25/12/2014 23:33:11 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o3pr37g4_4_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o3pr37g4_4_2 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 25/12/2014 23:33:11
+channel ORA_DISK_1: finished piece 5 at 25/12/2014 23:45:16 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o3pr37g4_5_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o3pr37g4_5_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 01:06:16
+channel ORA_DISK_1: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_2_seq_15895.395.866851639 RECID=54447 STAMP=866851640
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19420.1210.866851495 RECID=54444 STAMP=866851505
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19421.4105.866851617 RECID=54448 STAMP=866851630
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19422.540.866912389 thread=1 sequence=19422
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_2_seq_15896.2282.866918645 thread=2 sequence=15896
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19423.4020.866926593 thread=1 sequence=19423
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_2_seq_15897.1169.866918649 thread=2 sequence=15897
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19424.788.866926595 thread=1 sequence=19424
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_2_seq_15898.3131.866926595 thread=2 sequence=15898
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19425.3652.866926601 thread=1 sequence=19425
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19426.483.866926601 thread=1 sequence=19426
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_2_seq_15899.680.866926599 thread=2 sequence=15899
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_2_seq_15900.3134.866927253 thread=2 sequence=15900
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19427.3918.866927229 thread=1 sequence=19427
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_21/thread_1_seq_19428.787.866927231 thread=1 sequence=19428
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19429.3907.866968353 thread=1 sequence=19429
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15901.266.866968585 thread=2 sequence=15901
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19430.3883.866968441 thread=1 sequence=19430
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19431.3507.866968563 thread=1 sequence=19431
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19432.1973.866968735 thread=1 sequence=19432
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15902.3919.866969169 thread=2 sequence=15902
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19433.496.866968865 thread=1 sequence=19433
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19434.340.866969147 thread=1 sequence=19434
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19435.3875.866969285 thread=1 sequence=19435
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15903.3314.866969985 thread=2 sequence=15903
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19436.406.866969697 thread=1 sequence=19436
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19437.3188.866969963 thread=1 sequence=19437
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19438.3646.866970131 thread=1 sequence=19438
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15904.710.866970319 thread=2 sequence=15904
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19439.2838.866970239 thread=1 sequence=19439
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19440.1122.866970297 thread=1 sequence=19440
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19441.3820.866970397 thread=1 sequence=19441
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15905.1119.866971027 thread=2 sequence=15905
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19442.2989.866970815 thread=1 sequence=19442
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19443.2645.866971005 thread=1 sequence=19443
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19444.3295.866979203 thread=1 sequence=19444
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15906.611.866977503 thread=2 sequence=15906
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15907.4059.866987137 thread=2 sequence=15907
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19445.826.866983181 thread=1 sequence=19445
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19446.3016.866987119 thread=1 sequence=19446
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_1_seq_19447.4021.867013471 thread=1 sequence=19447
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_22/thread_2_seq_15908.2258.867017129 thread=2 sequence=15908
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19448.3997.867024117 thread=1 sequence=19448
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_2_seq_15909.793.867024395 thread=2 sequence=15909
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19449.2323.867024293 thread=1 sequence=19449
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19450.3289.867024375 thread=1 sequence=19450
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19451.3032.867078479 thread=1 sequence=19451
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_2_seq_15910.4254.867071985 thread=2 sequence=15910
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_2_seq_15911.1184.867079483 thread=2 sequence=15911
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19452.2609.867078983 thread=1 sequence=19452
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19453.3570.867079463 thread=1 sequence=19453
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19454.715.867079677 thread=1 sequence=19454
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_2_seq_15912.1135.867079877 thread=2 sequence=15912
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19455.3658.867079723 thread=1 sequence=19455
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19456.3647.867079855 thread=1 sequence=19456
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19457.440.867080175 thread=1 sequence=19457
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_2_seq_15913.1102.867082887 thread=2 sequence=15913
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19458.3547.867080889 thread=1 sequence=19458
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19459.1917.867082867 thread=1 sequence=19459
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19460.3660.867083419 thread=1 sequence=19460
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_2_seq_15914.1785.867091477 thread=2 sequence=15914
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19461.3654.867087177 thread=1 sequence=19461
+channel ORA_DISK_1: starting compressed archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=1 sequence=19462 RECID=54512 STAMP=867091469
+input archived log thread=1 sequence=19463 RECID=54513 STAMP=867095862
+input archived log thread=2 sequence=15915 RECID=54515 STAMP=867139627
+input archived log thread=1 sequence=19464 RECID=54514 STAMP=867139105
+input archived log thread=1 sequence=19465 RECID=54516 STAMP=867139611
+input archived log thread=1 sequence=19466 RECID=54517 STAMP=867140080
+input archived log thread=2 sequence=15916 RECID=54519 STAMP=867140371
+input archived log thread=1 sequence=19467 RECID=54518 STAMP=867140319
+input archived log thread=1 sequence=19468 RECID=54520 STAMP=867140360
+input archived log thread=1 sequence=19469 RECID=54521 STAMP=867140498
+input archived log thread=2 sequence=15917 RECID=54523 STAMP=867141823
+input archived log thread=1 sequence=19470 RECID=54522 STAMP=867140820
+input archived log thread=1 sequence=19471 RECID=54524 STAMP=867141814
+input archived log thread=1 sequence=19472 RECID=54525 STAMP=867143821
+input archived log thread=2 sequence=15918 RECID=54526 STAMP=867145826
+input archived log thread=1 sequence=19473 RECID=54528 STAMP=867160625
+input archived log thread=2 sequence=15919 RECID=54527 STAMP=867159888
+input archived log thread=2 sequence=15920 RECID=54529 STAMP=867160645
+input archived log thread=2 sequence=15921 RECID=54531 STAMP=867189816
+input archived log thread=1 sequence=19474 RECID=54530 STAMP=867188242
+input archived log thread=1 sequence=19475 RECID=54532 STAMP=867192493
+input archived log thread=2 sequence=15922 RECID=54534 STAMP=867196966
+input archived log thread=1 sequence=19476 RECID=54533 STAMP=867196903
+input archived log thread=1 sequence=19477 RECID=54535 STAMP=867196953
+input archived log thread=1 sequence=19478 RECID=54536 STAMP=867197135
+input archived log thread=2 sequence=15923 RECID=54538 STAMP=867197480
+input archived log thread=1 sequence=19479 RECID=54537 STAMP=867197301
+input archived log thread=1 sequence=19480 RECID=54539 STAMP=867197474
+input archived log thread=1 sequence=19481 RECID=54540 STAMP=867200310
+input archived log thread=2 sequence=15924 RECID=54541 STAMP=867235339
+input archived log thread=1 sequence=19482 RECID=54543 STAMP=867237782
+input archived log thread=2 sequence=15925 RECID=54542 STAMP=867236104
+input archived log thread=2 sequence=15926 RECID=54544 STAMP=867237932
+input archived log thread=1 sequence=19483 RECID=54545 STAMP=867238437
+input archived log thread=2 sequence=15927 RECID=54546 STAMP=867242161
+input archived log thread=1 sequence=19484 RECID=54547 STAMP=867244988
+input archived log thread=2 sequence=15928 RECID=54549 STAMP=867246381
+input archived log thread=1 sequence=19485 RECID=54548 STAMP=867246304
+input archived log thread=1 sequence=19486 RECID=54550 STAMP=867246367
+input archived log thread=1 sequence=19487 RECID=54551 STAMP=867251554
+input archived log thread=2 sequence=15929 RECID=54553 STAMP=867255633
+input archived log thread=1 sequence=19488 RECID=54552 STAMP=867255424
+input archived log thread=1 sequence=19489 RECID=54555 STAMP=867266104
+input archived log thread=2 sequence=15930 RECID=54554 STAMP=867256182
+input archived log thread=2 sequence=15931 RECID=54556 STAMP=867266129
+input archived log thread=2 sequence=15932 RECID=54558 STAMP=867278334
+input archived log thread=1 sequence=19490 RECID=54557 STAMP=867278331
+input archived log thread=1 sequence=19491 RECID=54560 STAMP=867278337
+input archived log thread=2 sequence=15933 RECID=54559 STAMP=867278357
+channel ORA_DISK_1: starting piece 1 at 25/12/2014 23:45:18
+channel ORA_DISK_1: finished piece 1 at 25/12/2014 23:58:43 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o4pr3bcd_1_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o4pr3bcd_1_2 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 25/12/2014 23:58:43
+channel ORA_DISK_1: finished piece 2 at 26/12/2014 00:12:08 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_25_20141225_o4pr3bcd_2_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141225_o4pr3bcd_2_2 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 26/12/2014 00:12:08
+channel ORA_DISK_1: finished piece 3 at 26/12/2014 00:25:33 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_26_20141226_o4pr3bcd_3_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_26_20141226_o4pr3bcd_3_2 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 26/12/2014 00:25:33
+channel ORA_DISK_1: finished piece 4 at 26/12/2014 00:39:38 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_26_20141226_o4pr3bcd_4_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_26_20141226_o4pr3bcd_4_2 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 26/12/2014 00:39:38
+channel ORA_DISK_1: finished piece 5 at 26/12/2014 00:54:53 with 2 copies and tag MONTHLY_ARCH
+piece handle=+DATA/rman/archi_26_20141226_o4pr3bcd_5_1 comment=NONE
+piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_26_20141226_o4pr3bcd_5_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 01:09:35
+channel ORA_DISK_1: deleting archived log(s)
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19462.1937.867091457 thread=1 sequence=19462
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_23/thread_1_seq_19463.2951.867095851 thread=1 sequence=19463
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15915.3005.867139619 thread=2 sequence=15915
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19464.1682.867139093 thread=1 sequence=19464
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19465.2031.867139599 thread=1 sequence=19465
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19466.4286.867140069 thread=1 sequence=19466
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15916.1738.867140371 thread=2 sequence=15916
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19467.3282.867140307 thread=1 sequence=19467
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19468.502.867140349 thread=1 sequence=19468
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19469.2563.867140487 thread=1 sequence=19469
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15917.3542.867141823 thread=2 sequence=15917
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19470.2746.867140809 thread=1 sequence=19470
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19471.1913.867141803 thread=1 sequence=19471
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19472.1915.867143809 thread=1 sequence=19472
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15918.4192.867145815 thread=2 sequence=15918
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19473.4107.867160615 thread=1 sequence=19473
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15919.2339.867159877 thread=2 sequence=15919
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15920.3841.867160633 thread=2 sequence=15920
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_2_seq_15921.3834.867189805 thread=2 sequence=15921
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19474.3822.867188231 thread=1 sequence=19474
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_24/thread_1_seq_19475.2350.867192481 thread=1 sequence=19475
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15922.3524.867196963 thread=2 sequence=15922
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19476.3828.867196883 thread=1 sequence=19476
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19477.3839.867196941 thread=1 sequence=19477
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19478.597.867197123 thread=1 sequence=19478
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15923.1088.867197479 thread=2 sequence=15923
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19479.361.867197295 thread=1 sequence=19479
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19480.1173.867197461 thread=1 sequence=19480
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19481.1466.867200297 thread=1 sequence=19481
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15924.1391.867235327 thread=2 sequence=15924
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19482.1323.867237769 thread=1 sequence=19482
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15925.377.867236093 thread=2 sequence=15925
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15926.3186.867237921 thread=2 sequence=15926
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19483.3877.867238425 thread=1 sequence=19483
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15927.1936.867242149 thread=2 sequence=15927
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19484.311.867244977 thread=1 sequence=19484
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15928.3077.867246377 thread=2 sequence=15928
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19485.428.867246291 thread=1 sequence=19485
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19486.942.867246355 thread=1 sequence=19486
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19487.995.867251543 thread=1 sequence=19487
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15929.420.867255621 thread=2 sequence=15929
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19488.3912.867255413 thread=1 sequence=19488
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19489.3221.867266097 thread=1 sequence=19489
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15930.3330.867256171 thread=2 sequence=15930
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15931.3048.867266117 thread=2 sequence=15931
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15932.3451.867278331 thread=2 sequence=15932
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19490.3878.867278329 thread=1 sequence=19490
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_1_seq_19491.3900.867278337 thread=1 sequence=19491
+RMAN-08120: WARNING: archived log not deleted, not yet applied by standby
+archived log file name=+RECO/ccbs/archivelog/2014_12_25/thread_2_seq_15933.798.867278357 thread=2 sequence=15933
+channel ORA_DISK_1: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2014_12_20/thread_1_seq_19419.3917.866842795 RECID=54442 STAMP=866842795
+archived log file name=+RECO/ccbs/archivelog/2014_12_20/thread_2_seq_15893.889.866842809 RECID=54439 STAMP=866842812
+archived log file name=+RECO/ccbs/archivelog/2014_12_20/thread_2_seq_15894.3656.866842815 RECID=54440 STAMP=866842814
+Finished backup at 26/12/2014 00:54:54
+
+Starting Control File and SPFILE Autobackup at 26/12/2014 00:54:55
+piece handle=+RECO/rman/c-271141816-20141226-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 26/12/2014 00:54:58
+
+Recovery Manager complete.

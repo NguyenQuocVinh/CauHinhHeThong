@@ -1,0 +1,10 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - VOTING DISK STATUS 
+
+
+
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   09f553130c874f29bfa540eb278f1b4e (o/192.168.10.3/DBFS_DG_CD_02_dm01cel01) [DBFS_DG]
+ 2. ONLINE   1905aced65604ffebffe53136b366b71 (o/192.168.10.4/DBFS_DG_CD_02_dm01cel02) [DBFS_DG]
+ 3. ONLINE   8e028cbabf9d4fbcbf5fb92630de1fa7 (o/192.168.10.5/DBFS_DG_CD_02_dm01cel03) [DBFS_DG]
+Located 3 voting disk(s).

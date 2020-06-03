@@ -1,0 +1,7 @@
+run
+{
+backup as compressed backupset copies 2 incremental level 0 format '+DATA/rman/AGGSXKD/level0_%D_%T_%U','/mnt/nfs203/AGGSXKD/level0_%D_%T_%U' tag level_0 database plus archivelog delete input;
+backup copies 2 current controlfile  format '+DATA/rman/AGGSXKD/control_%D_%T_%U','/mnt/nfs203/AGGSXKD/control_%D_%T_%U' tag bk_control_lv0 keep until time "sysdate+32";
+crosscheck backup;
+delete noprompt obsolete;
+}

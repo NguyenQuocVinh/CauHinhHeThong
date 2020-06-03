@@ -1,0 +1,32 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR CLUSTERWARE PATCH INVENTORY 
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR EXADATA SOFTWARE VERSION ON DATABASE SERVER 
+
+
+
+
+<b><u>Exadata Server software version</b></u>
+version:11.2.2.4.2.111221
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR HCA FIRMWARE VERSION ON DATABASE SERVER 
+
+
+
+
+<b><u>Infiniband HCA firmware version</b></u>
+Firmware version: 2.7.8130
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR OFED SOFTWARE VERSION ON DATABASE SERVER 
+
+
+
+
+<b><u>OpenFabrics Enterprise Distribution (OFED) Software version</b></u>
+1.5.1
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR OPERATING SYSTEM AND KERNEL VERSION ON DATABASE SERVER 
+
+
+
+
+<b><u>Operating system and Kernel version</b></u>
+Red Hat Enterprise Linux Server release 5.5 (Tikanga) kernel=2.6.18-238.12.2.0.2.el5

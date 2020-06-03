@@ -1,0 +1,15 @@
+
+Recovery Manager: Release 11.2.0.4.0 - Production on Tue Nov 24 07:30:21 2015
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+PL/SQL package SYS.DBMS_BACKUP_RESTORE version 11.02.00.01 in TARGET database is not current
+PL/SQL package SYS.DBMS_RCVMAN version 11.02.00.01 in TARGET database is not current
+connected to target database: DB119 (DBID=396868732)
+
+RMAN> list archivelog until time "sysdate-1.2";
+2> 
+using target database control file instead of recovery catalog
+specification does not match any archived log in the repository
+
+Recovery Manager complete.

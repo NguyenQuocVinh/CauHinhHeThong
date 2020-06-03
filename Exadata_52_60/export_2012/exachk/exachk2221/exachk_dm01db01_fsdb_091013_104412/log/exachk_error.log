@@ -1,0 +1,32 @@
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+/tmp/localcmd.sh: line 5: unexpected EOF while looking for matching ``'
+/tmp/localcmd.sh: line 6: syntax error: unexpected end of file
+/tmp/localcmd.sh: line 4: [: 0: unary operator expected
+/tmp/localcmd.sh: line 4: [: 0: unary operator expected
+cat: /sys/class/net/eth3/carrier: Invalid argument
+cat: /sys/class/net/eth4/carrier: Invalid argument
+cat: /sys/class/net/eth5/carrier: Invalid argument
+/tmp/localcmd.sh: line 5: [: too many arguments
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+./exachk: line 5878: [: 0123456789XYZ: integer expression expected
+LOG FROM dm01db02
+/tmp/localcmd.sh: line 5: unexpected EOF while looking for matching ``'
+/tmp/localcmd.sh: line 6: syntax error: unexpected end of file
+/tmp/localcmd.sh: line 4: [: 0: unary operator expected
+/tmp/localcmd.sh: line 4: [: 0: unary operator expected
+cat: /sys/class/net/eth3/carrier: Invalid argument
+cat: /sys/class/net/eth4/carrier: Invalid argument
+cat: /sys/class/net/eth5/carrier: Invalid argument
+/tmp/localcmd.sh: line 5: [: too many arguments
+egrep: /etc/sysctl.conf: Permission denied
+/tmp/localcmd.sh: line 4: [: too many arguments
+egrep: /etc/sysctl.conf: Permission denied
+/tmp/localcmd.sh: line 5: [: too many arguments

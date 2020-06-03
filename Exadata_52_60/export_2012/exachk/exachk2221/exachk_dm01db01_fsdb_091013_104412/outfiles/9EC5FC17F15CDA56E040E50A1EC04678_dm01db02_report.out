@@ -1,0 +1,17 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - OHASD LOG FILE OWNERSHIP 
+
+
+
+total 111752
+-rw-r--r-- 1 root root 10516796 Sep  7 19:59 ohasd.l01
+-rw-r--r-- 1 root root 10581256 Sep  4 16:14 ohasd.l02
+-rw-r--r-- 1 root root 10581203 Sep  1 11:32 ohasd.l03
+-rw-r--r-- 1 root root 10581491 Aug 29 06:49 ohasd.l04
+-rw-r--r-- 1 root root 10518895 Aug 26 01:49 ohasd.l05
+-rw-r--r-- 1 root root 10580470 Aug 22 22:49 ohasd.l06
+-rw-r--r-- 1 root root 10580817 Aug 19 18:39 ohasd.l07
+-rw-r--r-- 1 root root 10540340 Aug 16 14:19 ohasd.l08
+-rw-r--r-- 1 root root 10581449 Aug 13 11:35 ohasd.l09
+-rw-r--r-- 1 root root 10510658 Aug 10 06:41 ohasd.l10
+-rw-r--r-- 1 root root  8644534 Sep 10 10:59 ohasd.log
+-rw-r--r-- 1 root root     1674 Sep  6 19:46 ohasdOUT.log

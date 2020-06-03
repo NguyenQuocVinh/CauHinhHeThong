@@ -1,0 +1,25 @@
+A/ Khi tao moi 1 may chu cho Oracle:
+	1/ Tao user vinhnq cho hdh Linux
+	2/ Tao user vinhnq cho user Oracle
+	3/ Cai rlwrap
+	4/ Copy cac file .db, .grid,.db12c
+B/ Luu lai cac file he thong khi van hanh:
+1/Cac scripts tu viet:
+	a/ Trong /u01/app/export_2012
+	b/ Trong /u01/app/export_2014
+	c/ Trong /u01/app/export_2015
+2/ Schedule crontab
+3/ Automount /etc/vfstab
+4/ Config Network (neu co config dac biet): 
+	a/ File /etc/sysconfig/network
+	b/ Cac file trong /etc/sysconfig/network-scripts/
+		ifcfg-<device>
+		route-<device>
+		rule-<device>
+5/ Config NTP:(neu co cai RAC):
+	a/ File /etc/sysconfig/ntpd
+	b/ File /etc/ntp.conf
+6/ Oracle config files (ko luu cung duoc)
+	a/ TNSNames.ora
+	b/ SQLNet.ora
+7/ callout1.sh (neu co RAC)

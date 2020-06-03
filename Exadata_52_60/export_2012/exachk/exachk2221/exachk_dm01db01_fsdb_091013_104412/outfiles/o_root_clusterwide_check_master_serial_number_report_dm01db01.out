@@ -1,0 +1,14 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR VERIFY MASTER (RACK) SERIAL NUMBER IS SET [DATABASE SERVER] 
+
+
+
+Connected. Use ^D to exit.
+-> show /SP system_identifier
+
+  /SP
+    Properties:
+        system_identifier = Exadata Database Machine X2-2 AK00027248
+
+
+-> Session closed
+Disconnected

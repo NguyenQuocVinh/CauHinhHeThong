@@ -1,0 +1,24 @@
+md5sums on Linux for key exachk files:
+
+md5sum exachk.zip exachk collections.dat rules.dat
+120475f7fd16c16a46039603739cb066  exachk.zip
+a5124df9ed7a1157d2583a0ec62fea7c  exachk
+37ba941d8bb384fb1d5db9cedfc2e64d  collections.dat
+3d701515a9b93b145e1a86175fa96155  rules.dat
+
+
+md5sums on Solaris for key exachk files:
+
+md5sum exachk.zip exachk collections.dat rules.dat
+120475f7fd16c16a46039603739cb066  exachk.zip
+a5124df9ed7a1157d2583a0ec62fea7c  exachk
+37ba941d8bb384fb1d5db9cedfc2e64d  collections.dat
+3d701515a9b93b145e1a86175fa96155  rules.dat
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - NIC BONDING MODE FOR PUBLIC 
+
+
+
+
+NOTE: Look for MASTER
+
+bondeth0  Link encap:Ethernet  HWaddr 00:21:28:E7:7D:37  
+          inet addr:10.70.52.61  Bcast:10.70.52.255  Mask:255.255.255.0
+          inet6 addr: fe80::221:28ff:fee7:7d37/64 Scope:Link
+          UP BROADCAST RUNNING MASTER MULTICAST  MTU:1500  Metric:1
+          RX packets:55821939 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:41363180 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:41965061993 (39.0 GiB)  TX bytes:19919367609 (18.5 GiB)

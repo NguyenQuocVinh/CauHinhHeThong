@@ -1,0 +1,46 @@
+
+no_of_dictionary_managed_tablespace_x22 = 0                                     
+
+rdbms_version_11202 = 11202                                                     
+
+audses$.cache_size_x2-2 = 10000                                                 
+
+gc_block_lost_check_x2-2 = 0                                                    
+
+automatic_segment_space_management_x2-2 = 0                                     
+
+idgen1$.cache_size_x2-2 = 1000                                                  
+
+dba_data_files.non-autoextensible_x2-2 = 0                                      
+
+primary_flashback_status_value = NO                                             
+
+bigfile_tablespace_nondefault_max_bytes = 0                                     
+
+block_corruptions = 0                                                           
+
+aud_fga_logs_manual_space_management_count = 2                                  
+
+archivelog_mode_status = NOARCHIVELOG                                           
+
+temporary_tablespace = 1                                                        
+
+automatic_segment_space_management_count = 0                                    
+
+dictionary_managed_tablespace_count = 0                                         
+
+check_standby  = 0                                                              
+
+check_standby_client_failover  = 0                                              
+
+check_standby_nobranch  = 0                                                     
+
+undersized_redo_logs = 4                                                        
+
+high_redundancy_dg_count = 0                                                    
+
+dc_check_standby  = 0                                                           
+
+dc_no_standby  = 0                                                              
+
+unrecoverable_data_files = 0                                                    

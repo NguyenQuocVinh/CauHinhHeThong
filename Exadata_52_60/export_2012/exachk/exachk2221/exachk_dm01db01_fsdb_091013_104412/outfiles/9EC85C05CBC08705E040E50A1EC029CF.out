@@ -1,0 +1,2 @@
+dm01db01 450.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep public|awk '{ print $1}'|tail -1 == bondeth0
+dm01db02 450.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep public|awk '{ print $1}'|tail -1 == bondeth0

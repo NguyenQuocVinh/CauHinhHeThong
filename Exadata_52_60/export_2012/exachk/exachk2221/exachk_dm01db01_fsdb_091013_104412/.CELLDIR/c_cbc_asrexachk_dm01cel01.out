@@ -1,0 +1,44 @@
+ASRExacheck 2.5
+Tue Sep 10 11:02:50 ICT 2013
+Hostname: dm01cel01
+Device Type: Exadata Database Machine X2-2 AK00027248
+Serial Number: 1144FMM10A            
+ASR Manager IP: 10.70.52.170
+SNMP Trap Destinations: 	 ((host=dm01db01.ccbs.hcmpt.vn,port=3872,community=public),(host=dm01db02.ccbs.hcmpt.vn,port=3872,community=public),(host=asr01,port=162,community=public,type=asr))
+Exadata Cell Image: Active image version: 11.2.2.4.2.111221
+Cell Node validation Progress
+	 Checking for ASR/Exadata Process Running
+Checking for Type of ASR
+
+Checking BMC Status
+	 BMC Communication is Currently running
+
+Checking for Pre-Existing Errors
+
+Checking for HDD Faults
+	 No HDD Faults Found
+
+Checking for Flashdrive Failures
+	 No Flash Faults found
+
+Checking for FMA Faults
+	 No FMA faults found
+
+Checking for ILOM Hardware Faults
+	 No Hardware ILOM Faults
+
+Validating ASR Configuration with Validate SNMP
+
+Cell OS Validation
+	 OS Test event sent to 10.70.52.170 from 172.17.3.4
+
+Cell ILOM Validation
+	 ILOM Test event sent to 10.70.52.170 from 172.17.3.9
+
+Validation Complete
+	 Based on the Status, the email account registered to the ASR Manager
+	 should receive 2 emails. One from the OS Hostname, and the
+	 second from the ILOM Hostname
+	 If 2 emails has not been received, please work with the ASR Backline
+	 Team for further troubleshooting of the issue
+	 Please follow KM Article ID 1352349.1 For engaging the ASR Backline Team

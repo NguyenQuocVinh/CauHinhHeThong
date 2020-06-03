@@ -1,0 +1,16 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - GI SHELL LIMITS HARD NOFILE 
+
+
+
+
+
+
+oracle     soft    core       unlimited
+oracle     hard    core       unlimited
+oracle     soft    nproc       131072
+oracle     hard    nproc       131072
+oracle     soft    nofile      131072 
+oracle     hard    nofile      131072 
+oracle     soft    memlock       74136165
+oracle     hard    memlock       74136165
+

@@ -1,0 +1,7 @@
+status=30
+cluster=NO
+PARALLEL=1
+logfile=aud.log  
+dumpfile=aud_%U 
+filesize=4G directory=DPUMP_DIR
+tables=vinhnq.AUDIT_TMP

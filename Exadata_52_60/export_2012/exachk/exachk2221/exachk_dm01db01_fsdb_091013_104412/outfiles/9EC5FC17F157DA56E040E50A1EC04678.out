@@ -1,0 +1,2 @@
+dm01db01 434.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_root_time_zone.out ]; then cat /tmp/o_root_clusterwide_check_root_time_zone.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_root_time_zone.out>/dev/null 2>&1;fi == ICT
+dm01db02 434.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_root_time_zone.out ]; then cat /tmp/o_root_clusterwide_check_root_time_zone.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_root_time_zone.out>/dev/null 2>&1;fi == ICT

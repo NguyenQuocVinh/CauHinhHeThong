@@ -1,0 +1,73 @@
+#Cac buoc de backup ra disk tren desktop
+B1: Mount disk tren server Exadata
+B2: Tim thong tin cac backupset co redundancy la 2
+B3: backup tung backupset co tren B2; Backup xong cai nao thi xoa tren +RECO luon. Chon backupset nao cu nhat backup truoc; backup roi thi xoa luon.
+
+B1:
+	#sudo mount -t cifs //10.70.118.7/rman_ccbs /mnt/win7 -o username=vinhnq,password=quocvu98,domain=CCBS,iocharset=utf8,rw
+B2:
+	# report obsolete redundancy 2;		Xem Thong tin cac backupset: ID cua backupset
+B3:
+	# backup backupset <ID Backupset> format '/mnt/win7/%D_%T_%U' tag 'redundancy_2_on_win7' delete input;
+	# list backupset <ID Backupset>;			Xem thong tin ngay,thang,gio de xoa cho dung backup set.
+								Chon backupset nao tren +RECO de xoa, cai nao tren dia cung desktop thi giu lai.
+	# delete backupset tag <....> completed before "to_date('10/10/2012 01:01:01','dd/mm/yyyy hh24:mi:ss')";
+
+Example 1: Chi thay doi ID --> OK
+run{
+	allocate channel c1 device type disk;
+	backup backupset <ID> format '/mnt/win7/%D_%T_%U' tag 'redundancy_2_on_win7' delete input;
+	release channel c1;}
+
+Example 2:Chi thay doi ID, Tag, Ngay --> OK
+list backupset <ID>;
+delete backupset tag Weekly completed before "to_date('02/10/2012 21:09:34','dd/mm/yyyy hh24:mi:ss')";
+
+
+
+
+
+Cac Phan Sau la cac cau lenh minh hoa
+run
+{
+	allocate channel c1 device type disk;
+	backup backupset completed before "to_date('02/10/2012','dd/mm/yyyy')" format '/mnt/win7/%D_%T_%U' tag 'redundancy_2_on_win7' delete input;
+	backup backupset of archivelog all completed before "to_date('10/10/2012','dd/mm/yyyy')" format '/mnt/win7/arch_%D_%T_%U' tag 'arch_redundancy_2_on_win7' delete input;
+	release channel c1;	
+
+	# report obsolete redundancy 2;
+# Xem cac backupset hoan thanh truoc 0h ngay 10/10/2012 (nghia la tu ngay 9/10 tro ve truoc)
+# Neu ban backup level vao ngay 10/10, thi can chuyen cac backupset tu truoc ngay 10/10 vao dia cung la ok
+	# list backupset Summary completed before "to_date('10/10/2012','dd/mm/yyyy')";
+# xem cac backup tren dia cung tai may de ban
+	# list backupset summary tag 'redundancy_2_on_win7';
+	# list backupset summary tag MONTHLY_LEVEL_0 completed before 'sysdate';
+
+
+# sau khi backup roi thi delete cac backupset tren asm +RECO, chua lai cac backupset /mnt/win7 - dia cung usb
+	#delete noprompt obsolete redundancy 3;
+	#delete backupset tag MONTHLY_LEVEL_0 completed before "to_date('10/10/2012','dd/mm/yyyy')";
+#Tham khao cac lenh sau:
+	#delete backupset of archivelog all completed before "to_date('10/10/2012','dd/mm/yyyy')";
+	#backup backupset completed before "to_date('10/10/2012','dd/mm/yyyy')"; format '/mnt/win7/%D_%T_%U' tag 'redundancy_2_on_win7' delete input;
+}
+
+# 21/11/2012
+#thuc hien cong viec maintenance
+#xoa bot cac backupset tren +RECO, chua lai tren dia cung 52.10
+RMAN> list backupset summary;
+407     B  0  A DISK        02/11/2012 17:00:03 5       2       YES        MONTHLY_LEVEL_0
+408     B  0  A DISK        02/11/2012 17:54:01 5       2       YES        MONTHLY_LEVEL_0
+409     B  0  A DISK        02/11/2012 18:05:40 5       2       YES        MONTHLY_LEVEL_0
+...
+RMAN< list backupset 407;
+...
+ List of Backup Pieces for backup set 407 Copy #2
+   648     1   AVAILABLE   +RECO/rman/02_20121102_d8np9gro_1_1
+    650     2   AVAILABLE   +RECO/rman/02_20121102_d8np9gro_2_1
+    652     3   AVAILABLE   +RECO/rman/02_20121102_d8np9gro_3_1
+    654     4   AVAILABLE   +RECO/rman/02_20121102_d8np9gro_4_1
+    656     5   AVAILABLE   +RECO/rman/02_20121102_d8np9gro_5_1
+...
+RMAN> delete backuppiece 648,650,652,654,656;
+

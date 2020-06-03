@@ -1,0 +1,9 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 FOR EXADATA CRITICAL ISSUE DB09 
+
+
+
+ 
+ Interface Name = eth0 Interface Type = igb Driver Version = 2.1.0-k2-1 
+ Interface Name = eth1 Interface Type = igb Driver Version = 2.1.0-k2-1 
+ Interface Name = eth2 Interface Type = igb Driver Version = 2.1.0-k2-1 
+10gig_rxusecs0: unrecognized service

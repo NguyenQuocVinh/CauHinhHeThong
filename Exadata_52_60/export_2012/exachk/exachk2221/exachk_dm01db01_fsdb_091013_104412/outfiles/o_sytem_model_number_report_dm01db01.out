@@ -1,0 +1,17 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR EXADATA SYSTEM MODEL NUMBER 
+
+
+
+
+NOTE: Look for system_description = 
+
+Connected. Use ^D to exit.
+-> show /SP system_description
+
+  /SP
+    Properties:
+        system_description = SUN FIRE X4170 M2 SERVER, ILOM v3.0.16.10, r65138
+
+
+-> Session closed
+Disconnected

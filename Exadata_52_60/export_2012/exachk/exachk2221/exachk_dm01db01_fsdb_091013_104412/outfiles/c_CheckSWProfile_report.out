@@ -1,0 +1,48 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR VERIFY SOFTWARE ON STORAGE SERVERS (CHECKSWPROFILE.SH) 
+
+
+
+
+[INFO] [1;32mSUCCESS[0m: Meets requirements of operating platform and installed software for
+[INFO] below listed releases and patches of Exadata and of corresponding Database.
+[INFO] Check does NOT verify correctness of configuration for installed software.
+
+[The_ExadataAndDatabaseReleases]
+Exadata: 11.2.2.4.1 OracleDatabase: 11.2.0.2+Patches
+
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR VERIFY SOFTWARE ON STORAGE SERVERS (CHECKSWPROFILE.SH) 
+
+
+
+
+[INFO] [1;32mSUCCESS[0m: Meets requirements of operating platform and installed software for
+[INFO] below listed releases and patches of Exadata and of corresponding Database.
+[INFO] Check does NOT verify correctness of configuration for installed software.
+
+[The_ExadataAndDatabaseReleases]
+Exadata: 11.2.2.4.1 OracleDatabase: 11.2.0.2+Patches
+
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR VERIFY SOFTWARE ON STORAGE SERVERS (CHECKSWPROFILE.SH) 
+
+
+
+
+[INFO] [1;32mSUCCESS[0m: Meets requirements of operating platform and installed software for
+[INFO] below listed releases and patches of Exadata and of corresponding Database.
+[INFO] Check does NOT verify correctness of configuration for installed software.
+
+[The_ExadataAndDatabaseReleases]
+Exadata: 11.2.2.4.1 OracleDatabase: 11.2.0.2+Patches
+
+
+
+
+

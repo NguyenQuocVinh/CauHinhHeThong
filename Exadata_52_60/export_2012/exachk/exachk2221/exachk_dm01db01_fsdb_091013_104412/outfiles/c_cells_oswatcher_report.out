@@ -1,0 +1,63 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR OSWATCHER STATUS ON STORAGE SERVERS 
+
+
+
+
+NOTE: No output would indicate OSWatcher not running
+
+root      9322  9320  0 11:06 ?        00:00:00 grep -i osw
+root     25877     1  0 04:02 ?        00:00:03 /bin/ksh ./OSWatcher.sh 15 168 bzip2
+root     27936 25877  0 04:02 ?        00:00:00 /bin/ksh ./OSWatcherFM.sh 168
+root     27955 25877  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_vmstat.sh
+root     27956 25877  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_mpstat.sh
+root     27957 25877  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_netstat.sh
+root     27958 25877  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_iostat.sh
+root     27960 25877  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_top.sh
+root     27973 25877  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq /opt/oracle.oswatcher/osw/ExadataRdsInfo.sh
+root     27996 27973  0 04:02 ?        00:00:03 /bin/bash /opt/oracle.oswatcher/osw/ExadataRdsInfo.sh HighFreq
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR OSWATCHER STATUS ON STORAGE SERVERS 
+
+
+
+
+NOTE: No output would indicate OSWatcher not running
+
+root      8350  8348  0 11:06 ?        00:00:00 grep -i osw
+root     25341     1  0 04:02 ?        00:00:03 /bin/ksh ./OSWatcher.sh 15 168 bzip2
+root     27399 25341  0 04:02 ?        00:00:00 /bin/ksh ./OSWatcherFM.sh 168
+root     27418 25341  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_vmstat.sh
+root     27419 25341  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_mpstat.sh
+root     27420 25341  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_netstat.sh
+root     27421 25341  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_iostat.sh
+root     27423 25341  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_top.sh
+root     27440 25341  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq /opt/oracle.oswatcher/osw/ExadataRdsInfo.sh
+root     27468 27440  0 04:02 ?        00:00:03 /bin/bash /opt/oracle.oswatcher/osw/ExadataRdsInfo.sh HighFreq
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR OSWATCHER STATUS ON STORAGE SERVERS 
+
+
+
+
+NOTE: No output would indicate OSWatcher not running
+
+root      8171  8169  0 11:06 ?        00:00:00 grep -i osw
+root     24948     1  0 04:02 ?        00:00:03 /bin/ksh ./OSWatcher.sh 15 168 bzip2
+root     27006 24948  0 04:02 ?        00:00:00 /bin/ksh ./OSWatcherFM.sh 168
+root     27025 24948  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_vmstat.sh
+root     27026 24948  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_mpstat.sh
+root     27027 24948  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_netstat.sh
+root     27028 24948  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_iostat.sh
+root     27030 24948  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq ./Exadata_top.sh
+root     27047 24948  0 04:02 ?        00:00:00 /bin/ksh ./oswsub.sh HighFreq /opt/oracle.oswatcher/osw/ExadataRdsInfo.sh
+root     27080 27047  0 04:02 ?        00:00:03 /bin/bash /opt/oracle.oswatcher/osw/ExadataRdsInfo.sh HighFreq
+
+
+
+

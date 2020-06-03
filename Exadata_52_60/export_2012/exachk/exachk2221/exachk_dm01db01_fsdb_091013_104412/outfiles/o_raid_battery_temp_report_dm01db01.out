@@ -1,0 +1,8 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 FOR VERIFY RAID CONTROLLER BATTERY TEMPERATURE [DATABASE SERVER] 
+
+
+
+BatteryType: iBBU08
+Temperature: 43 C
+  Temperature                  : OK
+  Over Temperature        : No

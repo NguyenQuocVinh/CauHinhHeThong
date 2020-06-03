@@ -1,0 +1,41 @@
+**************
+20150910_0903
+**************
+The Oracle base has been set to /oracle/11.2.0.4
+The Oracle base remains unchanged with value /oracle/11.2.0.4
+
+SQL*Plus: Release 11.2.0.4.0 Production on Thu Sep 10 09:03:01 2015
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Partitioning, Real Application Clusters, Automatic Storage Management, OLAP,
+Data Mining and Real Application Testing options
+
+create table exp_audit.audit_tmp as select * from dba_audit_trail where 1=0
+                       *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+
+0 rows deleted.
+
+
+1836186 rows created.
+
+
+Commit complete.
+
+
+2058447 rows deleted.
+
+
+Commit complete.
+
+Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Partitioning, Real Application Clusters, Automatic Storage Management, OLAP,
+Data Mining and Real Application Testing options
+7 **************

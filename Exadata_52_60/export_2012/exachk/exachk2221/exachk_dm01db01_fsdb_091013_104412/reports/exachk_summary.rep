@@ -1,0 +1,308 @@
+---------------------------------------------------------------------------------
+
+Some checks were skipped. Please review /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/exachk_skipped_checks.log for more detail
+
+---------------------------------------------------------------------------------
+
+
+=============================================================
+                    Node name - dm01db01                                
+=============================================================
+Check:- FAIL => Database parameter DB_BLOCK_CHECKSUM is NOT set to recommended value on ccbs1 instance
+Check:- FAIL => Database parameter DB_BLOCK_CHECKSUM is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter _kill_diagnostics_timeout is not set to recommended value on ccbs1 instance
+Check:- FAIL => Database parameter _kill_diagnostics_timeout is not set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter _lm_rcvr_hang_allow_time is NOT set to the recommended value on ccbs1 instance
+Check:- FAIL => Database parameter _lm_rcvr_hang_allow_time is NOT set to the recommended value on fsdb1 instance
+Check:- FAIL => A minimum of two controlfiles are not stored in high redundancy diskgroups for fsdb
+Check:- WARNING => filesystemio_options is not set to recommended value on ccbs1 instance
+Check:- WARNING => filesystemio_options is not set to recommended value on fsdb1 instance
+Check:- FAIL => Some data or temp files are not autoextensible for ccbs
+Check:- WARNING => ASM parameter MEMORY_TARGET is NOT set according to recommended value.
+Check:- FAIL => Database parameter DB_LOST_WRITE_PROTECT is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter GLOBAL_NAMES is NOT set to recommended value on ccbs1 instance
+Check:- FAIL => Database parameter GLOBAL_NAMES is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter _file_size_increase_increment is NOT set to the recommended value on ccbs1 instance
+Check:- FAIL => Database parameter _file_size_increase_increment is NOT set to the recommended value on fsdb1 instance
+Check:- FAIL => Database parameter PARALLEL_ADAPTIVE_MULTI_USER is NOT set to recommended value on ccbs1 instance
+Check:- FAIL => Database parameter PARALLEL_ADAPTIVE_MULTI_USER is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter PARALLEL_THREADS_PER_CPU is NOT set to recommended value on ccbs1 instance
+Check:- FAIL => Database parameter PARALLEL_THREADS_PER_CPU is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter OS_AUTHENT_PREFIX is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter USE_LARGE_PAGES is NOT set to recommended value on ccbs1 instance
+Check:- FAIL => Database parameter USE_LARGE_PAGES is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter SQL92_SECURITY is NOT set to recommended value on fsdb1 instance
+Check:- FAIL => Database parameter CLUSTER_INTERCONNECTS is NOT set to the recommended value for ccbs
+Check:- FAIL => Database parameter CLUSTER_INTERCONNECTS is NOT set to the recommended value for fsdb
+Check:- FAIL => Database parameters log_archive_dest_n with Location attribute are NOT all set to recommended value for ccbs
+Check:- FAIL => Database parameter Db_create_online_log_dest_n is not set to recommended value for ccbs
+Check:- FAIL => Database parameter Db_create_online_log_dest_n is not set to recommended value for fsdb
+Check:- WARNING => Multiple RDBMS instances discovered, observe database consolidation best practices
+Check:- WARNING => Database parameter DB_BLOCK_CHECKING on PRIMARY is NOT set to the recommended value. for ccbs
+Check:- WARNING => Database parameter DB_BLOCK_CHECKING on PRIMARY is NOT set to the recommended value. for fsdb
+Check:- FAIL => Flashback on PRIMARY is not configured for ccbs
+Check:- FAIL => Flashback on PRIMARY is not configured for fsdb
+Check:- INFO => Operational Best Practices
+Check:- INFO => Consolidation Database Practices
+Check:- INFO => Computer failure prevention best practices
+Check:- INFO => Data corruption prevention best practices
+Check:- INFO => Logical corruption prevention best practices
+Check:- INFO => Database/Cluster/Site failure prevention best practices
+Check:- INFO => Client failover operational best practices
+Check:- FAIL => Some bigfile tablespaces do not have non-default maxbytes values set for ccbs
+Check:- WARNING => fast_start_mttr_target has NOT been changed from default on ccbs1 instance
+Check:- WARNING => fast_start_mttr_target has NOT been changed from default on fsdb1 instance
+Check:- FAIL => ASM processes parameter is not set to recommended value
+Check:- WARNING => Shared Server are in use - verify they do not do serial full table scans on fsdb1 instance
+Check:- FAIL => Operating system hugepages count does not satisfy total SGA requirements
+Check:- FAIL => Table AUD$[FGA_LOG$] should use Automatic Segment Space Management for ccbs
+Check:- FAIL => Table AUD$[FGA_LOG$] should use Automatic Segment Space Management for fsdb
+Check:- INFO => Database failure prevention best practices
+Check:- WARNING => Database Archivelog Mode should be set to ARCHIVELOG for fsdb
+Check:- FAIL => Primary database is NOT protected with Data Guard (standby database) for real-time data protection and availability for ccbs
+Check:- FAIL => Primary database is NOT protected with Data Guard (standby database) for real-time data protection and availability for fsdb
+Check:- FAIL => Database parameter LOG_BUFFER is NOT set to recommended value on fsdb1 instance
+Check:- WARNING => Redo log file size should be >= 4GB for ccbs
+Check:- WARNING => Redo log file size should be >= 4GB for fsdb
+Check:- FAIL => No one high redundancy diskgroup configured for ccbs
+Check:- FAIL => No one high redundancy diskgroup configured for fsdb
+Check:- INFO => Storage failures prevention best practices
+Check:- INFO => Network failure prevention best practices
+Check:- INFO => Software maintenance best practices
+Check:- FAIL => Database parameter DB_FILES should be set to recommended value. on ccbs1 instance
+Check:- FAIL => Database parameter DB_FILES should be set to recommended value. on fsdb1 instance
+Check:- FAIL => Database parameter PROCESSES should be set to recommended value on fsdb1 instance
+Check:- FAIL => The data files should be recoverable for ccbs
+Check:- FAIL => vm.min_free_kbytes should be set as recommended.
+=============================================================
+                    Storage server checks                    
+=============================================================
+Check:- FAIL => Storage Server alerts are not configured to be sent via email
+Check:- FAIL => One or more storage server has stateless alerts with null "examinedby" fields.
+Check:- FAIL => Storage server network should pass ipconf verification checks.
+=============================================================
+                    Infiniband switch checks                 
+=============================================================
+
+
+---------------------------------------------------------------------------------
+                      CLUSTERWIDE CHECKS
+---------------------------------------------------------------------------------
+Check:- PASS => Master (Rack) Serial Number matches across database servers and storage servers
+Check:- PASS => Time zone matches for root user across cluster
+Check:- PASS => Time zone matches for Grid Infrastructure software owner across cluster
+Check:- PASS => RDBMS software owner UID matches across cluster
+Check:- PASS => OS Kernel version(uname -r) matches across cluster.
+Check:- PASS => Public network interface names are the same across cluster
+Check:- PASS => RDBMS software version matches across cluster.
+Check:- PASS => Private interconnect interface names are the same across cluster
+Check:- PASS => Timezone matches for current user across cluster.
+Check:- PASS => Grid Infrastructure software owner UID matches across cluster
+Check:- PASS => Clusterware active version matches across cluster.
+Check:- PASS => Imageinfo version matches across all database and storage servers
+Check:- PASS => Imageinfo matches across cluster on database servers
+Check:- PASS => CRS home has same number of patches installed across the cluster
+Check:- PASS => RDBMS home /u01/app/oracle/product/11.2.0.2/dbhome_1 has same number of patches installed across the cluster
+---------------------------------------------------------------------------------
+=============================================================
+                    Node name - dm01db01                                
+=============================================================
+Check:- PASS => All disk groups have allocation unit size set to 4MB
+Check:- PASS => All disk groups have compatible.rdbms parameter set to recommended values
+Check:- PASS => All disk groups have CELL.SMART_SCAN_CAPABLE parameter set to true
+Check:- PASS => All disk groups have compatible.asm parameter set to recommended values
+Check:- PASS => Database server InfiniBand network is in "connected" mode.
+Check:- PASS => CSS misscount is set to the recommended value of 60
+Check:- PASS => Clusterware Home is properly linked with RDS library
+Check:- PASS => Database Server InfiniBand network MTU size is 65520
+Check:- PASS => NUMA is OFF at operating system level.
+Check:- PASS => ASM Version is 11.2.0.2 or higher as expected
+Check:- PASS => All tablespaces are locally manged tablespace for ccbs
+Check:- PASS => All tablespaces are locally manged tablespace for fsdb
+Check:- PASS => A minimum of two controlfiles are stored in high redundancy diskgroups for ccbs
+Check:- PASS => RDBMS Version is 11.2.0.2 or higher as expected for ccbs
+Check:- PASS => RDBMS Version is 11.2.0.2 or higher as expected for fsdb
+Check:- PASS => InfiniBand is the Private Network for Oracle Clusterware Communication
+Check:- PASS => Database Home is properly linked with RDS library for /u01/app/oracle/product/11.2.0.2/dbhome_1
+Check:- PASS => Oracle RAC Communication is using RDS protocol on Infiniband Network for /u01/app/oracle/product/11.2.0.2/dbhome_1
+Check:- PASS => Free space in root(/) filesystem meets or exceeds recommendation.
+Check:- PASS => The database server boot device had "Maximum mount count" equal to "-1"
+Check:- PASS => System model number is correct
+Check:- PASS => Correct number of FailGroups per ASM DiskGroup are configured
+Check:- PASS => ASM Audit file destination file count <= 100,000
+Check:- PASS => RAID controller battery temperature is normal [Database Server]
+Check:- PASS => Management network is separate from data network
+Check:- PASS => Shell limit soft nofile for GI is configured according to recommendation in /etc/security/limits.conf
+Check:- PASS => Shell limit soft nproc for GI is configured according to recommendation
+Check:- PASS => Shell limit hard nofile for GI is configured according to recommendation
+Check:- PASS => Shell limit hard nproc for GI is configured according to recommendation in /etc/security/limits.conf
+Check:- PASS => Shell limit hard nproc for DB is configured according to recommendation
+Check:- PASS => Shell limit soft nofile for DB is configured according to recommendation
+Check:- PASS => Shell limit hard nofile for DB is configured according to recommendation
+Check:- PASS => Shell limit hard stack for DB is configured according to recommendation
+Check:- PASS => Shell limit soft nproc for DB is configured according to recommendation
+Check:- PASS => Shell limit hard stack for GI is configured according to recommendation
+Check:- PASS => NIC bonding mode is not set to Broadcast(3) for public network
+Check:- PASS => Open files limit (ulimit -n) for current user is set to recommended value >= 65536 or unlimited
+Check:- PASS => NIC bonding is configured for public network (VIP)
+Check:- PASS => ohasd Log Ownership is Correct (root root)
+Check:- PASS => $ORACLE_HOME/bin/oradism setuid bit is set for /u01/app/oracle/product/11.2.0.2/dbhome_1
+Check:- PASS => NIC bonding is configured for interconnect
+Check:- PASS => $ORACLE_HOME/bin/oradism ownership is root for /u01/app/oracle/product/11.2.0.2/dbhome_1
+Check:- PASS => crsd/orarootagent_root Log Ownership is Correct (root root)
+Check:- PASS => SELinux is not being Enforced.
+Check:- PASS => Number of SCAN listeners is equal to the recommended number of 3.
+Check:- PASS => SYS.AUDSES$ sequence cache size >= 10,000 for ccbs
+Check:- PASS => SYS.AUDSES$ sequence cache size >= 10,000 for fsdb
+Check:- PASS => VKTM is running in real time scheduling class for ccbs
+Check:- PASS => VKTM is running in real time scheduling class for fsdb
+Check:- PASS => LMS is running in real time scheduling class for ccbs
+Check:- PASS => LMS is running in real time scheduling class for fsdb
+Check:- PASS => NIC bonding mode is not set to Broadcast(3) for cluster interconnect
+Check:- PASS => GC blocks lost is not occurring for ccbs
+Check:- PASS => GC blocks lost is not occurring for fsdb
+Check:- PASS => ORA_CRS_HOME environment variable is not set
+Check:- PASS => OSWatcher is running
+Check:- PASS => crsd Log Ownership is Correct (root root)
+Check:- PASS => All tablespaces are using Automatic segment storage management for ccbs
+Check:- PASS => All tablespaces are using Automatic segment storage management for fsdb
+Check:- PASS => SYS.IDGEN1$ sequence cache size >= 1,000 for ccbs
+Check:- PASS => SYS.IDGEN1$ sequence cache size >= 1,000 for fsdb
+Check:- PASS => Interconnect is configured on non-routable network addresses
+Check:- PASS => NTP is running with correct setting
+Check:- PASS => Remote listener is set to SCAN name for ccbs
+Check:- PASS => Remote listener is set to SCAN name for fsdb
+Check:- PASS => ohasd/orarootagent_root Log Ownership is Correct (root root)
+Check:- PASS => All data and temporary are autoextensible for fsdb
+Check:- PASS => All voting disks are online
+Check:- PASS => Local listener init parameter is set to local node VIP for ccbs
+Check:- PASS => Local listener init parameter is set to local node VIP for fsdb
+Check:- PASS => Hardware and firmware profile check is successful. [Database Server]
+Check:- PASS => Verify-topology executes without any errors or warning
+Check:- PASS => InfiniBand network error counters are zero
+Check:- PASS => Database server disk controllers use writeback cache
+Check:- PASS => Oracle ASM Communication is using RDS protocol on Infiniband Network
+Check:- PASS => Exadata software version supports Automatic Service Request functionality
+Check:- PASS => All database server logical volumes found had "Maximum mount count" equal to "-1"
+Check:- PASS => Disk cache policy is set to Disabled on database server
+Check:- PASS => Database parameter DB_LOST_WRITE_PROTECT is set to recommended value on ccbs1 instance
+Check:- PASS => Database parameter _ENABLE_NUMA_SUPPORT is set to recommended value on ccbs1 instance
+Check:- PASS => Database parameter _ENABLE_NUMA_SUPPORT is set to recommended value on fsdb1 instance
+Check:- PASS => Database parameter OS_AUTHENT_PREFIX is set to recommended value on ccbs1 instance
+Check:- PASS => Database parameter OPEN_CURSORS is set to recommended value on ccbs1 instance
+Check:- PASS => Database parameter OPEN_CURSORS is set to recommended value on fsdb1 instance
+Check:- PASS => Database parameter SQL92_SECURITY is set to recommended value on ccbs1 instance
+Check:- PASS => Database parameter PARALLEL_EXECUTION_MESSAGE_SIZE is set to recommended value on ccbs1 instance
+Check:- PASS => Database parameter PARALLEL_EXECUTION_MESSAGE_SIZE is set to recommended value on fsdb1 instance
+Check:- PASS => ASM parameter CLUSTER_INTERCONNECTS is set to the recommended value
+Check:- PASS => Database DB_CREATE_FILE_DEST and DB_RECOVERY_FILE_DEST are in different diskgroups for ccbs
+Check:- PASS => Database DB_CREATE_FILE_DEST and DB_RECOVERY_FILE_DEST are in different diskgroups for fsdb
+Check:- PASS => Database parameter db_recovery_file_dest_size is set to recommended value for ccbs
+Check:- PASS => Database parameter db_recovery_file_dest_size is set to recommended value for fsdb
+Check:- PASS => All InfiniBand network cables are connected
+Check:- PASS => All Ethernet network cables are connected
+Check:- PASS => Database parameter COMPATIBLE is set to recommended value for ccbs
+Check:- PASS => Database parameter COMPATIBLE is set to recommended value for fsdb
+Check:- PASS => Database parameters log_archive_dest_n with Location attribute are all set to recommended value for fsdb
+Check:- PASS => ASM griddisk,diskgroup and Failure group mapping is as recommended
+Check:- PASS => Address Resolution Protocol (ARP) is configured properly on database server.
+Check:- PASS => RAID controller battery condition is good [Database Server]
+Check:- PASS => Clusterware is running
+Check:- PASS => subnet manager is running on an InfiniBand switch
+Check:- PASS => All bigfile tablespaces have non-default maxbytes values set for fsdb
+Check:- PASS => Database parameter UNDO_RETENTION on PRIMARY is not null on ccbs1 instance
+Check:- PASS => Database parameter UNDO_RETENTION on PRIMARY is not null on fsdb1 instance
+Check:- PASS => SCN Headroom is good BUT see IMPORTANT Details about SCN Headroom /u01/app/oracle/product/11.2.0.2/dbhome_1
+Check:- PASS => DNS Server ping time is in acceptable range
+Check:- PASS => RECYCLEBIN on PRIMARY is set to the recommended value on ccbs1 instance
+Check:- PASS => RECYCLEBIN on PRIMARY is set to the recommended value on fsdb1 instance
+Check:- PASS => System is not exposed to Exadata Critical Issue DB11 /u01/app/oracle/product/11.2.0.2/dbhome_1
+Check:- PASS => No reported block corruptions in V$DATABASE_BLOCK_CORRUPTIONS for ccbs
+Check:- PASS => No reported block corruptions in V$DATABASE_BLOCK_CORRUPTIONS for fsdb
+Check:- PASS => Shared Servers are not in use on ccbs1 instance
+Check:- PASS => Database Server Virtual Drive Configuration meets recommendation
+Check:- PASS => Database Server Physical Drive Configuration meets recommendation
+Check:- PASS => Database Server Disk Controller Configuration meets recommendation
+Check:- PASS => Instance is using Automatic Undo Management on ccbs1 instance
+Check:- PASS => Instance is using Automatic Undo Management on fsdb1 instance
+Check:- PASS => Database Archivelog Mode is set to ARCHIVELOG for ccbs
+Check:- PASS => Default temporary tablespace is set for ccbs
+Check:- PASS => Default temporary tablespace is set for fsdb
+Check:- PASS => All tablespaces are using Automatic segment storage management for ccbs
+Check:- PASS => All tablespaces are using Automatic segment storage management for fsdb
+Check:- PASS => All tablespaces are locally managed tablespace for ccbs
+Check:- PASS => All tablespaces are locally managed tablespace for fsdb
+Check:- PASS => Database parameter LOG_BUFFER is set to recommended value on ccbs1 instance
+Check:- PASS => There are no ASM external redundancy diskgroups.
+Check:- PASS => There are no ASM unprotected templates.
+Check:- PASS => The service exachkcfg is not configured to autostart
+Check:- PASS => No disks found which are not part of any disk group
+Check:- PASS => The InfiniBand subnet manager is not running on database server
+Check:- PASS => Database parameter PROCESSES is set to recommended value on ccbs1 instance
+Check:- PASS => The data files are all recoverable for fsdb
+Check:- PASS => There was no ASM corruption found.
+=============================================================
+                    Storage server checks                    
+=============================================================
+Check:- PASS => No Storage Server Memory (ECC) Errors found.
+Check:- PASS => RAID controller version matches on all storage servers
+Check:- PASS => No celldisks have status of predictive failure
+Check:- PASS => All storage server disk controllers use writeback cache
+Check:- PASS => All storage servers meet or exceed root(/) filesystem free space recommendation
+Check:- PASS => All Exadata storage server meet system model number requirement
+Check:- PASS => RAID controller battery temperature is normal [Storage Server]
+Check:- PASS => OSWatcher is running on all storage servers
+Check:- PASS => Hardware and firmware profile check is successful on all storage servers.
+Check:- PASS => Software profile check is successful on all storage servers.
+Check:- PASS => Ambient temperature is within the recommended range
+Check:- PASS => Management network is separate from data network on all storage servers
+Check:- PASS => Disk cache policy is set to Disabled on all storage server
+Check:- PASS => All Ethernet network cables are connected on all Storage Servers
+Check:- PASS => All InfiniBand network cables are connected on all Storage Servers
+Check:- PASS => No Storage Server conventional or flash disks have a performance problem
+Check:- PASS => imageinfo version matches on all storage servers
+Check:- PASS => The service exachkcfg is configured to autostart
+Check:- PASS => RAID controller battery condition is good on all storage servers
+Check:- PASS => Peripheral component interconnect (PCI) bridge is configured for generation II on all storage servers
+Check:- PASS => Storage Server Flash Memory is configured as Exadata Smart Flash Cache
+Check:- PASS => Smart flash log is created on all storage server
+Check:- PASS => DNS Server ping time is in acceptable range on all storage servers
+Check:- PASS => The celldisk configuration on disk drives matches Oracle best practices
+Check:- PASS => The griddisk ASM status matches specification
+Check:- PASS => The griddisk count matches across all storage servers where a given prefix name exists
+Check:- PASS => The celldisk configuration on flash memory devices matches Oracle best practices
+Check:- PASS => Electronic Storage Module (ESM) Lifetime is within specification for all flash cards on all storage servers
+Check:- PASS => Exadata software version is compatible with Oracle RDBMS software version
+Check:- PASS => System is not exposed to Exadata Critical Issue EX9
+Check:- PASS => Release tracking bug matches on all storage servers
+Check:- PASS => The InfiniBand subnet manager is not running on storage server
+=============================================================
+                    Infiniband switch checks                 
+=============================================================
+Check:- PASS => HOSTNAME is set in /etc/sysconfig/network on infiniband switch dm01sw-ib3
+Check:- PASS => HOSTNAME is set in /etc/sysconfig/network on infiniband switch dm01sw-ib2
+Check:- PASS => NTP configuration has been changed from default on infiniband switch dm01sw-ib3
+Check:- PASS => NTP configuration has been changed from default on infiniband switch dm01sw-ib2
+Check:- PASS => sminfo_polling_timeout is set to recommended value of 1000 on infiniband switch dm01sw-ib3
+Check:- PASS => sminfo_polling_timeout is set to recommended value of 1000 on infiniband switch dm01sw-ib2
+Check:- PASS => routing_engine is set to recommended value of ftree on infiniband switch dm01sw-ib3
+Check:- PASS => routing_engine is set to recommended value of ftree on infiniband switch dm01sw-ib2
+Check:- PASS => log_flags is set to recommended value of 0x03 on infiniband switch dm01sw-ib3
+Check:- PASS => log_flags is set to recommended value of 0x03 on infiniband switch dm01sw-ib2
+Check:- PASS => controlled_handover is set to recommended value of TRUE on infiniband switch dm01sw-ib3
+Check:- PASS => controlled_handover is set to recommended value of TRUE on infiniband switch dm01sw-ib2
+Check:- PASS => polling_retry_number is set to recommended value of 5 on infiniband switch dm01sw-ib3
+Check:- PASS => polling_retry_number is set to recommended value of 5 on infiniband switch dm01sw-ib2
+Check:- PASS => Infiniband switch software version meets the recommendation on infiniband switch dm01sw-ib3
+Check:- PASS => Infiniband switch software version meets the recommendation on infiniband switch dm01sw-ib2
+Check:- PASS => Hostname is set in /etc/hosts on infiniband switch dm01sw-ib3
+Check:- PASS => Hostname is set in /etc/hosts on infiniband switch dm01sw-ib2
+Check:- PASS => DNS Server ping time is in acceptable range on infiniband switch dm01sw-ib3
+Check:- PASS => DNS Server ping time is in acceptable range on infiniband switch dm01sw-ib2
+Check:- PASS => Infiniband switch firmware version is compatible with Exadata software version on infiniband switch dm01sw-ib3
+Check:- PASS => Infiniband switch firmware version is compatible with Exadata software version on infiniband switch dm01sw-ib2
+Check:- PASS => sm_priority is set to recommended value on infiniband switch dm01sw-ib3
+Check:- PASS => sm_priority is set to recommended value on infiniband switch dm01sw-ib2
+Check:- PASS => Subnet manager daemon is running on infiniband switch dm01sw-ib3
+Check:- PASS => Subnet manager daemon is running on infiniband switch dm01sw-ib2
+Detailed report is /u01/app/export_2012/exachk/exachk2221/exachk_dm01db01_fsdb_091013_104412/exachk.rep

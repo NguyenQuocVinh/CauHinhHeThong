@@ -1,0 +1,43 @@
+#Created: year 2012
+# Updated 18-09-2012,14-01-2013,10-10-2013,12-3-2014
+
+0 22 15 * * sh /u01/app/export_2012/expdp_fullnodata.sh
+0 23 15 * * sh /u01/app/export_2012/expdp_static.sh
+
+# Export tung thang:
+# CT tu sinh ra file tham so,script, ... . Roi sau do chay lenh expdp
+30 0 10 * * sh /u01/app/export_2012/expdp_tables_monthly.sh
+
+# thay doi quyen doc cho moi user
+#30 7 16 * * chmod -R 664 /u01/app/export_2012/dpump_files/
+
+# 1 thang backup bang rman 2 lan vao ngay 10 & 25 , level 0
+# nhung ngay con lai backup level 1
+# ngay 1,16 thi move cac ban backup ra may khac.
+#updated 20/03/2014
+#0 19 1 * * sh /u01/app/export_2014/backup_monthly_level_0_day1.sh
+#0 19 16 * * sh /u01/app/export_2014/backup_monthly_level_0_day16.sh
+
+# level 1:  22/1/2014, updated: 20/03/2014
+#0 21 2-15 * * sh /u01/app/export_2014/backup_monthly_level_1_day2_15.sh
+#0 21 17-31 * * sh /u01/app/export_2014/backup_monthly_level_1_day17_31.sh
+
+# Don dep cac file audit/trace/log sau 15 ngay
+#0 0 * * *      sh /u01/app/export_2012/del_logs.sh     >> /u01/app/export_2012/del_logs.log
+# 27/12/2014 : tam thoi disable chuc nang nay. Khi fix loi standby xong --> enable lai.
+#0 0 * * *      sh /u01/app/export_2014/adrci_purge.sh
+
+# Don dep audit luc 0h
+# Export ra file dump, sau do xoa bot di
+0 0 1,2,3,4,5,6,7,8,9,10,11,13,15,17,19,21,23,25,27,29,30 * *       sh /u01/app/export_2012/expdp_aud.sh
+
+# khi co su co thi moi thuc hien cac dong sau
+#41 7 * * * sh /u01/app/export_2012/backup_monthly_level_0_day10.sh
+#30 15 16 * * sh /u01/app/export_2012/backup_backupset_day10.sh
+#45 16 * * * sh /u01/app/export_2012/backup_monthly_level_0_day25.sh
+#59 8 * * * sh /u01/app/export_2014/backup_monthly_level_0_day16.sh
+#0 10 12 3 * sh /u01/app/export_2012/copy_monthly_level_0_day10.sh
+# nho tat sh nay
+#11 10 * * * sh /u01/app/export_2014/backup_monthly_level_0_day16.sh
+#30 20 5 8 * sh /u01/app/export_2012/expdp_tables_201405.sh
+#30 22 5 8 * sh /u01/app/export_2012/expdp_tables_201406.sh

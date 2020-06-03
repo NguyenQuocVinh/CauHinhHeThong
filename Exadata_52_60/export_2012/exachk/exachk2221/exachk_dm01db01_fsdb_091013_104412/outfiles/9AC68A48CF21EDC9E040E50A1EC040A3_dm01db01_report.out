@@ -1,0 +1,8 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - ASM DISK GROUP COMPATIBLE.RDBMS PARAMETER 
+
+
+
+lowest rdbms version = 112020
+ASM DATA.compatible.rdbms = 11.2.0.2.0                                          
+ASM DBFS_DG.compatible.rdbms = 11.2.0.2                                         
+ASM RECO.compatible.rdbms = 11.2.0.2.0                                          

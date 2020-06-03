@@ -1,0 +1,14 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - CCBS DATABASE - HIGH REDUNDANCY REDOLOG FILES 
+
+
+
+High redundancy disk groups = 	  0
+Number of redo log groups with more than 1 member = 	     8 
+Number of diskgroup where redo log members are multiplexed = 		       1
+TO REVIEW COLLECTED DATA FROM DM01DB02 - FSDB DATABASE - HIGH REDUNDANCY REDOLOG FILES 
+
+
+
+High redundancy disk groups = 	  0
+Number of redo log groups with more than 1 member = 	     0 
+Number of diskgroup where redo log members are multiplexed = 		       1

@@ -1,0 +1,23 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - NIC BONDING MODE INTERCONNECT 
+
+
+
+Ethernet Channel Bonding Driver: v3.2.3 (December 6, 2007)
+
+Bonding Mode: fault-tolerance (active-backup) (fail_over_mac)
+Primary Slave: None
+Currently Active Slave: ib0
+MII Status: up
+MII Polling Interval (ms): 100
+Up Delay (ms): 5000
+Down Delay (ms): 5000
+
+Slave Interface: ib0
+MII Status: up
+Link Failure Count: 0
+Permanent HW addr: 80:00:00:48:fe:80
+
+Slave Interface: ib1
+MII Status: up
+Link Failure Count: 0
+Permanent HW addr: 80:00:00:49:fe:80

@@ -1,0 +1,14 @@
+TO REVIEW COLLECTED DATA FOR CCBS FOR LOCALLY MANAGED TABLESPACES 
+
+
+
+
+SYSTEM                         LOCAL                                            
+SYSAUX                         LOCAL                                            
+UNDOTBS1                       LOCAL                                            
+TEMP                           LOCAL                                            
+UNDOTBS2                       LOCAL                                            
+USERS                          LOCAL                                            
+INDX                           LOCAL                                            
+TBS_OTHERS                     LOCAL                                            
+GG_DATA                        LOCAL                                            

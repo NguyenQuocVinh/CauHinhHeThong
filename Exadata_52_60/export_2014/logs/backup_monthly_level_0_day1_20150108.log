@@ -1,0 +1,682 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Thu Jan 8 15:40:24 2015
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> 	crosscheck backup;
+41> 	delete noprompt obsolete;
+42> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+43> 	#backup ngay 1 
+44> 	backup incremental level 0 format '+RECO/RMAN/level0_%D_%T_%U' tag MONTHLY_LEVEL_0_day1 database plus archivelog include current controlfile;
+45> 
+46> 	#copy qua /mnt/nfs52100/RMAN/
+47> 	backup copies 2 backupset completed between "sysdate-2" AND "sysdate" format '/mnt/nfs52100/RMAN/level0_%D_%T_%U' tag copy_MONTHLY_LEVEL_0_day1;
+48> }
+49> 
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=392 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=1228 instance=ccbs1 device type=DISK
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_1_2 RECID=19715 STAMP=866532071
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_2_2 RECID=19714 STAMP=866532071
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_3_2 RECID=19716 STAMP=866533036
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_4_2 RECID=19717 STAMP=866533051
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_5_2 RECID=19719 STAMP=866534006
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_6_2 RECID=19718 STAMP=866534031
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_7_2 RECID=19721 STAMP=866534957
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_8_2 RECID=19720 STAMP=866534957
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_9_2 RECID=19722 STAMP=866535932
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_10_2 RECID=19723 STAMP=866535977
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_11_2 RECID=19725 STAMP=866536992
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_12_2 RECID=19724 STAMP=866537017
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_13_2 RECID=19726 STAMP=866538133
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_14_2 RECID=19727 STAMP=866538133
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_15_2 RECID=19729 STAMP=866539268
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_16_2 RECID=19728 STAMP=866539268
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_17_2 RECID=19730 STAMP=866540224
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_18_2 RECID=19731 STAMP=866540239
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_19_2 RECID=19732 STAMP=866541214
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_20_2 RECID=19733 STAMP=866541239
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_21_2 RECID=19734 STAMP=866542184
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_22_2 RECID=19735 STAMP=866542219
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_23_2 RECID=19736 STAMP=866543185
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_24_2 RECID=19737 STAMP=866543230
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_25_2 RECID=19738 STAMP=866544135
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_26_2 RECID=19739 STAMP=866544180
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_27_2 RECID=19740 STAMP=866545075
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_28_2 RECID=19741 STAMP=866545130
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_29_2 RECID=19742 STAMP=866546106
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_30_2 RECID=19743 STAMP=866546151
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_31_2 RECID=19744 STAMP=866547026
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_32_2 RECID=19745 STAMP=866547071
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_33_2 RECID=19746 STAMP=866547946
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_34_2 RECID=19747 STAMP=866547981
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_35_2 RECID=19748 STAMP=866548807
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_36_2 RECID=19749 STAMP=866548842
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_37_2 RECID=19750 STAMP=866549757
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_38_2 RECID=19751 STAMP=866549792
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_39_2 RECID=19752 STAMP=866550677
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_40_2 RECID=19753 STAMP=866550702
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_41_2 RECID=19754 STAMP=866551598
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_42_2 RECID=19755 STAMP=866551633
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_43_2 RECID=19756 STAMP=866552528
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_44_2 RECID=19757 STAMP=866552553
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_45_2 RECID=19758 STAMP=866553478
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_46_2 RECID=19759 STAMP=866553493
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_47_2 RECID=19761 STAMP=866554399
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mjpqb3d6_48_2 RECID=19760 STAMP=866554414
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_1_1 RECID=19565 STAMP=866487720
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_2_1 RECID=19566 STAMP=866488239
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_3_1 RECID=19567 STAMP=866488749
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_4_1 RECID=19568 STAMP=866489255
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_5_1 RECID=19569 STAMP=866489750
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_6_1 RECID=19570 STAMP=866490300
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_7_1 RECID=19571 STAMP=866490840
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_8_1 RECID=19572 STAMP=866491320
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_9_1 RECID=19573 STAMP=866491770
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_10_1 RECID=19574 STAMP=866492190
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_11_1 RECID=19575 STAMP=866492601
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_12_1 RECID=19576 STAMP=866493011
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_13_1 RECID=19577 STAMP=866493431
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_14_1 RECID=19578 STAMP=866493861
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_15_1 RECID=19579 STAMP=866494291
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_16_1 RECID=19580 STAMP=866494711
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_17_1 RECID=19581 STAMP=866495141
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_18_1 RECID=19582 STAMP=866495581
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_19_1 RECID=19583 STAMP=866496021
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_20_1 RECID=19584 STAMP=866496452
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_21_1 RECID=19585 STAMP=866496872
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_22_1 RECID=19586 STAMP=866497292
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_23_1 RECID=19587 STAMP=866497722
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_24_1 RECID=19588 STAMP=866498182
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_25_1 RECID=19589 STAMP=866498642
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_26_1 RECID=19590 STAMP=866499102
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_27_1 RECID=19591 STAMP=866499542
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_28_1 RECID=19592 STAMP=866499983
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_29_1 RECID=19593 STAMP=866500433
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_30_1 RECID=19594 STAMP=866500873
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_31_1 RECID=19595 STAMP=866501323
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_32_1 RECID=19596 STAMP=866501783
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_33_1 RECID=19597 STAMP=866502223
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_34_1 RECID=19598 STAMP=866502673
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_35_1 RECID=19599 STAMP=866503133
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_36_1 RECID=19600 STAMP=866503584
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_37_1 RECID=19601 STAMP=866504044
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_38_1 RECID=19602 STAMP=866504504
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_39_1 RECID=19603 STAMP=866504974
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mjpqb3d6_40_1 RECID=19604 STAMP=866505426
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_41_1 RECID=19605 STAMP=866505881
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_42_1 RECID=19606 STAMP=866506316
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_43_1 RECID=19607 STAMP=866506766
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_44_1 RECID=19608 STAMP=866507227
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_45_1 RECID=19609 STAMP=866507699
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_46_1 RECID=19610 STAMP=866508199
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_47_1 RECID=19611 STAMP=866508695
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mjpqb3d6_48_1 RECID=19612 STAMP=866509190
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_1_2 RECID=19762 STAMP=866555289
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_2_2 RECID=19763 STAMP=866555334
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_3_2 RECID=19764 STAMP=866556269
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_4_2 RECID=19765 STAMP=866556314
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_5_2 RECID=19766 STAMP=866557190
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_6_2 RECID=19767 STAMP=866557245
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_7_2 RECID=19768 STAMP=866558150
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_8_2 RECID=19769 STAMP=866558195
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_9_2 RECID=19770 STAMP=866559140
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_10_2 RECID=19771 STAMP=866559185
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_11_2 RECID=19772 STAMP=866560161
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_12_2 RECID=19773 STAMP=866560196
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_13_2 RECID=19774 STAMP=866561101
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_14_2 RECID=19775 STAMP=866561146
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_15_2 RECID=19776 STAMP=866562011
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_16_2 RECID=19777 STAMP=866562066
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_17_2 RECID=19778 STAMP=866562952
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_18_2 RECID=19779 STAMP=866563007
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_19_2 RECID=19780 STAMP=866563912
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_20_2 RECID=19781 STAMP=866563947
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_21_2 RECID=19782 STAMP=866564892
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_22_2 RECID=19783 STAMP=866564928
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_23_2 RECID=19784 STAMP=866565913
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_24_2 RECID=19785 STAMP=866565938
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_25_2 RECID=19786 STAMP=866567023
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_26_2 RECID=19787 STAMP=866567038
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_27_2 RECID=19788 STAMP=866568104
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_28_2 RECID=19789 STAMP=866568119
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_29_2 RECID=19790 STAMP=866569164
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_30_2 RECID=19791 STAMP=866569167
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_31_2 RECID=19792 STAMP=866570302
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_32_2 RECID=19793 STAMP=866570302
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_33_2 RECID=19795 STAMP=866571468
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_34_2 RECID=19794 STAMP=866571468
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_35_2 RECID=19796 STAMP=866572603
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_36_2 RECID=19797 STAMP=866572603
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_37_2 RECID=19798 STAMP=866573439
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_38_2 RECID=19799 STAMP=866573446
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_39_2 RECID=19801 STAMP=866574281
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_40_2 RECID=19800 STAMP=866574281
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_41_2 RECID=19802 STAMP=866575126
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_42_2 RECID=19803 STAMP=866575126
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_43_2 RECID=19805 STAMP=866575982
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_44_2 RECID=19804 STAMP=866575982
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_45_2 RECID=19807 STAMP=866576827
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_46_2 RECID=19806 STAMP=866576827
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_47_2 RECID=19808 STAMP=866577702
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_48_2 RECID=19809 STAMP=866577702
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mipqb3d6_49_2 RECID=19811 STAMP=866578587
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_1_1 RECID=19613 STAMP=866487719
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_2_1 RECID=19614 STAMP=866488214
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_3_1 RECID=19615 STAMP=866488734
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_4_1 RECID=19616 STAMP=866489255
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_5_1 RECID=19617 STAMP=866489785
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_6_1 RECID=19618 STAMP=866490325
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_7_1 RECID=19619 STAMP=866490855
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_8_1 RECID=19620 STAMP=866491385
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_9_1 RECID=19621 STAMP=866491885
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_10_1 RECID=19622 STAMP=866492335
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_11_1 RECID=19623 STAMP=866492766
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_12_1 RECID=19624 STAMP=866493186
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_13_1 RECID=19625 STAMP=866493596
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_14_1 RECID=19626 STAMP=866494016
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_15_1 RECID=19627 STAMP=866494456
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_16_1 RECID=19628 STAMP=866494886
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_17_1 RECID=19629 STAMP=866495326
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_18_1 RECID=19630 STAMP=866495766
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_19_1 RECID=19631 STAMP=866496217
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_20_1 RECID=19632 STAMP=866496647
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_21_1 RECID=19633 STAMP=866497067
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_22_1 RECID=19634 STAMP=866497487
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_23_1 RECID=19635 STAMP=866497917
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_24_1 RECID=19636 STAMP=866498357
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_25_1 RECID=19637 STAMP=866498797
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_26_1 RECID=19638 STAMP=866499237
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_27_1 RECID=19639 STAMP=866499677
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_28_1 RECID=19640 STAMP=866500108
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_29_1 RECID=19641 STAMP=866500538
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_30_1 RECID=19642 STAMP=866500968
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_31_1 RECID=19643 STAMP=866501408
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_32_1 RECID=19644 STAMP=866501848
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_33_1 RECID=19645 STAMP=866502278
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_34_1 RECID=19646 STAMP=866502708
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_35_1 RECID=19647 STAMP=866503148
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_36_1 RECID=19648 STAMP=866503609
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_37_1 RECID=19649 STAMP=866504069
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_38_1 RECID=19650 STAMP=866504519
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_39_1 RECID=19651 STAMP=866504974
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141216_mipqb3d6_40_1 RECID=19652 STAMP=866505419
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_41_1 RECID=19653 STAMP=866505881
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_42_1 RECID=19654 STAMP=866506341
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_43_1 RECID=19655 STAMP=866506781
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_44_1 RECID=19656 STAMP=866507234
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_45_1 RECID=19657 STAMP=866507714
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_46_1 RECID=19658 STAMP=866508200
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_47_1 RECID=19659 STAMP=866508695
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_48_1 RECID=19660 STAMP=866509190
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mipqb3d6_49_1 RECID=19661 STAMP=866509681
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_1_2 RECID=19812 STAMP=866578595
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_2_2 RECID=19813 STAMP=866579120
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_3_2 RECID=19814 STAMP=866579475
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_4_2 RECID=19815 STAMP=866580000
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_5_2 RECID=19816 STAMP=866580345
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_6_2 RECID=19817 STAMP=866580860
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_7_2 RECID=19818 STAMP=866581226
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_8_2 RECID=19825 STAMP=866582001
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_9_2 RECID=19826 STAMP=866582566
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_10_2 RECID=19830 STAMP=866583481
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_11_2 RECID=19831 STAMP=866584007
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_12_2 RECID=19832 STAMP=866584742
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_13_2 RECID=19833 STAMP=866585217
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_14_2 RECID=19834 STAMP=866585892
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_15_2 RECID=19835 STAMP=866586357
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_16_2 RECID=19849 STAMP=866587053
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_17_2 RECID=19850 STAMP=866587508
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_18_2 RECID=19851 STAMP=866588203
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_19_2 RECID=19852 STAMP=866588648
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_20_2 RECID=19853 STAMP=866589353
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_21_2 RECID=19854 STAMP=866589789
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_22_2 RECID=19855 STAMP=866590484
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_23_2 RECID=19856 STAMP=866590859
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_24_2 RECID=19857 STAMP=866591504
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141217_mkpqbor2_25_2 RECID=19858 STAMP=866591939
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_26_2 RECID=19859 STAMP=866592615
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_27_2 RECID=19860 STAMP=866593050
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_28_2 RECID=19861 STAMP=866593765
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_29_2 RECID=19862 STAMP=866594210
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_30_2 RECID=19863 STAMP=866594925
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_31_2 RECID=19864 STAMP=866595371
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_32_2 RECID=19865 STAMP=866596076
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_33_2 RECID=19866 STAMP=866596521
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_34_2 RECID=19867 STAMP=866597246
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_35_2 RECID=19868 STAMP=866597671
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_36_2 RECID=19869 STAMP=866598417
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_37_2 RECID=19870 STAMP=866598842
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_38_2 RECID=19871 STAMP=866599467
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_39_2 RECID=19872 STAMP=866599872
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_40_2 RECID=19873 STAMP=866600627
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_41_2 RECID=19874 STAMP=866601023
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_42_2 RECID=19875 STAMP=866601778
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_43_2 RECID=19876 STAMP=866602183
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_18_20141218_mkpqbor2_45_2 RECID=19877 STAMP=866603343
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_1_1 RECID=19663 STAMP=866509667
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_2_1 RECID=19664 STAMP=866510115
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_3_1 RECID=19665 STAMP=866510550
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_4_1 RECID=19666 STAMP=866511015
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_5_1 RECID=19667 STAMP=866511460
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_6_1 RECID=19668 STAMP=866511905
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_7_1 RECID=19669 STAMP=866512360
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_8_1 RECID=19670 STAMP=866512805
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_9_1 RECID=19671 STAMP=866513250
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_10_1 RECID=19672 STAMP=866513735
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_11_1 RECID=19673 STAMP=866514170
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_12_1 RECID=19674 STAMP=866514585
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_13_1 RECID=19675 STAMP=866515001
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_14_1 RECID=19676 STAMP=866515416
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_15_1 RECID=19677 STAMP=866515841
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_16_1 RECID=19678 STAMP=866516276
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_17_1 RECID=19679 STAMP=866516701
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_18_1 RECID=19680 STAMP=866517136
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_19_1 RECID=19681 STAMP=866517581
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_20_1 RECID=19682 STAMP=866518026
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_21_1 RECID=19683 STAMP=866518461
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_22_1 RECID=19684 STAMP=866518876
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_23_1 RECID=19685 STAMP=866519281
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_24_1 RECID=19686 STAMP=866519686
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_25_1 RECID=19687 STAMP=866520112
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_26_1 RECID=19688 STAMP=866520547
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_27_1 RECID=19689 STAMP=866520982
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_28_1 RECID=19690 STAMP=866521407
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_29_1 RECID=19691 STAMP=866521832
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_30_1 RECID=19692 STAMP=866522277
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_31_1 RECID=19693 STAMP=866522722
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_32_1 RECID=19694 STAMP=866523167
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_33_1 RECID=19695 STAMP=866523612
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_34_1 RECID=19696 STAMP=866524057
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_35_1 RECID=19697 STAMP=866524502
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_36_1 RECID=19698 STAMP=866524958
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_37_1 RECID=19699 STAMP=866525403
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_38_1 RECID=19700 STAMP=866525848
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_39_1 RECID=19701 STAMP=866526303
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_40_1 RECID=19702 STAMP=866526748
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_41_1 RECID=19703 STAMP=866527193
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_42_1 RECID=19704 STAMP=866527628
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_43_1 RECID=19705 STAMP=866528053
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_44_1 RECID=19706 STAMP=866528488
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_45_1 RECID=19707 STAMP=866528943
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_46_1 RECID=19708 STAMP=866529398
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_47_1 RECID=19709 STAMP=866529854
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_48_1 RECID=19710 STAMP=866530349
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_49_1 RECID=19711 STAMP=866530834
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_50_1 RECID=19712 STAMP=866531319
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141217_mkpqbor2_51_1 RECID=19713 STAMP=866531824
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_17_20141217_mmpqdums_1_1 RECID=19819 STAMP=866581213
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mmpqdums_1_2 RECID=19820 STAMP=866581213
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_17_20141217_mnpqdums_1_1 RECID=19821 STAMP=866581214
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mnpqdums_1_2 RECID=19822 STAMP=866581214
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_17_20141217_mopqe0bt_1_1 RECID=19827 STAMP=866582911
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_17_20141217_mopqe0bt_1_2 RECID=19828 STAMP=866582911
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_17_20141217_mspqe1uv_1_1 RECID=19836 STAMP=866584543
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_17_20141217_mspqe1uv_2_1 RECID=19838 STAMP=866585799
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_17_20141217_mspqe1uv_3_1 RECID=19840 STAMP=866587004
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_17_20141217_mrpqe1uv_1_1 RECID=19842 STAMP=866584543
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_17_20141217_mrpqe1uv_2_1 RECID=19844 STAMP=866585799
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_17_20141217_mrpqe1uv_3_1 RECID=19846 STAMP=866587004
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_18_20141218_mvpqgj2s_1_1 RECID=19878 STAMP=866667616
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_18_20141218_mvpqgj2s_1_2 RECID=19879 STAMP=866667616
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_18_20141218_mupqgj2s_1_1 RECID=19880 STAMP=866667613
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_18_20141218_mupqgj2s_1_2 RECID=19881 STAMP=866667613
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_18_20141218_n0pqgk2l_1_1 RECID=19884 STAMP=866668634
+
+user interrupt received
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03009: failure of crosscheck command on ORA_DISK_1 channel at 01/08/2015 15:42:02
+ORA-03111: break received on communication channel
+
+Recovery Manager complete.

@@ -1,0 +1,27 @@
+Tue Sep 10 10:44:13 2013 started watcher
+Tue Sep 10 10:44:13 2013 running watcher 1 
+Tue Sep 10 10:44:13 2013 candidate child pid for killing is  -  
+Tue Sep 10 10:44:13 2013 watcher sleeping for 90 seconds 
+Tue Sep 10 10:45:43 2013 running watcher 2 
+Tue Sep 10 10:45:43 2013 candidate child pid for killing is  3734 - expect -f - 
+Tue Sep 10 10:45:43 2013 watcher sleeping for 300 seconds 
+Tue Sep 10 10:50:43 2013 running watcher 3 
+Tue Sep 10 10:50:43 2013 candidate child pid for killing is  18985 19493 20000 - expect -f - 
+Tue Sep 10 10:50:43 2013 watcher sleeping for 300 seconds 
+Timed out while running collections on 192.168.10.3
+Timed out while running collections on 192.168.10.4
+Timed out while running collections on 192.168.10.5
+Tue Sep 10 10:55:43 2013 running watcher 4 
+Tue Sep 10 10:55:43 2013 candidate child pid for killing is  30235 - expect -f - 
+Tue Sep 10 10:55:43 2013 watcher sleeping for 300 seconds 
+LOG FROM dm01db02
+Tue Sep 10 10:51:15 2013 started watcher
+Tue Sep 10 10:51:15 2013 running watcher 1 
+Tue Sep 10 10:51:15 2013 candidate child pid for killing is  -  
+Tue Sep 10 10:51:15 2013 watcher sleeping for 90 seconds 
+Tue Sep 10 10:52:45 2013 running watcher 2 
+Tue Sep 10 10:52:45 2013 candidate child pid for killing is  31867 - expect -f - 
+Tue Sep 10 10:52:45 2013 watcher sleeping for 300 seconds 
+Tue Sep 10 10:57:45 2013 running watcher 3 
+Tue Sep 10 10:57:45 2013 candidate child pid for killing is  - expect -f - 
+Tue Sep 10 10:57:45 2013 watcher sleeping for 300 seconds 

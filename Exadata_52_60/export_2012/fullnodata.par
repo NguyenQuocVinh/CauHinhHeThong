@@ -1,0 +1,4 @@
+logfile=fullnodata.log  
+dumpfile=fullnodata.dmp 
+filesize=4G directory=DPUMP_DIR
+full=y content=metadata_only

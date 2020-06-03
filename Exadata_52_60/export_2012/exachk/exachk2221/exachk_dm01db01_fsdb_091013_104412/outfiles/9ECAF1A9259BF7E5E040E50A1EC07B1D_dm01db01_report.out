@@ -1,0 +1,5 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - NTP WITH CORRECT SETTING 
+
+
+
+ntp       7272     1  0 Sep06 ?        00:00:00 ntpd -u ntp:ntp -p /var/run/ntpd.pid -x -g

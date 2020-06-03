@@ -1,0 +1,7 @@
+status=30
+cluster=NO
+PARALLEL=1
+logfile=DPUMP_AUDIT_DIR:aud
+dumpfile=DPUMP_AUDIT_DIR:aud_%U
+filesize=4G
+tables=exp_audit.AUDIT_TMP

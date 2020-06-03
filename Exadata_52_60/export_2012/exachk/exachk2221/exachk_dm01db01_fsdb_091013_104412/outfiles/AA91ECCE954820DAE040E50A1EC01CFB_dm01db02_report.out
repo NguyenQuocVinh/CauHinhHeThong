@@ -1,0 +1,6 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - VERIFY INFINIBAND CABLE CONNECTION QUALITY 
+
+
+
+/sys/class/net/ib0/carrier = 1
+/sys/class/net/ib1/carrier = 1

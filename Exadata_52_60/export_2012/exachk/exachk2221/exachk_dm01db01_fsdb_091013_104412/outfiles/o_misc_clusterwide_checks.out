@@ -1,0 +1,2 @@
+Check:- PASS => CRS home has same number of patches installed across the cluster
+Check:- PASS => RDBMS home /u01/app/oracle/product/11.2.0.2/dbhome_1 has same number of patches installed across the cluster

@@ -1,0 +1,2 @@
+dm01db01 787.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_compute_imageinfo.out ]; then cat /tmp/o_root_clusterwide_check_compute_imageinfo.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_compute_imageinfo.out>/dev/null 2>&1;fi == 11.2.2.4.2.111221
+dm01db02 787.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_compute_imageinfo.out ]; then cat /tmp/o_root_clusterwide_check_compute_imageinfo.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_compute_imageinfo.out>/dev/null 2>&1;fi == 11.2.2.4.2.111221

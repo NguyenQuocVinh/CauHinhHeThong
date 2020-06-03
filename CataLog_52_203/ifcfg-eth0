@@ -1,0 +1,12 @@
+# Broadcom Corporation NetXtreme II BCM5709 Gigabit Ethernet
+DEVICE=eth0
+BOOTPROTO=none
+HWADDR=5c:f3:fc:0b:ca:d8
+IPADDR=10.70.52.203
+NETMASK=255.255.255.0
+NETWORK=10.70.52.0
+ONBOOT=yes
+TYPE=Ethernet
+USERCTL=no
+IPV6INIT=no
+PEERDNS=yes

@@ -1,0 +1,19 @@
+#0 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * * sh /u01/app/export_2014/delete_archivelog_stby.sh
+
+#3/4/2015- backup ve may 203
+# se mo cac rem khi da hoan thanh
+# Exadata
+0 18 28 * * sh /u01/app/export_2014/Exadata_level_0.sh
+0 18 1-27,30,31 * * sh /u01/app/export_2014/Exadata_level_1.sh
+# CTDC
+0 20 27 * * sh /u01/app/export_2014/CTDC_level_0.sh
+0 20 1-26,28,30,31 * * sh /u01/app/export_2014/CTDC_level_1.sh
+# DHSX
+0 12,22 26 * * sh /u01/app/export_2014/DHSX_level_0.sh
+0 12,22 1-25,27-31 * * sh /u01/app/export_2014/DHSX_level_1.sh
+# DHSX tren SVTech
+0 12,23 25 * * sh /u01/app/export_2014/DHSX_SVTech_level_0.sh
+0 12,23 1-24,26-31 * * sh /u01/app/export_2014/DHSX_SVTech_level_1.sh
+# DBCATA
+0 5 1 * * sh /u01/app/export_2014/DBCATA_level_0.sh
+0 5 2-31 * * sh /u01/app/export_2014/DBCATA_level_1.sh

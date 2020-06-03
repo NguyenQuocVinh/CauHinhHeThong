@@ -1,0 +1,7 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - PROCESSES PARAMETER FOR ASM INSTANCE 
+
+
+
+Processes parameter set on +ASM2 = 100 
+Number of RDBMS instances running = 2
+Recommended value for Processes parameter for +ASM2 = 150

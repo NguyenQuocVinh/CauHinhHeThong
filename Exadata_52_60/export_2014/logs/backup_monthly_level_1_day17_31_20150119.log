@@ -1,0 +1,628 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Mon Jan 19 21:00:01 2015
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> 	backup incremental level 1 copies 2 format '+DATA/RMAN/level1_%D_%T_%U','/mnt/nfs52100/RMAN/level1_%D_%T_%U' tag MON_LV1_17_31 
+41>   database include current controlfile;
+42> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+43> 	backup as compressed backupset copies 2 archivelog all format '+DATA/RMAN/archi_%D_%T_%U','/u03/rman_ccbs_ftp5/RMAN/archi_%D_%T_%U'
+44>   tag monthly_arch_17_31 delete input;
+45> }
+46> 
+Starting backup at 19/01/2015 21:00:03
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=1241 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=1318 instance=ccbs1 device type=DISK
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+channel ORA_DISK_1: starting piece 1 at 19/01/2015 21:00:11
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_2: starting piece 1 at 19/01/2015 21:00:12
+channel ORA_DISK_1: finished piece 1 at 19/01/2015 21:16:47 with 2 copies and tag MON_LV1_17_31
+piece handle=+DATA/rman/level1_19_20150119_ucpt4v2r_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_19_20150119_ucpt4v2r_1_2 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:16:36
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+channel ORA_DISK_1: starting piece 1 at 19/01/2015 21:16:48
+channel ORA_DISK_2: finished piece 1 at 19/01/2015 21:16:48 with 2 copies and tag MON_LV1_17_31
+piece handle=+DATA/rman/level1_19_20150119_udpt4v2r_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_19_20150119_udpt4v2r_1_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:16:36
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_2: starting piece 1 at 19/01/2015 21:16:56
+channel ORA_DISK_2: finished piece 1 at 19/01/2015 21:17:03 with 2 copies and tag MON_LV1_17_31
+piece handle=+DATA/rman/level1_19_20150119_ufpt5020_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_19_20150119_ufpt5020_1_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:00:07
+RMAN-03009: failure of backup command on ORA_DISK_1 channel at 01/19/2015 21:21:01
+ORA-19502: write error on file "/mnt/nfs52100/RMAN/level1_19_20150119_uept5020_1_2", block number 94721 (block size=8192)
+ORA-27072: File I/O error
+Linux-x86_64 Error: 5: Input/output error
+Additional information: 4
+Additional information: 94721
+Additional information: -1
+ORA-19502: write error on file "/mnt/nfs52100/RMAN/level1_19_20150119_uept5020_1_2", block number 94721 (block size=8192)
+channel ORA_DISK_1 disabled, job failed on it will be run on another channel
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+channel ORA_DISK_2: starting piece 1 at 19/01/2015 21:21:02
+channel ORA_DISK_2: finished piece 1 at 19/01/2015 21:34:57 with 2 copies and tag MON_LV1_17_31
+piece handle=+DATA/rman/level1_19_20150119_ugpt509t_1_1 comment=NONE
+piece handle=/mnt/nfs52100/RMAN/level1_19_20150119_ugpt509t_1_2 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:13:55
+Finished backup at 19/01/2015 21:34:57
+
+Starting Control File and SPFILE Autobackup at 19/01/2015 21:34:57
+piece handle=+RECO/rman/c-271141816-20150119-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 19/01/2015 21:35:00
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 19/01/2015 21:35:10
+current log archived
+using channel ORA_DISK_2
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20691.3525.868348883; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20692.2796.868349563; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20693.1604.868349629; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20694.3381.868350461; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20695.1584.868350553; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20696.1592.868350643; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20697.1576.868350703; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20698.1566.868350755; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20699.1542.868350803; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20700.1554.868350849; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20701.1536.868350909; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20702.1504.868352339; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20703.3338.868356327; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20704.2021.868369525; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20705.4123.868390651; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20706.2824.868397019; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20707.4096.868400789; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_1_seq_20708.2352.868400853; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20709.1842.868406663; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20710.3645.868406741; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20711.3729.868433661; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20712.3745.868437463; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20713.3761.868438561; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20714.3765.868439891; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20715.3757.868439963; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20716.3777.868440493; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20717.3781.868440579; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20718.3789.868441805; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20719.3805.868446219; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20720.3801.868449205; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20721.3813.868449259; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20722.2260.868455677; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20723.2564.868487641; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20724.2879.868488033; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20725.2236.868488041; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20726.4256.868488641; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_1_seq_20727.2347.868489869; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20728.4222.868492919; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20729.1341.868524119; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20730.1327.868531585; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20731.4219.868541023; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20732.4179.868541091; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20733.955.868541507; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20734.2093.868547041; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20735.668.868571791; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_1_seq_20736.1067.868571801; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20737.1357.868584303; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20738.1371.868618339; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20739.1387.868618345; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20740.3103.868627067; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20741.3166.868655953; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20742.3075.868661737; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20743.2156.868661873; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_1_seq_20744.1819.868662081; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_11/thread_1_seq_20745.1166.868665865; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_11/thread_1_seq_20746.1646.868665983; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_11/thread_1_seq_20747.938.868666675; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_11/thread_1_seq_20748.609.868700305; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_11/thread_1_seq_20749.569.868700679; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_11/thread_1_seq_20750.1089.868705593; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20751.1351.868753149; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20752.1401.868791917; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20753.1440.868797751; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20754.2272.868797827; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20755.2256.868797901; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20756.3309.868797977; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20757.447.868798053; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20758.3457.868798127; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20759.2908.868798197; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20760.3469.868798265; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20761.1803.868798339; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20762.3317.868798411; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20763.4072.868798483; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20764.3819.868798553; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20765.2192.868798627; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20766.2356.868798711; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20767.1959.868799495; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20768.1028.868799685; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20769.3833.868799879; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20770.1317.868800077; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20771.3856.868800281; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20772.3864.868801531; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20773.3867.868801569; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20774.3023.868801613; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20775.1049.868801653; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20776.888.868801695; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20777.1151.868801749; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20778.445.868801795; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20779.587.868801837; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20780.919.868801879; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20781.655.868801923; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20782.616.868802013; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20783.1732.868802251; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20784.1777.868802469; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20785.4287.868803163; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20786.1164.868803209; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20787.1154.868803253; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20788.1038.868803299; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20789.381.868803345; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20790.3202.868803529; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20791.490.868803583; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20792.1126.868803647; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20793.976.868803875; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20794.1076.868803973; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_1_seq_20795.3939.868837901; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20796.3946.868838535; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20797.678.868838713; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20798.3530.868838793; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20799.3511.868876671; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20800.3865.868887167; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20801.3933.868887579; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20802.1901.868893357; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20803.3096.868893705; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20804.1987.868895945; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_1_seq_20805.3585.868912035; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20806.3950.868952079; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20807.2918.868952169; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20808.3958.868960713; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20809.3019.868961093; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20810.2511.868961255; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20811.1931.868962267; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20812.2170.868962825; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20813.2651.868962909; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20814.4000.868963399; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20815.4064.868979115; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20816.4243.868979349; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20817.4032.868979475; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20818.4152.868980661; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_1_seq_20819.4173.869009987; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20820.4184.869011335; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20821.501.869011531; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20822.4022.869040575; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20823.4016.869040655; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20824.4185.869040735; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20825.3897.869040819; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20826.3960.869040901; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20827.820.869040983; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20828.4037.869041061; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20829.2395.869041139; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20830.2403.869041217; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20831.2424.869041293; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20832.2738.869041367; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20833.2768.869041439; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20834.1967.869041515; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20835.4101.869041603; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20836.4033.869041761; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20837.3579.869041951; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20838.2800.869042151; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20839.2818.869042355; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20840.2820.869042557; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20841.2460.869044425; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20842.2473.869044469; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20843.2495.869044511; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20844.2525.869044557; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20845.2140.869044603; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20846.3081.869044751; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20847.2551.869044809; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20848.3139.869044865; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20849.3154.869045243; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20850.3216.869045351; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20851.3264.869046733; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20852.3315.869046771; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20853.3055.869046811; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20854.2132.869046853; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20855.2348.869046893; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20856.4289.869046935; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20857.3144.869046975; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20858.3037.869047015; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20859.3533.869047055; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20860.4226.869047093; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20861.3045.869047761; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20862.2567.869047973; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20863.2582.869048123; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20864.2689.869048689; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20865.1977.869048733; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20866.1935.869048777; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20867.1911.869048821; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20868.2589.869048867; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20869.2601.869048913; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20870.2619.869049061; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20871.1830.869049119; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20872.1808.869049179; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20873.1790.869049485; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20874.1742.869049593; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20875.2910.869060195; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20876.3896.869064483; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_1_seq_20877.4029.869089825; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_1_seq_20878.2977.869138905; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_1_seq_20879.3513.869167247; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_1_seq_20880.3455.869167255; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17052.1295.868325949; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17053.3478.868348887; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17054.3492.868348889; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17055.2842.868350489; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17056.1560.868350725; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17057.1528.868350871; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17058.1514.868351259; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17059.1520.868351607; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17060.1496.868352357; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17061.3388.868352781; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17062.3356.868353649; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17063.1488.868356345; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17064.3288.868357215; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17065.3260.868358793; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17066.3305.868369543; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17067.3581.868376625; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17068.3208.868382335; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17069.1704.868390671; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17070.2091.868396857; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17071.3528.868397037; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17072.3537.868400361; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17073.3137.868400395; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17074.2967.868400809; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17075.3895.868400833; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17076.3496.868400853; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_07/thread_2_seq_17077.4135.868400873; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17078.3651.868406763; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17079.1889.868433165; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17080.3655.868433677; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17081.3733.868436041; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17082.3659.868436787; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17083.3737.868437481; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17084.3749.868437697; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17085.3741.868438343; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17086.3753.868438581; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17087.3769.868439985; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17088.3773.868440835; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17089.3785.868440901; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17090.3793.868441823; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17091.3797.868442095; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17092.3809.868446241; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17093.2776.868449283; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17094.3817.868475393; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17095.2969.868488055; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_08/thread_2_seq_17096.2940.868488061; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_2_seq_17097.4200.868492939; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_2_seq_17098.365.868527897; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_2_seq_17099.1333.868541113; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_2_seq_17100.1182.868569505; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_2_seq_17101.548.868571809; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_09/thread_2_seq_17102.461.868571823; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_2_seq_17103.1211.868618341; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_2_seq_17104.1422.868627059; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_2_seq_17105.1444.868627059; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_2_seq_17106.1403.868627065; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_10/thread_2_seq_17107.1464.868627065; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17108.1369.868788677; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17109.1205.868791947; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17110.1610.868792051; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17111.3146.868792297; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17112.3192.868797935; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17113.3927.868798163; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17114.721.868798379; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17115.2611.868798589; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17116.3823.868799543; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17117.1315.868800111; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17118.3859.868801603; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17119.338.868801729; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17120.1176.868801875; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17121.3390.868802047; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17122.258.868803199; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17123.856.868803333; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17124.1140.868803619; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_12/thread_2_seq_17125.437.868804009; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_2_seq_17126.556.868838747; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_2_seq_17127.4224.868873185; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_2_seq_17128.1004.868884547; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_2_seq_17129.2462.868884769; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_2_seq_17130.2663.868889225; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_13/thread_2_seq_17131.4079.868895979; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_2_seq_17132.3929.868952205; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_2_seq_17133.4248.868961291; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_2_seq_17134.3968.868962945; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_2_seq_17135.1040.868979383; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_14/thread_2_seq_17136.4128.869010025; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17137.4109.869040611; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17138.4212.869040855; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17139.4236.869041095; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17140.2442.869041325; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17141.3001.869041551; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17142.4277.869041987; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17143.2846.869042593; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17144.2505.869044547; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17145.2537.869044783; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17146.3184.869045279; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17147.3386.869046807; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17148.3101.869046927; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17149.3258.869047047; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17150.3262.869047795; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17151.2712.869048723; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17152.1881.869048855; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17153.1845.869049095; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17154.1764.869049521; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_15/thread_2_seq_17155.3596.869064519; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_2_seq_17156.2176.869098763; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_2_seq_17157.2154.869133393; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_2_seq_17158.2315.869152293; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_2_seq_17159.2685.869167281; already backed up 2 time(s)
+skipping archived log file +RECO/ccbs/archivelog/2015_01_16/thread_2_seq_17160.2716.869167257; already backed up 2 time(s)
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=1 sequence=20881 RECID=57185 STAMP=869184268
+input archived log thread=2 sequence=17161 RECID=57187 STAMP=869211666
+input archived log thread=1 sequence=20882 RECID=57186 STAMP=869203201
+input archived log thread=1 sequence=20883 RECID=57188 STAMP=869214190
+input archived log thread=2 sequence=17162 RECID=57189 STAMP=869214225
+input archived log thread=1 sequence=20884 RECID=57191 STAMP=869261382
+input archived log thread=2 sequence=17163 RECID=57190 STAMP=869221261
+input archived log thread=2 sequence=17164 RECID=57192 STAMP=869261423
+input archived log thread=2 sequence=17165 RECID=57194 STAMP=869261424
+input archived log thread=1 sequence=20885 RECID=57193 STAMP=869261390
+input archived log thread=1 sequence=20886 RECID=57196 STAMP=869307233
+input archived log thread=2 sequence=17166 RECID=57195 STAMP=869292203
+input archived log thread=2 sequence=17167 RECID=57197 STAMP=869307274
+input archived log thread=2 sequence=17168 RECID=57199 STAMP=869347715
+input archived log thread=1 sequence=20887 RECID=57198 STAMP=869347675
+input archived log thread=1 sequence=20888 RECID=57200 STAMP=869347683
+input archived log thread=2 sequence=17169 RECID=57201 STAMP=869347718
+input archived log thread=1 sequence=20889 RECID=57202 STAMP=869357062
+input archived log thread=2 sequence=17170 RECID=57204 STAMP=869383375
+input archived log thread=1 sequence=20890 RECID=57203 STAMP=869357178
+input archived log thread=1 sequence=20891 RECID=57205 STAMP=869383350
+input archived log thread=1 sequence=20892 RECID=57207 STAMP=869397715
+input archived log thread=2 sequence=17171 RECID=57206 STAMP=869388011
+input archived log thread=2 sequence=17172 RECID=57208 STAMP=869397749
+input archived log thread=2 sequence=17173 RECID=57209 STAMP=869413421
+input archived log thread=1 sequence=20893 RECID=57211 STAMP=869434510
+input archived log thread=2 sequence=17174 RECID=57210 STAMP=869434541
+input archived log thread=1 sequence=20894 RECID=57212 STAMP=869434512
+input archived log thread=2 sequence=17175 RECID=57213 STAMP=869434546
+channel ORA_DISK_2: starting piece 1 at 19/01/2015 21:35:17
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03009: failure of backup command on ORA_DISK_2 channel at 01/19/2015 21:35:18
+ORA-19504: failed to create file "/u03/rman_ccbs_ftp5/RMAN/archi_19_20150119_uipt514l_1_2"
+ORA-27040: file create error, unable to create file
+Linux-x86_64 Error: 2: No such file or directory
+
+Recovery Manager complete.

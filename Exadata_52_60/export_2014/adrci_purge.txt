@@ -1,0 +1,26 @@
+spool adrci_purge.log
+
+show homes
+
+set home diag/rdbms/ccbs/ccbs1
+show homes
+purge -age 720 -type incident
+purge -age 720 -type trace
+purge -age 720 -type alert
+purge -age 720 -type cdump
+
+set home diag/tnslsnr/dm01db01/listener
+show homes
+purge -age 720 -type incident
+purge -age 720 -type trace
+purge -age 720 -type alert
+purge -age 720 -type cdump
+
+set home diag/asm/+asm/+ASM1
+show homes
+purge -age 720 -type incident
+purge -age 720 -type trace
+purge -age 720 -type alert
+purge -age 720 -type cdump
+
+spool off

@@ -1,0 +1,12 @@
+
+NOTE: See Link: Speed
+
+19:00.0 InfiniBand: Mellanox Technologies MT26428 [ConnectX VPI PCIe 2.0 5GT/s - IB QDR / 10GigE] (rev b0)
+	Subsystem: Mellanox Technologies MT26428 [ConnectX VPI PCIe 2.0 5GT/s - IB QDR / 10GigE]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr+ Stepping- SERR+ FastB2B-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR-
+	Latency: 0, Cache Line Size: 256 bytes
+	Interrupt: pin A routed to IRQ 149
+	Region 0: Memory at df600000 (64-bit, non-prefetchable) [size=1M]
+	Region 2: Memory at dd800000 (64-bit, prefetchable) [size=8M]
+	Capabilities: <access denied>

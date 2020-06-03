@@ -1,0 +1,7 @@
+/u02/RMAN 10.70.100.30/255.255.255.255(rw,no_root_squash)
+/u02/RMAN 10.70.100.31/255.255.255.255(rw,no_root_squash)
+#/u02/RMAN 10.70.52.0/255.255.255.0(rw,no_root_squash)
+/u02/RMAN 10.70.52.60/255.255.255.255(rw,no_root_squash)
+/u02/RMAN 10.70.52.61/255.255.255.255(rw,no_root_squash)
+/u02/RMAN/DHSX_SVTech 10.70.52.84/255.255.255.255(rw,no_root_squash)
+/u02/RMAN/DHSX_SVTech 10.70.52.85/255.255.255.255(rw,no_root_squash)

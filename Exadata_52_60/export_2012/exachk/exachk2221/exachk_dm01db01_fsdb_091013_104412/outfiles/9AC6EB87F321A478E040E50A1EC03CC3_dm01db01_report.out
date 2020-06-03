@@ -1,0 +1,7 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - ASM CELL SMART SCAN 
+
+
+
+ASM DATA.cell.smart_scan_capable = TRUE                                         
+ASM DBFS_DG.cell.smart_scan_capable = TRUE                                      
+ASM RECO.cell.smart_scan_capable = TRUE                                         

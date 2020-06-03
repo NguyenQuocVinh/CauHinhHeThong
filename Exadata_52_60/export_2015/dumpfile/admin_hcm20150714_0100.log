@@ -1,0 +1,110 @@
+;;; 
+Export: Release 11.2.0.2.0 - Production on Tue Jul 14 01:00:01 2015
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle Database 11g Enterprise Edition Release 11.2.0.2.0 - 64bit Production
+With the Partitioning, Real Application Clusters, Automatic Storage Management, OLAP,
+Data Mining and Real Application Testing options
+Starting "EXPDHSX"."EXPDHSX":  /********@sxkd1 parfile=data_admin_hcm.par 
+Estimate in progress using BLOCKS method...
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+Total estimation using BLOCKS method: 3.102 GB
+Processing object type SCHEMA_EXPORT/USER
+Processing object type SCHEMA_EXPORT/SYSTEM_GRANT
+Processing object type SCHEMA_EXPORT/ROLE_GRANT
+Processing object type SCHEMA_EXPORT/DEFAULT_ROLE
+Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA
+Processing object type SCHEMA_EXPORT/DB_LINK
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/GRANT/OWNER_GRANT/OBJECT_GRANT
+Processing object type SCHEMA_EXPORT/TABLE/GRANT/CROSS_SCHEMA/OBJECT_GRANT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/COMMENT
+Processing object type SCHEMA_EXPORT/PACKAGE/PACKAGE_SPEC
+Processing object type SCHEMA_EXPORT/FUNCTION/FUNCTION
+Processing object type SCHEMA_EXPORT/PROCEDURE/PROCEDURE
+Processing object type SCHEMA_EXPORT/PACKAGE/COMPILE_PACKAGE/PACKAGE_SPEC/ALTER_PACKAGE_SPEC
+Processing object type SCHEMA_EXPORT/FUNCTION/ALTER_FUNCTION
+Processing object type SCHEMA_EXPORT/PROCEDURE/ALTER_PROCEDURE
+Processing object type SCHEMA_EXPORT/PACKAGE/PACKAGE_BODY
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+. . exported "ADMIN_HCM"."LOG_ACTION"                    102.0 MB  398439 rows
+. . exported "ADMIN_HCM"."BAOCAO"                        120.9 MB     765 rows
+. . exported "ADMIN_HCM"."LOG_FORM_ACTION_USER"          3.849 MB   48615 rows
+. . exported "ADMIN_HCM"."A_BAOCAO"                      12.53 MB     149 rows
+. . exported "ADMIN_HCM"."LOG_ERROR"                     630.1 KB    3463 rows
+. . exported "ADMIN_HCM"."LOG_STATUS_USER"               1.146 MB   18081 rows
+. . exported "ADMIN_HCM"."NHANVIEN"                      605.6 KB    4740 rows
+. . exported "ADMIN_HCM"."NGUOIDUNG"                     744.1 KB    4819 rows
+. . exported "ADMIN_HCM"."CT_TSMD_BLOB"                  19.03 KB       1 rows
+. . exported "ADMIN_HCM"."LS_NGUOIDUNG"                  42.62 KB     187 rows
+. . exported "ADMIN_HCM"."LS_QUYEN_MENU"                 315.6 KB    8242 rows
+. . exported "ADMIN_HCM"."CT_TSMD"                       174.2 KB    7701 rows
+. . exported "ADMIN_HCM"."LOG_MATKHAU"                   140.0 KB    2058 rows
+. . exported "ADMIN_HCM"."NGUOIDUNG_DL"                  215.8 KB   18066 rows
+. . exported "ADMIN_HCM"."THAMSO_BC"                     179.6 KB    1391 rows
+. . exported "ADMIN_HCM"."DONVI"                         200.6 KB    2632 rows
+. . exported "ADMIN_HCM"."DS_NVTC_NVQL_TMP"              144.4 KB    8926 rows
+. . exported "ADMIN_HCM"."CHUCNANG"                      85.92 KB     651 rows
+. . exported "ADMIN_HCM"."CHUCNANG_MOTA"                 44.06 KB      52 rows
+. . exported "ADMIN_HCM"."DONVI_LDV"                     47.18 KB    3876 rows
+. . exported "ADMIN_HCM"."DONVI_QL"                      62.24 KB    3182 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_BANG"                 54.08 KB     307 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_MENU"                 78.53 KB    6666 rows
+. . exported "ADMIN_HCM"."ICON"                          11.52 KB       4 rows
+. . exported "ADMIN_HCM"."MAIL_SERVER"                   8.390 KB       1 rows
+. . exported "ADMIN_HCM"."MENU"                          48.45 KB     516 rows
+. . exported "ADMIN_HCM"."NGUOIDUNG_TN"                  8.796 KB     281 rows
+. . exported "ADMIN_HCM"."NHANVIEN_DV"                   77.87 KB    6171 rows
+. . exported "ADMIN_HCM"."NHANVIEN_LNV"                  73.64 KB    6362 rows
+. . exported "ADMIN_HCM"."NHANVIEN_QL"                   11.42 KB     507 rows
+. . exported "ADMIN_HCM"."A_BAOCAO_CON"                  10.26 KB      22 rows
+. . exported "ADMIN_HCM"."BAOCAO_CON"                    24.38 KB     111 rows
+. . exported "ADMIN_HCM"."BAOCAO_HG"                      6.25 KB      63 rows
+. . exported "ADMIN_HCM"."BD_HOSO"                       7.765 KB      16 rows
+. . exported "ADMIN_HCM"."CT_TSMD_DV"                    26.01 KB     612 rows
+. . exported "ADMIN_HCM"."DS_BANG"                       6.875 KB       6 rows
+. . exported "ADMIN_HCM"."DS_BANGTS"                     8.023 KB      20 rows
+. . exported "ADMIN_HCM"."DS_COT"                        14.88 KB      89 rows
+. . exported "ADMIN_HCM"."DS_HAM"                        6.789 KB       1 rows
+. . exported "ADMIN_HCM"."DS_QUYEN"                      23.81 KB     490 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_BAOCAO"               30.91 KB    2319 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_MOI"                  6.468 KB      20 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_ND"                   28.79 KB    2058 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_NHOM_ND"              6.921 KB     143 rows
+. . exported "ADMIN_HCM"."FILE_HS"                       9.390 KB      12 rows
+. . exported "ADMIN_HCM"."HOSO"                          10.75 KB      21 rows
+. . exported "ADMIN_HCM"."HS_THUEBAO"                    6.179 KB      13 rows
+. . exported "ADMIN_HCM"."KEYS"                          18.60 KB     361 rows
+. . exported "ADMIN_HCM"."KIEU_TK"                       9.335 KB      45 rows
+. . exported "ADMIN_HCM"."LOAI_CT"                       5.992 KB       4 rows
+. . exported "ADMIN_HCM"."LOAI_DIEUKHIEN"                6.023 KB       7 rows
+. . exported "ADMIN_HCM"."LOAI_DVI"                      8.734 KB      57 rows
+. . exported "ADMIN_HCM"."LOAI_FILE"                     5.804 KB       9 rows
+. . exported "ADMIN_HCM"."LOAI_HS"                       6.156 KB      10 rows
+. . exported "ADMIN_HCM"."LOAI_HS_ICON"                  5.546 KB       4 rows
+. . exported "ADMIN_HCM"."LOAI_NV"                       7.570 KB      42 rows
+. . exported "ADMIN_HCM"."LS_QUYEN_BANG"                 17.96 KB      13 rows
+. . exported "ADMIN_HCM"."LS_QUYEN_BAOCAO"               12.72 KB     157 rows
+. . exported "ADMIN_HCM"."LS_QUYEN_ND"                   12.13 KB     147 rows
+. . exported "ADMIN_HCM"."LS_QUYEN_NHOM_ND"              8.468 KB      48 rows
+. . exported "ADMIN_HCM"."LYDO_HS"                       5.585 KB       5 rows
+. . exported "ADMIN_HCM"."MESSAGE"                       8.039 KB       1 rows
+. . exported "ADMIN_HCM"."NHOMHAM"                       5.898 KB       2 rows
+. . exported "ADMIN_HCM"."NHOM_BC"                       7.789 KB      37 rows
+. . exported "ADMIN_HCM"."NHOM_CN"                       6.976 KB      21 rows
+. . exported "ADMIN_HCM"."NHOM_MENU"                     6.421 KB       4 rows
+. . exported "ADMIN_HCM"."NHOM_ND"                       9.921 KB      62 rows
+. . exported "ADMIN_HCM"."PHIENBAN"                      7.695 KB       3 rows
+. . exported "ADMIN_HCM"."THAMSO_MD"                     14.61 KB     109 rows
+. . exported "ADMIN_HCM"."TRANGTHAI_HS"                    5.5 KB       2 rows
+. . exported "ADMIN_HCM"."DS_QUYEN_HAM"                      0 KB       0 rows
+Master table "EXPDHSX"."EXPDHSX" successfully loaded/unloaded
+******************************************************************************
+Dump file set for EXPDHSX.EXPDHSX is:
+  /u01/app/export_2015/dumpfile/admin_hcm01.dmp
+Job "EXPDHSX"."EXPDHSX" successfully completed at 01:00:19

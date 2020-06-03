@@ -1,0 +1,18 @@
+connect auxiliary sys/SaiGon123@stbyccbs;
+run {
+allocate channel primar1 type disk;
+allocate auxiliary channel standb1 type disk;
+duplicate target database for standby from active database 
+spfile
+  parameter_value_convert 'ccbs','stbyccbs'
+  set db_unique_name='stbyccbs'
+  set db_file_name_convert= '+DATA/ccbs/datafile/', '/u02/app/oradata/stbyccbs/', '+DATA/ccbs/tempfile/', '/u02/app/oradata/stbyccbs/'
+  set log_file_name_convert='+DATA/ccbs/onlinelog/','/u02/app/oradata/stbyccbs/'
+  SET cluster_database='false'
+  reset REMOTE_LISTENER
+  reset local_listener
+  set control_files='/u02/app/oradata/stbyccbs/control1.ctl'
+  set log_archive_max_processes='5'
+  set fal_server='ccbs'
+  set standby_file_management='AUTO';
+}

@@ -1,0 +1,591 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Sun Feb 8 21:00:01 2015
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G; #updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40>  #  backup incremental level 1 copies 2 format '+DATA/RMAN/level1_%D_%T_%U','/mnt/nfs52100/RMAN/level1_%D_%T_%U' tag MON_LV1_2_15 database include current controlfile;
+41>   backup incremental level 1 format '+DATA/RMAN/level1_%D_%T_%U' tag MON_LV1_2_15 database include current controlfile;
+42> 
+43> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+44> #	backup as compressed backupset copies 2 archivelog all format '+DATA/RMAN/archi_%D_%T_%U','/u03/rman_ccbs_ftp5/RMAN/archi_%D_%T_%U'
+45> #  tag monthly_arch_2_15 delete input;
+46> 	backup as compressed backupset archivelog all format '+DATA/RMAN/archi_%D_%T_%U' tag monthly_arch_2_15 delete input;
+47> }
+48> 
+Starting backup at 08/02/2015 21:00:03
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=1076 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=1230 instance=ccbs1 device type=DISK
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00136 name=+DATA/ccbs/datafile/users.711.870969071
+input datafile file number=00139 name=+DATA/ccbs/datafile/indx.704.870969125
+input datafile file number=00142 name=+DATA/ccbs/datafile/indx.700.870969205
+input datafile file number=00145 name=+DATA/ccbs/datafile/gg_data.762.870969269
+input datafile file number=00148 name=+DATA/ccbs/datafile/undotbs2_02.932.870969393
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+channel ORA_DISK_1: starting piece 1 at 08/02/2015 21:00:13
+channel ORA_DISK_2: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00004 name=+DATA/ccbs/datafile/system.714.870969047
+input datafile file number=00138 name=+DATA/ccbs/datafile/users.715.870969105
+input datafile file number=00141 name=+DATA/ccbs/datafile/indx.707.870969167
+input datafile file number=00144 name=+DATA/ccbs/datafile/tbs_others.645.870969247
+input datafile file number=00147 name=+DATA/ccbs/datafile/undotbs1_02.931.870969377
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_2: starting piece 1 at 08/02/2015 21:00:15
+channel ORA_DISK_2: finished piece 1 at 08/02/2015 21:08:00
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_1_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 08/02/2015 21:08:00
+channel ORA_DISK_2: finished piece 2 at 08/02/2015 21:15:35
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_2_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 08/02/2015 21:15:35
+channel ORA_DISK_1: finished piece 1 at 08/02/2015 21:19:10
+piece handle=+DATA/rman/level1_08_20150208_2bpupmis_1_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 08/02/2015 21:19:10
+channel ORA_DISK_2: finished piece 3 at 08/02/2015 21:23:05
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_3_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 4 at 08/02/2015 21:23:05
+channel ORA_DISK_1: finished piece 2 at 08/02/2015 21:28:11
+piece handle=+DATA/rman/level1_08_20150208_2bpupmis_2_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 08/02/2015 21:28:11
+channel ORA_DISK_1: finished piece 3 at 08/02/2015 21:29:56
+piece handle=+DATA/rman/level1_08_20150208_2bpupmis_3_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:29:43
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+input datafile file number=00003 name=+DATA/ccbs/datafile/system.709.870969027
+input datafile file number=00137 name=+DATA/ccbs/datafile/users.713.870969093
+input datafile file number=00140 name=+DATA/ccbs/datafile/indx.708.870969149
+input datafile file number=00143 name=+DATA/ccbs/datafile/users.763.870969217
+input datafile file number=00146 name=+DATA/ccbs/datafile/undotbs1_02.930.870969365
+input datafile file number=00149 name=+DATA/ccbs/datafile/undotbs2_02.933.870969415
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+channel ORA_DISK_1: starting piece 1 at 08/02/2015 21:29:57
+channel ORA_DISK_2: finished piece 4 at 08/02/2015 21:30:42
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_4_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 5 at 08/02/2015 21:30:42
+channel ORA_DISK_2: finished piece 5 at 08/02/2015 21:38:27
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_5_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 6 at 08/02/2015 21:38:27
+channel ORA_DISK_1: finished piece 1 at 08/02/2015 21:40:22
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_1_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 08/02/2015 21:40:22
+channel ORA_DISK_2: finished piece 6 at 08/02/2015 21:46:17
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_6_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 7 at 08/02/2015 21:46:17
+channel ORA_DISK_1: finished piece 2 at 08/02/2015 21:47:52
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_2_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 08/02/2015 21:47:52
+channel ORA_DISK_2: finished piece 7 at 08/02/2015 21:54:07
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_7_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 8 at 08/02/2015 21:54:07
+channel ORA_DISK_1: finished piece 3 at 08/02/2015 21:55:22
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_3_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 08/02/2015 21:55:22
+channel ORA_DISK_2: finished piece 8 at 08/02/2015 22:01:47
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_8_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 9 at 08/02/2015 22:01:47
+channel ORA_DISK_1: finished piece 4 at 08/02/2015 22:02:42
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_4_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 08/02/2015 22:02:42
+channel ORA_DISK_2: finished piece 9 at 08/02/2015 22:09:17
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_9_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 10 at 08/02/2015 22:09:17
+channel ORA_DISK_1: finished piece 5 at 08/02/2015 22:10:02
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_5_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 6 at 08/02/2015 22:10:02
+channel ORA_DISK_2: finished piece 10 at 08/02/2015 22:16:57
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_10_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 11 at 08/02/2015 22:16:57
+channel ORA_DISK_1: finished piece 6 at 08/02/2015 22:17:22
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_6_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 7 at 08/02/2015 22:17:22
+channel ORA_DISK_2: finished piece 11 at 08/02/2015 22:24:38
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_11_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 12 at 08/02/2015 22:24:38
+channel ORA_DISK_1: finished piece 7 at 08/02/2015 22:25:23
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_7_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 8 at 08/02/2015 22:25:23
+channel ORA_DISK_2: finished piece 12 at 08/02/2015 22:32:28
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_12_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 13 at 08/02/2015 22:32:28
+channel ORA_DISK_1: finished piece 8 at 08/02/2015 22:32:43
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_8_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 9 at 08/02/2015 22:32:43
+channel ORA_DISK_1: finished piece 9 at 08/02/2015 22:39:58
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_9_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 10 at 08/02/2015 22:39:58
+channel ORA_DISK_2: finished piece 13 at 08/02/2015 22:40:23
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_13_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 14 at 08/02/2015 22:40:23
+channel ORA_DISK_1: finished piece 10 at 08/02/2015 22:47:28
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_10_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 11 at 08/02/2015 22:47:28
+channel ORA_DISK_2: finished piece 14 at 08/02/2015 22:48:23
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_14_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 15 at 08/02/2015 22:48:23
+channel ORA_DISK_1: finished piece 11 at 08/02/2015 22:55:08
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_11_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 12 at 08/02/2015 22:55:08
+channel ORA_DISK_2: finished piece 15 at 08/02/2015 22:56:43
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_15_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 16 at 08/02/2015 22:56:43
+channel ORA_DISK_1: finished piece 12 at 08/02/2015 23:02:38
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_12_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 13 at 08/02/2015 23:02:38
+channel ORA_DISK_2: finished piece 16 at 08/02/2015 23:04:33
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_16_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 17 at 08/02/2015 23:04:33
+channel ORA_DISK_1: finished piece 13 at 08/02/2015 23:09:48
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_13_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 14 at 08/02/2015 23:09:48
+channel ORA_DISK_2: finished piece 17 at 08/02/2015 23:12:13
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_17_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 18 at 08/02/2015 23:12:13
+channel ORA_DISK_1: finished piece 14 at 08/02/2015 23:17:08
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_14_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 15 at 08/02/2015 23:17:08
+channel ORA_DISK_2: finished piece 18 at 08/02/2015 23:19:53
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_18_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 19 at 08/02/2015 23:19:53
+channel ORA_DISK_1: finished piece 15 at 08/02/2015 23:24:28
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_15_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 16 at 08/02/2015 23:24:28
+channel ORA_DISK_2: finished piece 19 at 08/02/2015 23:27:33
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_19_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 20 at 08/02/2015 23:27:33
+channel ORA_DISK_1: finished piece 16 at 08/02/2015 23:32:19
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_16_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 17 at 08/02/2015 23:32:19
+channel ORA_DISK_2: finished piece 20 at 08/02/2015 23:35:24
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_20_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 21 at 08/02/2015 23:35:24
+channel ORA_DISK_1: finished piece 17 at 08/02/2015 23:39:59
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_17_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 18 at 08/02/2015 23:39:59
+channel ORA_DISK_2: finished piece 21 at 08/02/2015 23:43:24
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_21_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 22 at 08/02/2015 23:43:24
+channel ORA_DISK_1: finished piece 18 at 08/02/2015 23:47:39
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_18_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 19 at 08/02/2015 23:47:39
+channel ORA_DISK_2: finished piece 22 at 08/02/2015 23:50:44
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_22_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 23 at 08/02/2015 23:50:44
+channel ORA_DISK_1: finished piece 19 at 08/02/2015 23:55:19
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_19_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 20 at 08/02/2015 23:55:19
+channel ORA_DISK_2: finished piece 23 at 08/02/2015 23:58:04
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_23_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 24 at 08/02/2015 23:58:04
+channel ORA_DISK_1: finished piece 20 at 09/02/2015 00:02:59
+piece handle=+DATA/rman/level1_08_20150208_2dpupoak_20_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 21 at 09/02/2015 00:02:59
+channel ORA_DISK_2: finished piece 24 at 09/02/2015 00:05:34
+piece handle=+DATA/rman/level1_08_20150208_2cpupmit_24_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 25 at 09/02/2015 00:05:34
+channel ORA_DISK_1: finished piece 21 at 09/02/2015 00:10:49
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_21_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 22 at 09/02/2015 00:10:49
+channel ORA_DISK_2: finished piece 25 at 09/02/2015 00:13:24
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_25_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 26 at 09/02/2015 00:13:24
+channel ORA_DISK_1: finished piece 22 at 09/02/2015 00:18:39
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_22_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 23 at 09/02/2015 00:18:39
+channel ORA_DISK_2: finished piece 26 at 09/02/2015 00:21:14
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_26_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 27 at 09/02/2015 00:21:14
+channel ORA_DISK_1: finished piece 23 at 09/02/2015 00:26:19
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_23_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 24 at 09/02/2015 00:26:19
+channel ORA_DISK_2: finished piece 27 at 09/02/2015 00:28:44
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_27_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 28 at 09/02/2015 00:28:44
+channel ORA_DISK_1: finished piece 24 at 09/02/2015 00:33:59
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_24_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 25 at 09/02/2015 00:33:59
+channel ORA_DISK_2: finished piece 28 at 09/02/2015 00:35:54
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_28_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 29 at 09/02/2015 00:35:54
+channel ORA_DISK_1: finished piece 25 at 09/02/2015 00:41:59
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_25_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 26 at 09/02/2015 00:41:59
+channel ORA_DISK_2: finished piece 29 at 09/02/2015 00:43:14
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_29_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 30 at 09/02/2015 00:43:14
+channel ORA_DISK_1: finished piece 26 at 09/02/2015 00:49:50
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_26_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 27 at 09/02/2015 00:49:50
+channel ORA_DISK_2: finished piece 30 at 09/02/2015 00:50:45
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_30_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 31 at 09/02/2015 00:50:45
+channel ORA_DISK_1: finished piece 27 at 09/02/2015 00:57:10
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_27_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 28 at 09/02/2015 00:57:10
+channel ORA_DISK_2: finished piece 31 at 09/02/2015 00:58:45
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_31_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 32 at 09/02/2015 00:58:45
+channel ORA_DISK_1: finished piece 28 at 09/02/2015 01:04:50
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_28_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 29 at 09/02/2015 01:04:50
+channel ORA_DISK_2: finished piece 32 at 09/02/2015 01:06:35
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_32_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 33 at 09/02/2015 01:06:35
+channel ORA_DISK_1: finished piece 29 at 09/02/2015 01:12:40
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_29_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 30 at 09/02/2015 01:12:40
+channel ORA_DISK_2: finished piece 33 at 09/02/2015 01:14:05
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_33_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 34 at 09/02/2015 01:14:05
+channel ORA_DISK_1: finished piece 30 at 09/02/2015 01:20:30
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_30_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 31 at 09/02/2015 01:20:30
+channel ORA_DISK_2: finished piece 34 at 09/02/2015 01:21:25
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_34_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 35 at 09/02/2015 01:21:25
+channel ORA_DISK_1: finished piece 31 at 09/02/2015 01:28:40
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_31_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 32 at 09/02/2015 01:28:40
+channel ORA_DISK_2: finished piece 35 at 09/02/2015 01:29:05
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_35_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 36 at 09/02/2015 01:29:05
+channel ORA_DISK_2: finished piece 36 at 09/02/2015 01:36:40
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_36_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 37 at 09/02/2015 01:36:40
+channel ORA_DISK_1: finished piece 32 at 09/02/2015 01:36:55
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_32_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 33 at 09/02/2015 01:36:55
+channel ORA_DISK_2: finished piece 37 at 09/02/2015 01:44:40
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_37_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 38 at 09/02/2015 01:44:40
+channel ORA_DISK_1: finished piece 33 at 09/02/2015 01:45:05
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_33_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 34 at 09/02/2015 01:45:05
+channel ORA_DISK_2: finished piece 38 at 09/02/2015 01:52:30
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_38_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 39 at 09/02/2015 01:52:30
+channel ORA_DISK_1: finished piece 34 at 09/02/2015 01:53:45
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_34_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 35 at 09/02/2015 01:53:45
+channel ORA_DISK_2: finished piece 39 at 09/02/2015 02:00:01
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_39_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 40 at 09/02/2015 02:00:01
+channel ORA_DISK_1: finished piece 35 at 09/02/2015 02:02:56
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_35_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: starting piece 36 at 09/02/2015 02:02:56
+channel ORA_DISK_2: finished piece 40 at 09/02/2015 02:07:41
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_40_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 41 at 09/02/2015 02:07:41
+channel ORA_DISK_1: finished piece 36 at 09/02/2015 02:08:16
+piece handle=+DATA/rman/level1_09_20150209_2dpupoak_36_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 04:38:19
+channel ORA_DISK_1: starting compressed incremental level 1 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_1: starting piece 1 at 09/02/2015 02:08:19
+channel ORA_DISK_1: finished piece 1 at 09/02/2015 02:08:22
+piece handle=+DATA/rman/level1_09_20150209_2epuq8kg_1_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:03
+channel ORA_DISK_2: finished piece 41 at 09/02/2015 02:15:24
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_41_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 42 at 09/02/2015 02:15:24
+channel ORA_DISK_2: finished piece 42 at 09/02/2015 02:23:09
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_42_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 43 at 09/02/2015 02:23:09
+channel ORA_DISK_2: finished piece 43 at 09/02/2015 02:30:44
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_43_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 44 at 09/02/2015 02:30:44
+channel ORA_DISK_2: finished piece 44 at 09/02/2015 02:38:09
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_44_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 45 at 09/02/2015 02:38:09
+channel ORA_DISK_2: finished piece 45 at 09/02/2015 02:45:34
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_45_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 46 at 09/02/2015 02:45:34
+channel ORA_DISK_2: finished piece 46 at 09/02/2015 02:53:09
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_46_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 47 at 09/02/2015 02:53:09
+channel ORA_DISK_2: finished piece 47 at 09/02/2015 03:01:04
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_47_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 48 at 09/02/2015 03:01:04
+channel ORA_DISK_2: finished piece 48 at 09/02/2015 03:08:59
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_48_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 49 at 09/02/2015 03:08:59
+channel ORA_DISK_2: finished piece 49 at 09/02/2015 03:16:34
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_49_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 50 at 09/02/2015 03:16:34
+channel ORA_DISK_2: finished piece 50 at 09/02/2015 03:24:30
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_50_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 51 at 09/02/2015 03:24:30
+channel ORA_DISK_2: finished piece 51 at 09/02/2015 03:32:25
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_51_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 52 at 09/02/2015 03:32:25
+channel ORA_DISK_2: finished piece 52 at 09/02/2015 03:40:30
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_52_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 53 at 09/02/2015 03:40:30
+channel ORA_DISK_2: finished piece 53 at 09/02/2015 03:48:45
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_53_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 54 at 09/02/2015 03:48:45
+channel ORA_DISK_2: finished piece 54 at 09/02/2015 03:57:00
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_54_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 55 at 09/02/2015 03:57:00
+channel ORA_DISK_2: finished piece 55 at 09/02/2015 04:05:25
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_55_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: starting piece 56 at 09/02/2015 04:05:25
+channel ORA_DISK_2: finished piece 56 at 09/02/2015 04:13:40
+piece handle=+DATA/rman/level1_09_20150209_2cpupmit_56_1 tag=MON_LV1_2_15 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 07:13:25
+Finished backup at 09/02/2015 04:13:40
+
+Starting Control File and SPFILE Autobackup at 09/02/2015 04:13:40
+piece handle=+RECO/rman/c-271141816-20150209-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 09/02/2015 04:13:43
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 09/02/2015 04:13:52
+current log archived
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+channel ORA_DISK_1: starting compressed archived log backup set
+channel ORA_DISK_1: specifying archived log(s) in backup set
+input archived log thread=1 sequence=21118 RECID=57694 STAMP=871118239
+input archived log thread=2 sequence=17433 RECID=57696 STAMP=871120143
+input archived log thread=1 sequence=21119 RECID=57695 STAMP=871118953
+input archived log thread=1 sequence=21120 RECID=57697 STAMP=871120113
+input archived log thread=1 sequence=21121 RECID=57698 STAMP=871120383
+input archived log thread=2 sequence=17434 RECID=57700 STAMP=871122162
+input archived log thread=1 sequence=21122 RECID=57699 STAMP=871121590
+input archived log thread=1 sequence=21123 RECID=57701 STAMP=871122135
+input archived log thread=1 sequence=21124 RECID=57702 STAMP=871125576
+channel ORA_DISK_1: starting piece 1 at 09/02/2015 04:14:00
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=2 sequence=17435 RECID=57703 STAMP=871130241
+input archived log thread=1 sequence=21125 RECID=57705 STAMP=871132649
+input archived log thread=2 sequence=17436 RECID=57704 STAMP=871132381
+input archived log thread=2 sequence=17437 RECID=57706 STAMP=871132694
+input archived log thread=2 sequence=17438 RECID=57708 STAMP=871171583
+input archived log thread=1 sequence=21126 RECID=57707 STAMP=871171337
+input archived log thread=1 sequence=21127 RECID=57709 STAMP=871171550
+input archived log thread=1 sequence=21128 RECID=57711 STAMP=871186431
+input archived log thread=2 sequence=17439 RECID=57710 STAMP=871186464
+input archived log thread=2 sequence=17440 RECID=57713 STAMP=871186470
+channel ORA_DISK_2: starting piece 1 at 09/02/2015 04:14:00
+channel ORA_DISK_2: finished piece 1 at 09/02/2015 04:19:55
+piece handle=+DATA/rman/archi_09_20150209_2hpuqg08_1_1 tag=MONTHLY_ARCH_2_15 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:05:55
+channel ORA_DISK_2: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_2_seq_17435.2918.871130227 RECID=57703 STAMP=871130241
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21125.2473.871132647 RECID=57705 STAMP=871132649
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_2_seq_17436.1931.871132369 RECID=57704 STAMP=871132381
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_2_seq_17437.3585.871132681 RECID=57706 STAMP=871132694
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_2_seq_17438.2403.871171575 RECID=57708 STAMP=871171583
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_1_seq_21126.2738.871171325 RECID=57707 STAMP=871171337
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_1_seq_21127.2818.871171537 RECID=57709 STAMP=871171550
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_1_seq_21128.4101.871186427 RECID=57711 STAMP=871186431
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_2_seq_17439.4033.871186461 RECID=57710 STAMP=871186464
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_2_seq_17440.4037.871186471 RECID=57713 STAMP=871186470
+channel ORA_DISK_2: starting compressed archived log backup set
+channel ORA_DISK_2: specifying archived log(s) in backup set
+input archived log thread=1 sequence=21129 RECID=57712 STAMP=871186432
+channel ORA_DISK_2: starting piece 1 at 09/02/2015 04:19:56
+channel ORA_DISK_2: finished piece 1 at 09/02/2015 04:19:57
+piece handle=+DATA/rman/archi_09_20150209_2ipuqgbc_1_1 tag=MONTHLY_ARCH_2_15 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 00:00:01
+channel ORA_DISK_2: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2015_02_09/thread_1_seq_21129.1967.871186433 RECID=57712 STAMP=871186432
+channel ORA_DISK_1: finished piece 1 at 09/02/2015 04:20:21
+piece handle=+DATA/rman/archi_09_20150209_2gpuqg08_1_1 tag=MONTHLY_ARCH_2_15 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:06:21
+channel ORA_DISK_1: deleting archived log(s)
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21118.4032.871118227 RECID=57694 STAMP=871118239
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_2_seq_17433.4064.871120139 RECID=57696 STAMP=871120143
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21119.2170.871118943 RECID=57695 STAMP=871118953
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21120.4000.871120101 RECID=57697 STAMP=871120113
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21121.3958.871120371 RECID=57698 STAMP=871120383
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_2_seq_17434.2511.871122161 RECID=57700 STAMP=871122162
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21122.2651.871121579 RECID=57699 STAMP=871121590
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21123.3019.871122125 RECID=57701 STAMP=871122135
+archived log file name=+RECO/ccbs/archivelog/2015_02_08/thread_1_seq_21124.1987.871125565 RECID=57702 STAMP=871125576
+Finished backup at 09/02/2015 04:20:22
+
+Starting Control File and SPFILE Autobackup at 09/02/2015 04:20:22
+piece handle=+RECO/rman/c-271141816-20150209-01 comment=NONE
+Finished Control File and SPFILE Autobackup at 09/02/2015 04:20:25
+
+Recovery Manager complete.

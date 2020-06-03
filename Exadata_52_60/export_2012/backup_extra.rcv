@@ -1,0 +1,5 @@
+run
+{
+	#copy qua may 52.10
+	backup copies 2 backupset completed between "sysdate-3" AND "sysdate" format '/mnt/rman_ccbs/level0_%D_%T_%U' tag backup_backupset_day25;
+}

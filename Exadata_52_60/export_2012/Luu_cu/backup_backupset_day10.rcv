@@ -1,0 +1,11 @@
+# 
+run
+{
+	#backup copies 2 to destination '/mnt/rman_ccbs/level0_%D_%T_%U' from tag MONTHLY_LEVEL_0_day10 tag backup_backupset_day10;
+	backup backupset 956,957 format '/mnt/rman_ccbs/level0_%D_%T_%U' tag backup_backupset_day10;
+	#backup backupset completed between "sysdate-1" AND "sysdate" format '/mnt/rman_ccbs/level0_%D_%T_%U' tag backup_backupset_day10;
+	delete  noprompt backupset tag MONTHLY_LEVEL_0_day10;
+}
+
+# cu phap chinh su dung trong script:
+# backup backupset {all |CompleteSpec | PrimaryKey}

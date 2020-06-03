@@ -1,0 +1,5 @@
+TO REVIEW COLLECTED DATA FROM DM01DB02 - MANAGE ASM AUDIT FILE DIRECTORY GROWTH WITH CRON 
+
+
+
+Number of audit files at /u01/app/11.2.0.2/grid/rdbms/audit = 161

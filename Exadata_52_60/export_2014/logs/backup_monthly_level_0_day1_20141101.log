@@ -1,0 +1,2147 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Sat Nov 1 19:00:01 2014
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> #CONFIGURE RETENTION POLICY TO REDUNDANCY 1;	#updated 20/3/2014 
+2> #CONFIGURE BACKUP OPTIMIZATION ON;
+3> #CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+4> #CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+5> #CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '+RECO/RMAN/%F';
+6> #CONFIGURE DEVICE TYPE DISK PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET;
+7> #CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+8> #CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+9> #CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 4 G;	#updated 24/3/2014
+10> #CONFIGURE MAXSETSIZE TO UNLIMITED;
+11> #CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+12> #CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+13> #CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ; # default
+14> #Chi khi nao cac archive da duoc apply tren cac standby thi moi cho delete.
+15> #CONFIGURE ARCHIVELOG DELETION POLICY TO APPLIED ON ALL STANDBY;
+16> #CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.2.0.2/dbhome_1/dbs/snapcf_ccbs1.f'; # default
+17> 
+18> 
+19> #updated 20/8/2014
+20> # Ngay 1:
+21> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+22> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day1
+23> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	copy_MONTHLY_LEVEL_0_day1
+24> # Ngay 2-15:
+25> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN
+26> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+27> #	Delete archived all
+28> 
+29> # Ngay 16:
+30> #	Xoa cac backup obsolete: Giu lai backupset hien tai, xoa cac ban backupset truoc do.
+31> #	Backup level0 vao +RECO	tag MONTHLY_LEVEL_0_day16
+32> # 	copy ban level0 thu 2 vao o dia /mnt/nfs52100/RMAN	tag copy_MONTHLY_LEVEL_0_day16
+33> # Ngay 17-31:
+34> #	Backup copies 2 level1 vao +RECO,/mnt/nfs52100/RMAN	
+35> #	Backup copies 2 archived vao +RECO,/mnt/nfs52100/RMAN
+36> #	Delete archived all
+37> 
+38> run
+39> {
+40> 	crosscheck backup;
+41> 	delete noprompt obsolete;
+42> 	sql 'ALTER SYSTEM ARCHIVE LOG CURRENT';
+43> 	#backup ngay 1 
+44> 	backup incremental level 0 format '+RECO/RMAN/level0_%D_%T_%U' tag MONTHLY_LEVEL_0_day1 database include current controlfile;
+45> 
+46> 	#copy qua /mnt/nfs52100/RMAN/
+47> 	backup copies 2 backupset completed between "sysdate-2" AND "sysdate" format '/mnt/nfs52100/RMAN/level0_%D_%T_%U' tag copy_MONTHLY_LEVEL_0_day1;
+48> }
+49> 
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=333 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=495 instance=ccbs1 device type=DISK
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141017_39pl7k9p_1_2 RECID=17957 STAMP=861164676
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level0_17_20141017_39pl7k9p_2_2 RECID=17956 STAMP=861164676
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_1_1 RECID=17837 STAMP=861131095
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_2_1 RECID=17838 STAMP=861131666
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_3_1 RECID=17839 STAMP=861132226
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_4_1 RECID=17840 STAMP=861132736
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_5_1 RECID=17841 STAMP=861133276
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_6_1 RECID=17842 STAMP=861133731
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_7_1 RECID=17843 STAMP=861134181
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_8_1 RECID=17844 STAMP=861134591
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_9_1 RECID=17845 STAMP=861135001
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_10_1 RECID=17846 STAMP=861135411
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_11_1 RECID=17847 STAMP=861135831
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_12_1 RECID=17848 STAMP=861136242
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_13_1 RECID=17849 STAMP=861136682
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_14_1 RECID=17850 STAMP=861137102
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_15_1 RECID=17851 STAMP=861137512
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_16_1 RECID=17852 STAMP=861137942
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_17_1 RECID=17853 STAMP=861138372
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_18_1 RECID=17854 STAMP=861138802
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_19_1 RECID=17855 STAMP=861139232
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_20_1 RECID=17856 STAMP=861139662
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_21_1 RECID=17857 STAMP=861140082
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_22_1 RECID=17858 STAMP=861140512
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_23_1 RECID=17859 STAMP=861140952
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_24_1 RECID=17860 STAMP=861141392
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_25_1 RECID=17861 STAMP=861141827
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_26_1 RECID=17862 STAMP=861142278
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_27_1 RECID=17863 STAMP=861142708
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_28_1 RECID=17864 STAMP=861143138
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_29_1 RECID=17865 STAMP=861143578
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_30_1 RECID=17866 STAMP=861144028
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_31_1 RECID=17867 STAMP=861144478
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_32_1 RECID=17868 STAMP=861144898
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_33_1 RECID=17869 STAMP=861145318
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_34_1 RECID=17870 STAMP=861145748
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_35_1 RECID=17871 STAMP=861146198
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_36_1 RECID=17872 STAMP=861146668
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_37_1 RECID=17873 STAMP=861147148
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_39pl7k9p_38_1 RECID=17874 STAMP=861147628
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_1_1 RECID=17875 STAMP=861131094
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_2_1 RECID=17876 STAMP=861131621
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_3_1 RECID=17877 STAMP=861132171
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_4_1 RECID=17878 STAMP=861132721
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_5_1 RECID=17879 STAMP=861133251
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_6_1 RECID=17880 STAMP=861133776
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_7_1 RECID=17881 STAMP=861134296
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_8_1 RECID=17882 STAMP=861134746
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_9_1 RECID=17883 STAMP=861135166
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_10_1 RECID=17884 STAMP=861135566
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_11_1 RECID=17885 STAMP=861135966
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_12_1 RECID=17886 STAMP=861136386
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_13_1 RECID=17887 STAMP=861136817
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_14_1 RECID=17888 STAMP=861137237
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_15_1 RECID=17889 STAMP=861137657
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_16_1 RECID=17890 STAMP=861138077
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_17_1 RECID=17891 STAMP=861138497
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_18_1 RECID=17892 STAMP=861138917
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_19_1 RECID=17893 STAMP=861139337
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_20_1 RECID=17894 STAMP=861139747
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_21_1 RECID=17895 STAMP=861140167
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_22_1 RECID=17896 STAMP=861140577
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_23_1 RECID=17897 STAMP=861140987
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_24_1 RECID=17898 STAMP=861141399
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_25_1 RECID=17899 STAMP=861141824
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_26_1 RECID=17900 STAMP=861142252
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_27_1 RECID=17901 STAMP=861142673
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_28_1 RECID=17902 STAMP=861143103
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_29_1 RECID=17903 STAMP=861143523
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_30_1 RECID=17904 STAMP=861143963
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_31_1 RECID=17905 STAMP=861144393
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_32_1 RECID=17906 STAMP=861144823
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_33_1 RECID=17907 STAMP=861145253
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_34_1 RECID=17908 STAMP=861145693
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_35_1 RECID=17909 STAMP=861146113
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_36_1 RECID=17910 STAMP=861146543
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_37_1 RECID=17911 STAMP=861147003
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_38_1 RECID=17912 STAMP=861147473
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_39_1 RECID=17913 STAMP=861147960
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_38pl7k9o_40_1 RECID=17914 STAMP=861148440
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_38pl7k9o_41_1 RECID=17915 STAMP=861148940
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_3apl84nc_1_1 RECID=17917 STAMP=861147885
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_16_20141016_3apl84nc_2_1 RECID=17918 STAMP=861148335
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_3_1 RECID=17919 STAMP=861148845
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_4_1 RECID=17920 STAMP=861149313
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_5_1 RECID=17921 STAMP=861149788
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_6_1 RECID=17922 STAMP=861150253
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_7_1 RECID=17923 STAMP=861150728
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_8_1 RECID=17924 STAMP=861151143
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_9_1 RECID=17925 STAMP=861151568
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_10_1 RECID=17926 STAMP=861151993
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_11_1 RECID=17927 STAMP=861152438
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_12_1 RECID=17928 STAMP=861152854
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_13_1 RECID=17929 STAMP=861153259
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_14_1 RECID=17930 STAMP=861153664
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_15_1 RECID=17931 STAMP=861154069
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_16_1 RECID=17932 STAMP=861154484
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_17_1 RECID=17933 STAMP=861154899
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_18_1 RECID=17934 STAMP=861155324
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_19_1 RECID=17935 STAMP=861155749
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_20_1 RECID=17936 STAMP=861156184
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_21_1 RECID=17937 STAMP=861156609
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_22_1 RECID=17938 STAMP=861157064
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_23_1 RECID=17939 STAMP=861157499
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_24_1 RECID=17940 STAMP=861157934
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_25_1 RECID=17941 STAMP=861158379
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_26_1 RECID=17942 STAMP=861158824
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_27_1 RECID=17943 STAMP=861159269
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_28_1 RECID=17944 STAMP=861159705
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_29_1 RECID=17945 STAMP=861160130
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_30_1 RECID=17946 STAMP=861160545
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_31_1 RECID=17947 STAMP=861160950
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_32_1 RECID=17948 STAMP=861161355
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_33_1 RECID=17949 STAMP=861161770
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_34_1 RECID=17950 STAMP=861162195
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_35_1 RECID=17951 STAMP=861162630
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_36_1 RECID=17952 STAMP=861163075
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_37_1 RECID=17953 STAMP=861163530
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_38_1 RECID=17954 STAMP=861163995
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level0_17_20141017_3apl84nc_39_1 RECID=17955 STAMP=861164500
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_17_20141017_3mplafeq_1_1 RECID=17958 STAMP=861224413
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_17_20141017_3mplafeq_1_2 RECID=17959 STAMP=861224413
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_17_20141017_3lplafep_1_1 RECID=17960 STAMP=861224410
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_17_20141017_3lplafep_1_2 RECID=17961 STAMP=861224410
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_17_20141017_3oplagc4_1_1 RECID=17964 STAMP=861225351
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_17_20141017_3oplagc4_1_2 RECID=17965 STAMP=861225351
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_18_20141018_55pld3qr_1_1 RECID=17966 STAMP=861310814
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_18_20141018_55pld3qr_1_2 RECID=17967 STAMP=861310814
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_18_20141018_54pld3qr_1_1 RECID=17968 STAMP=861310812
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_18_20141018_54pld3qr_1_2 RECID=17969 STAMP=861310812
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_18_20141018_56pld4mi_1_1 RECID=17972 STAMP=861311699
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_18_20141018_56pld4mi_1_2 RECID=17973 STAMP=861311699
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_19_20141019_6oplfo6s_1_1 RECID=17974 STAMP=861397217
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_19_20141019_6oplfo6s_1_2 RECID=17975 STAMP=861397217
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_19_20141019_6nplfo6r_1_1 RECID=17976 STAMP=861397213
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_19_20141019_6nplfo6r_1_2 RECID=17977 STAMP=861397213
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_19_20141019_6pplfp29_1_1 RECID=17980 STAMP=861398091
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_19_20141019_6pplfp29_1_2 RECID=17981 STAMP=861398091
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_20_20141020_82plicir_1_1 RECID=17982 STAMP=861483612
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_20_20141020_82plicir_1_2 RECID=17983 STAMP=861483612
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_20_20141020_83plicir_1_1 RECID=17984 STAMP=861483619
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_20_20141020_83plicir_1_2 RECID=17985 STAMP=861483619
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_20_20141020_84plidfi_1_1 RECID=17988 STAMP=861484533
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_20_20141020_84plidfi_1_2 RECID=17989 STAMP=861484533
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141021-0a RECID=18000 STAMP=861550009
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_21_20141021_92pll0ur_1_1 RECID=18001 STAMP=861570014
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_21_20141021_92pll0ur_1_2 RECID=18002 STAMP=861570014
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_21_20141021_91pll0uq_1_1 RECID=18003 STAMP=861570012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_21_20141021_91pll0uq_1_2 RECID=18004 STAMP=861570012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_21_20141021_94pll1se_1_1 RECID=18005 STAMP=861570966
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_21_20141021_94pll1se_1_2 RECID=18006 STAMP=861570966
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_22_20141022_96plnlao_1_1 RECID=18007 STAMP=861656409
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_22_20141022_96plnlao_1_2 RECID=18008 STAMP=861656409
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_22_20141022_97plnlap_1_1 RECID=18009 STAMP=861656412
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_22_20141022_97plnlap_1_2 RECID=18010 STAMP=861656412
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_22_20141022_99plnmcv_1_1 RECID=18011 STAMP=861657506
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_22_20141022_99plnmcv_1_2 RECID=18012 STAMP=861657506
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_22_20141022_98plnmc5_1_1 RECID=18013 STAMP=861657479
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_22_20141022_98plnmc5_1_2 RECID=18014 STAMP=861657479
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141022-00 RECID=18015 STAMP=861658514
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_22_20141022_9cplnncu_1_1 RECID=18016 STAMP=861658526
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_22_20141022_9cplnncu_1_2 RECID=18017 STAMP=861658526
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_22_20141022_9bplnncu_1_1 RECID=18018 STAMP=861658526
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_22_20141022_9bplnncu_1_2 RECID=18019 STAMP=861658526
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141022-01 RECID=18020 STAMP=861659204
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_23_20141023_9fplq9mp_1_1 RECID=18021 STAMP=861742812
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_23_20141023_9fplq9mp_1_2 RECID=18022 STAMP=861742812
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_23_20141023_9eplq9mo_1_1 RECID=18023 STAMP=861742809
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_23_20141023_9eplq9mo_1_2 RECID=18024 STAMP=861742809
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_23_20141023_9hplqakd_1_1 RECID=18025 STAMP=861743764
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_23_20141023_9hplqakd_1_2 RECID=18026 STAMP=861743764
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_23_20141023_9gplqakc_1_1 RECID=18027 STAMP=861743757
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_23_20141023_9gplqakc_1_2 RECID=18028 STAMP=861743757
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141023-00 RECID=18029 STAMP=861744521
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_23_20141023_9kplqbda_1_1 RECID=18030 STAMP=861744554
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_23_20141023_9kplqbda_1_2 RECID=18031 STAMP=861744554
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_23_20141023_9lplqblj_1_1 RECID=18032 STAMP=861744819
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_23_20141023_9lplqblj_1_2 RECID=18033 STAMP=861744819
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_23_20141023_9jplqbda_1_1 RECID=18034 STAMP=861744554
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_23_20141023_9jplqbda_1_2 RECID=18035 STAMP=861744554
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141023-01 RECID=18036 STAMP=861744947
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_24_20141024_9oplsu2q_1_1 RECID=18037 STAMP=861829213
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_24_20141024_9oplsu2q_1_2 RECID=18038 STAMP=861829213
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_24_20141024_9nplsu2p_1_1 RECID=18039 STAMP=861829210
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_24_20141024_9nplsu2p_1_2 RECID=18040 STAMP=861829210
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_24_20141024_9qplsv45_1_1 RECID=18041 STAMP=861830284
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_24_20141024_9qplsv45_1_2 RECID=18042 STAMP=861830284
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_24_20141024_9pplsv44_1_1 RECID=18043 STAMP=861830278
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_24_20141024_9pplsv44_1_2 RECID=18044 STAMP=861830278
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141024-00 RECID=18045 STAMP=861831181
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_24_20141024_9tplt015_1_1 RECID=18046 STAMP=861831205
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_24_20141024_9tplt015_1_2 RECID=18047 STAMP=861831205
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_24_20141024_9splt014_1_1 RECID=18048 STAMP=861831205
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_24_20141024_9splt014_1_2 RECID=18049 STAMP=861831205
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141024-01 RECID=18050 STAMP=861832003
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_25_20141025_a0plvieq_1_1 RECID=18051 STAMP=861915613
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_25_20141025_a0plvieq_1_2 RECID=18052 STAMP=861915613
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_25_20141025_9vplviep_1_1 RECID=18053 STAMP=861915610
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_25_20141025_9vplviep_1_2 RECID=18054 STAMP=861915610
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_25_20141025_a2plvjb5_1_1 RECID=18055 STAMP=861916524
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_25_20141025_a2plvjb5_1_2 RECID=18056 STAMP=861916524
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_25_20141025_a1plvjb4_1_1 RECID=18057 STAMP=861916517
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_25_20141025_a1plvjb4_1_2 RECID=18058 STAMP=861916517
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141025-00 RECID=18059 STAMP=861917281
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_25_20141025_a5plvk3o_1_1 RECID=18060 STAMP=861917304
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141025_a5plvk3o_1_2 RECID=18061 STAMP=861917304
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_25_20141025_a4plvk3o_1_1 RECID=18062 STAMP=861917304
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_25_20141025_a4plvk3o_1_2 RECID=18063 STAMP=861917304
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141025-01 RECID=18064 STAMP=861917682
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_26_20141026_a8pm26qq_1_1 RECID=18065 STAMP=862002013
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_26_20141026_a8pm26qq_1_2 RECID=18066 STAMP=862002013
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_26_20141026_a7pm26qp_1_1 RECID=18067 STAMP=862002010
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_26_20141026_a7pm26qp_1_2 RECID=18068 STAMP=862002010
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_26_20141026_aapm27mm_1_1 RECID=18069 STAMP=862002909
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_26_20141026_aapm27mm_1_2 RECID=18070 STAMP=862002909
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_26_20141026_a9pm27m6_1_1 RECID=18071 STAMP=862002888
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_26_20141026_a9pm27m6_1_2 RECID=18072 STAMP=862002888
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141026-00 RECID=18073 STAMP=862003566
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_26_20141026_adpm28c1_1_1 RECID=18074 STAMP=862003585
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_26_20141026_adpm28c1_1_2 RECID=18075 STAMP=862003585
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_26_20141026_acpm28c1_1_1 RECID=18076 STAMP=862003585
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_26_20141026_acpm28c1_1_2 RECID=18077 STAMP=862003585
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141026-01 RECID=18078 STAMP=862003703
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_27_20141027_agpm4r6q_1_1 RECID=18079 STAMP=862088415
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_27_20141027_agpm4r6q_1_2 RECID=18080 STAMP=862088415
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_27_20141027_afpm4r6p_1_1 RECID=18081 STAMP=862088410
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_27_20141027_afpm4r6p_1_2 RECID=18082 STAMP=862088410
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_27_20141027_aipm4s5l_1_1 RECID=18083 STAMP=862089404
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_27_20141027_aipm4s5l_1_2 RECID=18084 STAMP=862089404
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_27_20141027_ahpm4s5k_1_1 RECID=18085 STAMP=862089397
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_27_20141027_ahpm4s5k_1_2 RECID=18086 STAMP=862089397
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141027-00 RECID=18087 STAMP=862090251
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_27_20141027_alpm4t0o_1_1 RECID=18088 STAMP=862090264
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_27_20141027_alpm4t0o_1_2 RECID=18089 STAMP=862090264
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_27_20141027_ampm4thg_1_1 RECID=18090 STAMP=862090800
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_27_20141027_ampm4thg_1_2 RECID=18091 STAMP=862090800
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_27_20141027_akpm4t0o_1_1 RECID=18092 STAMP=862090264
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_27_20141027_akpm4t0o_1_2 RECID=18093 STAMP=862090264
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141027-01 RECID=18094 STAMP=862090968
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_28_20141028_appm7fiq_1_1 RECID=18095 STAMP=862174813
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_28_20141028_appm7fiq_1_2 RECID=18096 STAMP=862174813
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_28_20141028_aopm7fiq_1_1 RECID=18097 STAMP=862174811
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_28_20141028_aopm7fiq_1_2 RECID=18098 STAMP=862174811
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_28_20141028_arpm7ghr_1_1 RECID=18099 STAMP=862175806
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_28_20141028_arpm7ghr_1_2 RECID=18100 STAMP=862175806
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_28_20141028_aqpm7ghb_1_1 RECID=18101 STAMP=862175790
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_28_20141028_aqpm7ghb_1_2 RECID=18102 STAMP=862175790
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141028-00 RECID=18103 STAMP=862176634
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_28_20141028_aupm7hc6_1_1 RECID=18104 STAMP=862176646
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_28_20141028_aupm7hc6_1_2 RECID=18105 STAMP=862176646
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_28_20141028_avpm7hpg_1_1 RECID=18106 STAMP=862177072
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_28_20141028_avpm7hpg_1_2 RECID=18107 STAMP=862177072
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_28_20141028_atpm7hc6_1_1 RECID=18108 STAMP=862176646
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_28_20141028_atpm7hc6_1_2 RECID=18109 STAMP=862176646
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141028-01 RECID=18110 STAMP=862177260
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_29_20141029_b2pma3ur_1_1 RECID=18111 STAMP=862261214
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_29_20141029_b2pma3ur_1_2 RECID=18112 STAMP=862261214
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_29_20141029_b1pma3ur_1_1 RECID=18113 STAMP=862261211
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_29_20141029_b1pma3ur_1_2 RECID=18114 STAMP=862261211
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_29_20141029_b4pma4tj_1_1 RECID=18115 STAMP=862262198
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_29_20141029_b4pma4tj_1_2 RECID=18116 STAMP=862262198
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_29_20141029_b3pma4t2_1_1 RECID=18117 STAMP=862262181
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_29_20141029_b3pma4t2_1_2 RECID=18118 STAMP=862262181
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141029-00 RECID=18119 STAMP=862263045
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_29_20141029_b7pma5oh_1_1 RECID=18120 STAMP=862263057
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_29_20141029_b7pma5oh_1_2 RECID=18121 STAMP=862263057
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_29_20141029_b8pma665_1_1 RECID=18122 STAMP=862263493
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_29_20141029_b8pma665_1_2 RECID=18123 STAMP=862263493
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_29_20141029_b6pma5oh_1_1 RECID=18124 STAMP=862263057
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_29_20141029_b6pma5oh_1_2 RECID=18125 STAMP=862263057
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141029-01 RECID=18126 STAMP=862263642
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_30_20141030_bbpmcoas_1_1 RECID=18127 STAMP=862347614
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_30_20141030_bbpmcoas_1_2 RECID=18128 STAMP=862347614
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_30_20141030_bapmcoar_1_1 RECID=18129 STAMP=862347612
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_30_20141030_bapmcoar_1_2 RECID=18130 STAMP=862347612
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_30_20141030_bdpmcp96_1_1 RECID=18131 STAMP=862348589
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_30_20141030_bdpmcp96_1_2 RECID=18132 STAMP=862348589
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_30_20141030_bcpmcp92_1_1 RECID=18133 STAMP=862348579
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_30_20141030_bcpmcp92_1_2 RECID=18134 STAMP=862348579
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141030-00 RECID=18135 STAMP=862349386
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_30_20141030_bgpmcq2n_1_1 RECID=18136 STAMP=862349399
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_30_20141030_bgpmcq2n_1_2 RECID=18137 STAMP=862349399
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_30_20141030_bfpmcq2n_1_1 RECID=18138 STAMP=862349399
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_30_20141030_bfpmcq2n_1_2 RECID=18139 STAMP=862349399
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_30_20141030_bhpmcqgk_1_1 RECID=18140 STAMP=862349844
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_30_20141030_bhpmcqgk_1_2 RECID=18141 STAMP=862349844
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141030-01 RECID=18142 STAMP=862349848
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_31_20141031_bkpmfcmr_1_1 RECID=18143 STAMP=862434015
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_31_20141031_bkpmfcmr_1_2 RECID=18144 STAMP=862434015
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_31_20141031_bjpmfcmr_1_1 RECID=18145 STAMP=862434012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_31_20141031_bjpmfcmr_1_2 RECID=18146 STAMP=862434012
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_31_20141031_bmpmfdpp_1_1 RECID=18147 STAMP=862435136
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_31_20141031_bmpmfdpp_1_2 RECID=18148 STAMP=862435136
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/level1_31_20141031_blpmfdpo_1_1 RECID=18149 STAMP=862435129
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/mnt/nfs52100/RMAN/level1_31_20141031_blpmfdpo_1_2 RECID=18150 STAMP=862435129
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141031-00 RECID=18151 STAMP=862436143
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_31_20141031_bppmfeps_1_1 RECID=18152 STAMP=862436156
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_31_20141031_bppmfeps_1_2 RECID=18153 STAMP=862436156
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_31_20141031_bopmfeps_1_1 RECID=18154 STAMP=862436156
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+DATA/rman/archi_31_20141031_bopmfeps_2_1 RECID=18156 STAMP=862437242
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_31_20141031_bopmfeps_1_2 RECID=18155 STAMP=862436156
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/rman_ccbs_ftp5/RMAN/archi_31_20141031_bopmfeps_2_2 RECID=18157 STAMP=862437242
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=+RECO/rman/c-271141816-20141031-01 RECID=18158 STAMP=862437340
+Crosschecked 303 objects
+
+
+RMAN retention policy will be applied to the command
+RMAN retention policy is set to redundancy 1
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+Deleting the following obsolete backups and copies:
+Type                 Key    Completion Time    Filename/Handle
+-------------------- ------ ------------------ --------------------
+Control File Copy     15     17/10/2014 15:12:52 +RECO/rman/snapcf_ccbs.f
+Backup Set           5172   21/10/2014 15:26:49
+  Backup Piece       18000  21/10/2014 15:26:49 +RECO/rman/c-271141816-20141021-0a
+Backup Set           5175   21/10/2014 21:16:08
+  Backup Piece       18006  21/10/2014 21:16:08 /mnt/nfs52100/RMAN/level1_21_20141021_94pll1se_1_2
+Backup Set           5175   21/10/2014 21:16:08
+  Backup Piece       18005  21/10/2014 21:16:08 +DATA/rman/level1_21_20141021_94pll1se_1_1
+Backup Set           5178   22/10/2014 21:18:29
+  Backup Piece       18011  22/10/2014 21:18:29 +DATA/rman/level1_22_20141022_99plnmcv_1_1
+Backup Set           5178   22/10/2014 21:18:29
+  Backup Piece       18012  22/10/2014 21:18:29 /mnt/nfs52100/RMAN/level1_22_20141022_99plnmcv_1_2
+Backup Set           5180   22/10/2014 21:35:14
+  Backup Piece       18015  22/10/2014 21:35:14 +RECO/rman/c-271141816-20141022-00
+Backup Set           5183   22/10/2014 21:46:45
+  Backup Piece       18020  22/10/2014 21:46:45 +RECO/rman/c-271141816-20141022-01
+Backup Set           5186   23/10/2014 21:16:06
+  Backup Piece       18025  23/10/2014 21:16:06 +DATA/rman/level1_23_20141023_9hplqakd_1_1
+Backup Set           5186   23/10/2014 21:16:06
+  Backup Piece       18026  23/10/2014 21:16:06 /mnt/nfs52100/RMAN/level1_23_20141023_9hplqakd_1_2
+Backup Set           5188   23/10/2014 21:28:41
+  Backup Piece       18029  23/10/2014 21:28:41 +RECO/rman/c-271141816-20141023-00
+Backup Set           5192   23/10/2014 21:35:48
+  Backup Piece       18036  23/10/2014 21:35:48 +RECO/rman/c-271141816-20141023-01
+Backup Set           5195   24/10/2014 21:18:07
+  Backup Piece       18042  24/10/2014 21:18:07 /mnt/nfs52100/RMAN/level1_24_20141024_9qplsv45_1_2
+Backup Set           5195   24/10/2014 21:18:07
+  Backup Piece       18041  24/10/2014 21:18:07 +DATA/rman/level1_24_20141024_9qplsv45_1_1
+Backup Set           5197   24/10/2014 21:33:02
+  Backup Piece       18045  24/10/2014 21:33:02 +RECO/rman/c-271141816-20141024-00
+Backup Set           5200   24/10/2014 21:46:44
+  Backup Piece       18050  24/10/2014 21:46:44 +RECO/rman/c-271141816-20141024-01
+Backup Set           5203   25/10/2014 21:15:26
+  Backup Piece       18056  25/10/2014 21:15:26 /mnt/nfs52100/RMAN/level1_25_20141025_a2plvjb5_1_2
+Backup Set           5203   25/10/2014 21:15:26
+  Backup Piece       18055  25/10/2014 21:15:26 +DATA/rman/level1_25_20141025_a2plvjb5_1_1
+Backup Set           5205   25/10/2014 21:28:01
+  Backup Piece       18059  25/10/2014 21:28:01 +RECO/rman/c-271141816-20141025-00
+Backup Set           5208   25/10/2014 21:34:43
+  Backup Piece       18064  25/10/2014 21:34:43 +RECO/rman/c-271141816-20141025-01
+Backup Set           5211   26/10/2014 21:15:11
+  Backup Piece       18070  26/10/2014 21:15:11 /mnt/nfs52100/RMAN/level1_26_20141026_aapm27mm_1_2
+Backup Set           5211   26/10/2014 21:15:11
+  Backup Piece       18069  26/10/2014 21:15:11 +DATA/rman/level1_26_20141026_aapm27mm_1_1
+Backup Set           5213   26/10/2014 21:26:06
+  Backup Piece       18073  26/10/2014 21:26:06 +RECO/rman/c-271141816-20141026-00
+Backup Set           5216   26/10/2014 21:28:24
+  Backup Piece       18078  26/10/2014 21:28:24 +RECO/rman/c-271141816-20141026-01
+Backup Set           5219   27/10/2014 21:16:46
+  Backup Piece       18084  27/10/2014 21:16:46 /mnt/nfs52100/RMAN/level1_27_20141027_aipm4s5l_1_2
+Backup Set           5219   27/10/2014 21:16:46
+  Backup Piece       18083  27/10/2014 21:16:46 +DATA/rman/level1_27_20141027_aipm4s5l_1_1
+Backup Set           5221   27/10/2014 21:30:51
+  Backup Piece       18087  27/10/2014 21:30:51 +RECO/rman/c-271141816-20141027-00
+Backup Set           5225   27/10/2014 21:42:48
+  Backup Piece       18094  27/10/2014 21:42:48 +RECO/rman/c-271141816-20141027-01
+Backup Set           5228   28/10/2014 21:16:49
+  Backup Piece       18100  28/10/2014 21:16:49 /mnt/nfs52100/RMAN/level1_28_20141028_arpm7ghr_1_2
+Backup Set           5228   28/10/2014 21:16:49
+  Backup Piece       18099  28/10/2014 21:16:49 +DATA/rman/level1_28_20141028_arpm7ghr_1_1
+Backup Set           5230   28/10/2014 21:30:34
+  Backup Piece       18103  28/10/2014 21:30:34 +RECO/rman/c-271141816-20141028-00
+Backup Set           5234   28/10/2014 21:41:00
+  Backup Piece       18110  28/10/2014 21:41:00 +RECO/rman/c-271141816-20141028-01
+Backup Set           5237   29/10/2014 21:16:40
+  Backup Piece       18116  29/10/2014 21:16:40 /mnt/nfs52100/RMAN/level1_29_20141029_b4pma4tj_1_2
+Backup Set           5237   29/10/2014 21:16:40
+  Backup Piece       18115  29/10/2014 21:16:40 +DATA/rman/level1_29_20141029_b4pma4tj_1_1
+Backup Set           5239   29/10/2014 21:30:45
+  Backup Piece       18119  29/10/2014 21:30:45 +RECO/rman/c-271141816-20141029-00
+Backup Set           5243   29/10/2014 21:40:42
+  Backup Piece       18126  29/10/2014 21:40:42 +RECO/rman/c-271141816-20141029-01
+Backup Set           5246   30/10/2014 21:16:31
+  Backup Piece       18132  30/10/2014 21:16:31 /mnt/nfs52100/RMAN/level1_30_20141030_bdpmcp96_1_2
+Backup Set           5246   30/10/2014 21:16:31
+  Backup Piece       18131  30/10/2014 21:16:31 +DATA/rman/level1_30_20141030_bdpmcp96_1_1
+Backup Set           5248   30/10/2014 21:29:46
+  Backup Piece       18135  30/10/2014 21:29:46 +RECO/rman/c-271141816-20141030-00
+Backup Set           5252   30/10/2014 21:37:28
+  Backup Piece       18142  30/10/2014 21:37:28 +RECO/rman/c-271141816-20141030-01
+Backup Set           5255   31/10/2014 21:18:58
+  Backup Piece       18147  31/10/2014 21:18:58 +DATA/rman/level1_31_20141031_bmpmfdpp_1_1
+Backup Set           5255   31/10/2014 21:18:58
+  Backup Piece       18148  31/10/2014 21:18:58 /mnt/nfs52100/RMAN/level1_31_20141031_bmpmfdpp_1_2
+Backup Set           5257   31/10/2014 21:35:44
+  Backup Piece       18151  31/10/2014 21:35:44 +RECO/rman/c-271141816-20141031-00
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141021-0a RECID=18000 STAMP=861550009
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_21_20141021_94pll1se_1_2 RECID=18006 STAMP=861570966
+deleted backup piece
+backup piece handle=+DATA/rman/level1_21_20141021_94pll1se_1_1 RECID=18005 STAMP=861570966
+deleted backup piece
+backup piece handle=+DATA/rman/level1_22_20141022_99plnmcv_1_1 RECID=18011 STAMP=861657506
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_22_20141022_99plnmcv_1_2 RECID=18012 STAMP=861657506
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141022-00 RECID=18015 STAMP=861658514
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141022-01 RECID=18020 STAMP=861659204
+deleted backup piece
+backup piece handle=+DATA/rman/level1_23_20141023_9hplqakd_1_1 RECID=18025 STAMP=861743764
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_23_20141023_9hplqakd_1_2 RECID=18026 STAMP=861743764
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141023-00 RECID=18029 STAMP=861744521
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141023-01 RECID=18036 STAMP=861744947
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_24_20141024_9qplsv45_1_2 RECID=18042 STAMP=861830284
+deleted backup piece
+backup piece handle=+DATA/rman/level1_24_20141024_9qplsv45_1_1 RECID=18041 STAMP=861830284
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141024-00 RECID=18045 STAMP=861831181
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141024-01 RECID=18050 STAMP=861832003
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_25_20141025_a2plvjb5_1_2 RECID=18056 STAMP=861916524
+deleted backup piece
+backup piece handle=+DATA/rman/level1_25_20141025_a2plvjb5_1_1 RECID=18055 STAMP=861916524
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141025-00 RECID=18059 STAMP=861917281
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141025-01 RECID=18064 STAMP=861917682
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_26_20141026_aapm27mm_1_2 RECID=18070 STAMP=862002909
+deleted backup piece
+backup piece handle=+DATA/rman/level1_26_20141026_aapm27mm_1_1 RECID=18069 STAMP=862002909
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141026-00 RECID=18073 STAMP=862003566
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141026-01 RECID=18078 STAMP=862003703
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_27_20141027_aipm4s5l_1_2 RECID=18084 STAMP=862089404
+deleted backup piece
+backup piece handle=+DATA/rman/level1_27_20141027_aipm4s5l_1_1 RECID=18083 STAMP=862089404
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141027-00 RECID=18087 STAMP=862090251
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141027-01 RECID=18094 STAMP=862090968
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_28_20141028_arpm7ghr_1_2 RECID=18100 STAMP=862175806
+deleted backup piece
+backup piece handle=+DATA/rman/level1_28_20141028_arpm7ghr_1_1 RECID=18099 STAMP=862175806
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141028-00 RECID=18103 STAMP=862176634
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141028-01 RECID=18110 STAMP=862177260
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_29_20141029_b4pma4tj_1_2 RECID=18116 STAMP=862262198
+deleted backup piece
+backup piece handle=+DATA/rman/level1_29_20141029_b4pma4tj_1_1 RECID=18115 STAMP=862262198
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141029-00 RECID=18119 STAMP=862263045
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141029-01 RECID=18126 STAMP=862263642
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_30_20141030_bdpmcp96_1_2 RECID=18132 STAMP=862348589
+deleted backup piece
+backup piece handle=+DATA/rman/level1_30_20141030_bdpmcp96_1_1 RECID=18131 STAMP=862348589
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141030-00 RECID=18135 STAMP=862349386
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141030-01 RECID=18142 STAMP=862349848
+deleted backup piece
+backup piece handle=+DATA/rman/level1_31_20141031_bmpmfdpp_1_1 RECID=18147 STAMP=862435136
+deleted backup piece
+backup piece handle=/mnt/nfs52100/RMAN/level1_31_20141031_bmpmfdpp_1_2 RECID=18148 STAMP=862435136
+deleted backup piece
+backup piece handle=+RECO/rman/c-271141816-20141031-00 RECID=18151 STAMP=862436143
+Deleted 42 objects
+
+
+RMAN-06207: WARNING: 1 objects could not be deleted for DISK channel(s) due
+RMAN-06208:          to mismatched status.  Use CROSSCHECK command to fix status
+RMAN-06210: List of Mismatched objects
+RMAN-06211: ==========================
+RMAN-06212:   Object Type   Filename/Handle
+RMAN-06213: --------------- ---------------------------------------------------
+RMAN-06214: Datafile Copy   +RECO/rman/snapcf_ccbs.f
+
+
+sql statement: ALTER SYSTEM ARCHIVE LOG CURRENT
+
+Starting backup at 01/11/2014 19:01:17
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+channel ORA_DISK_1: starting compressed incremental level 0 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+input datafile file number=00002 name=+DATA/ccbs/datafile/sysaux.258.772710837
+input datafile file number=00107 name=+DATA/ccbs/datafile/sysaux.390.822699669
+input datafile file number=00130 name=+DATA/ccbs/datafile/undotbs1_02.426.857385663
+input datafile file number=00133 name=+DATA/ccbs/datafile/undotbs2_02.516.857386025
+input datafile file number=00001 name=+DATA/ccbs/datafile/system.271.772710825
+input datafile file number=00061 name=+DATA/ccbs/datafile/gg_data.338.779148549
+input datafile file number=00007 name=+DATA/ccbs/datafile/users.282.774527471
+input datafile file number=00010 name=+DATA/ccbs/datafile/indx.287.774530539
+input datafile file number=00013 name=+DATA/ccbs/datafile/indx.290.774541697
+input datafile file number=00016 name=+DATA/ccbs/datafile/indx.293.774541877
+input datafile file number=00019 name=+DATA/ccbs/datafile/indx.296.774541987
+input datafile file number=00022 name=+DATA/ccbs/datafile/users.299.774543191
+input datafile file number=00025 name=+DATA/ccbs/datafile/users.302.774543327
+input datafile file number=00028 name=+DATA/ccbs/datafile/users.305.774543443
+input datafile file number=00031 name=+DATA/ccbs/datafile/users.308.774543671
+input datafile file number=00034 name=+DATA/ccbs/datafile/users.311.775873655
+input datafile file number=00037 name=+DATA/ccbs/datafile/users.314.775996677
+input datafile file number=00040 name=+DATA/ccbs/datafile/users.317.775996743
+input datafile file number=00043 name=+DATA/ccbs/datafile/users.320.775997701
+input datafile file number=00046 name=+DATA/ccbs/datafile/users.323.775997787
+input datafile file number=00049 name=+DATA/ccbs/datafile/users.326.775997875
+input datafile file number=00052 name=+DATA/ccbs/datafile/users.329.775998289
+input datafile file number=00055 name=+DATA/ccbs/datafile/users.332.776000393
+input datafile file number=00058 name=+DATA/ccbs/datafile/users.335.776001375
+input datafile file number=00062 name=+DATA/ccbs/datafile/users.339.780491723
+input datafile file number=00065 name=+DATA/ccbs/datafile/users.342.780492259
+input datafile file number=00068 name=+DATA/ccbs/datafile/users.345.780493063
+input datafile file number=00071 name=+DATA/ccbs/datafile/users.348.780493937
+input datafile file number=00074 name=+DATA/ccbs/datafile/indx.351.780853091
+input datafile file number=00077 name=+DATA/ccbs/datafile/indx.354.780853419
+input datafile file number=00080 name=+DATA/ccbs/datafile/users.357.780853601
+input datafile file number=00083 name=+DATA/ccbs/datafile/users.360.780853693
+input datafile file number=00086 name=+DATA/ccbs/datafile/users.363.780853829
+input datafile file number=00089 name=+DATA/ccbs/datafile/users.366.780853939
+input datafile file number=00092 name=+DATA/ccbs/datafile/users.369.780853997
+input datafile file number=00095 name=+DATA/ccbs/datafile/users.372.780854143
+input datafile file number=00098 name=+DATA/ccbs/datafile/users.375.780854347
+input datafile file number=00101 name=+DATA/ccbs/datafile/tbs_others.267.792772437
+input datafile file number=00104 name=+DATA/ccbs/datafile/indx.387.819597647
+input datafile file number=00124 name=+DATA/ccbs/datafile/indx.417.843228737
+input datafile file number=00109 name=+DATA/ccbs/datafile/indx.402.843228399
+input datafile file number=00112 name=+DATA/ccbs/datafile/indx.405.843228469
+input datafile file number=00115 name=+DATA/ccbs/datafile/indx.408.843228491
+input datafile file number=00118 name=+DATA/ccbs/datafile/indx.411.843228541
+input datafile file number=00121 name=+DATA/ccbs/datafile/indx.414.843228559
+channel ORA_DISK_1: starting piece 1 at 01/11/2014 19:01:26
+channel ORA_DISK_2: starting compressed incremental level 0 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00105 name=+DATA/ccbs/datafile/sysaux.388.822699379
+input datafile file number=00108 name=+DATA/ccbs/datafile/sysaux.391.822699673
+input datafile file number=00129 name=+DATA/ccbs/datafile/undotbs1_02.468.857385623
+input datafile file number=00132 name=+DATA/ccbs/datafile/undotbs2_02.538.857385993
+input datafile file number=00135 name=+DATA/ccbs/datafile/undotbs2_02.633.857386105
+input datafile file number=00006 name=+DATA/ccbs/datafile/indx.285.774530247
+input datafile file number=00009 name=+DATA/ccbs/datafile/indx.286.774530435
+input datafile file number=00012 name=+DATA/ccbs/datafile/tbs_others.289.774531237
+input datafile file number=00015 name=+DATA/ccbs/datafile/indx.292.774541795
+input datafile file number=00018 name=+DATA/ccbs/datafile/indx.295.774541965
+input datafile file number=00021 name=+DATA/ccbs/datafile/users.298.774543045
+input datafile file number=00024 name=+DATA/ccbs/datafile/users.301.774543271
+input datafile file number=00027 name=+DATA/ccbs/datafile/users.304.774543419
+input datafile file number=00030 name=+DATA/ccbs/datafile/users.307.774543485
+input datafile file number=00033 name=+DATA/ccbs/datafile/users.310.775873623
+input datafile file number=00036 name=+DATA/ccbs/datafile/users.313.775873743
+input datafile file number=00039 name=+DATA/ccbs/datafile/users.316.775996723
+input datafile file number=00042 name=+DATA/ccbs/datafile/users.319.775997681
+input datafile file number=00045 name=+DATA/ccbs/datafile/users.322.775997741
+input datafile file number=00048 name=+DATA/ccbs/datafile/users.325.775997857
+input datafile file number=00051 name=+DATA/ccbs/datafile/users.328.775997951
+input datafile file number=00054 name=+DATA/ccbs/datafile/users.331.775998423
+input datafile file number=00057 name=+DATA/ccbs/datafile/users.334.776000867
+input datafile file number=00060 name=+DATA/ccbs/datafile/tbs_others.337.776001527
+input datafile file number=00064 name=+DATA/ccbs/datafile/users.341.780492153
+input datafile file number=00067 name=+DATA/ccbs/datafile/users.344.780492429
+input datafile file number=00070 name=+DATA/ccbs/datafile/users.347.780493719
+input datafile file number=00073 name=+DATA/ccbs/datafile/indx.350.780852893
+input datafile file number=00076 name=+DATA/ccbs/datafile/indx.353.780853327
+input datafile file number=00079 name=+DATA/ccbs/datafile/users.356.780853583
+input datafile file number=00082 name=+DATA/ccbs/datafile/users.359.780853645
+input datafile file number=00085 name=+DATA/ccbs/datafile/users.362.780853743
+input datafile file number=00088 name=+DATA/ccbs/datafile/users.365.780853919
+input datafile file number=00091 name=+DATA/ccbs/datafile/users.368.780853979
+input datafile file number=00094 name=+DATA/ccbs/datafile/users.371.780854093
+input datafile file number=00097 name=+DATA/ccbs/datafile/users.374.780854327
+input datafile file number=00100 name=+DATA/ccbs/datafile/users.377.780854429
+input datafile file number=00103 name=+DATA/ccbs/datafile/indx.386.819597557
+input datafile file number=00123 name=+DATA/ccbs/datafile/indx.416.843228721
+input datafile file number=00126 name=+DATA/ccbs/datafile/indx.419.843228767
+input datafile file number=00111 name=+DATA/ccbs/datafile/indx.404.843228463
+input datafile file number=00114 name=+DATA/ccbs/datafile/indx.407.843228483
+input datafile file number=00117 name=+DATA/ccbs/datafile/indx.410.843228505
+input datafile file number=00120 name=+DATA/ccbs/datafile/indx.413.843228553
+channel ORA_DISK_2: starting piece 1 at 01/11/2014 19:01:27
+channel ORA_DISK_1: finished piece 1 at 01/11/2014 19:09:42
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_1_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 2 at 01/11/2014 19:09:42
+channel ORA_DISK_2: finished piece 1 at 01/11/2014 19:10:37
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_1_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 01/11/2014 19:10:37
+channel ORA_DISK_1: finished piece 2 at 01/11/2014 19:18:22
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_2_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 3 at 01/11/2014 19:18:22
+channel ORA_DISK_2: finished piece 2 at 01/11/2014 19:19:17
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_2_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 01/11/2014 19:19:17
+channel ORA_DISK_1: finished piece 3 at 01/11/2014 19:27:02
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_3_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 4 at 01/11/2014 19:27:02
+channel ORA_DISK_2: finished piece 3 at 01/11/2014 19:27:37
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_3_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 4 at 01/11/2014 19:27:37
+channel ORA_DISK_1: finished piece 4 at 01/11/2014 19:35:52
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_4_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 5 at 01/11/2014 19:35:52
+channel ORA_DISK_2: finished piece 4 at 01/11/2014 19:36:57
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_4_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 5 at 01/11/2014 19:36:57
+channel ORA_DISK_1: finished piece 5 at 01/11/2014 19:45:03
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_5_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 6 at 01/11/2014 19:45:03
+channel ORA_DISK_2: finished piece 5 at 01/11/2014 19:45:06
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_5_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 6 at 01/11/2014 19:45:06
+channel ORA_DISK_2: finished piece 6 at 01/11/2014 19:52:21
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_6_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 7 at 01/11/2014 19:52:21
+channel ORA_DISK_1: finished piece 6 at 01/11/2014 19:53:26
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_6_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 7 at 01/11/2014 19:53:26
+channel ORA_DISK_2: finished piece 7 at 01/11/2014 19:59:21
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_7_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 8 at 01/11/2014 19:59:21
+channel ORA_DISK_1: finished piece 7 at 01/11/2014 20:01:16
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_7_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 8 at 01/11/2014 20:01:16
+channel ORA_DISK_2: finished piece 8 at 01/11/2014 20:06:01
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_8_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 9 at 01/11/2014 20:06:01
+channel ORA_DISK_1: finished piece 8 at 01/11/2014 20:08:26
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_8_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 9 at 01/11/2014 20:08:26
+channel ORA_DISK_2: finished piece 9 at 01/11/2014 20:12:41
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_9_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 10 at 01/11/2014 20:12:41
+channel ORA_DISK_1: finished piece 9 at 01/11/2014 20:15:16
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_9_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 10 at 01/11/2014 20:15:16
+channel ORA_DISK_2: finished piece 10 at 01/11/2014 20:19:31
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_10_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 11 at 01/11/2014 20:19:31
+channel ORA_DISK_1: finished piece 10 at 01/11/2014 20:21:56
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_10_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 11 at 01/11/2014 20:21:56
+channel ORA_DISK_2: finished piece 11 at 01/11/2014 20:26:31
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_11_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 12 at 01/11/2014 20:26:31
+channel ORA_DISK_1: finished piece 11 at 01/11/2014 20:28:36
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_11_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 12 at 01/11/2014 20:28:36
+channel ORA_DISK_2: finished piece 12 at 01/11/2014 20:33:41
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_12_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 13 at 01/11/2014 20:33:41
+channel ORA_DISK_1: finished piece 12 at 01/11/2014 20:35:36
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_12_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 13 at 01/11/2014 20:35:36
+channel ORA_DISK_2: finished piece 13 at 01/11/2014 20:40:51
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_13_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 14 at 01/11/2014 20:40:51
+channel ORA_DISK_1: finished piece 13 at 01/11/2014 20:42:36
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_13_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 14 at 01/11/2014 20:42:36
+channel ORA_DISK_2: finished piece 14 at 01/11/2014 20:47:41
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_14_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 15 at 01/11/2014 20:47:41
+channel ORA_DISK_1: finished piece 14 at 01/11/2014 20:49:36
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_14_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 15 at 01/11/2014 20:49:36
+channel ORA_DISK_2: finished piece 15 at 01/11/2014 20:54:21
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_15_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 16 at 01/11/2014 20:54:21
+channel ORA_DISK_1: finished piece 15 at 01/11/2014 20:56:37
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_15_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 16 at 01/11/2014 20:56:37
+channel ORA_DISK_2: finished piece 16 at 01/11/2014 21:01:12
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_16_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 17 at 01/11/2014 21:01:12
+channel ORA_DISK_1: finished piece 16 at 01/11/2014 21:03:37
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_16_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 17 at 01/11/2014 21:03:37
+channel ORA_DISK_2: finished piece 17 at 01/11/2014 21:08:22
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_17_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 18 at 01/11/2014 21:08:22
+channel ORA_DISK_1: finished piece 17 at 01/11/2014 21:10:27
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_17_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 18 at 01/11/2014 21:10:27
+channel ORA_DISK_2: finished piece 18 at 01/11/2014 21:15:22
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_18_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 19 at 01/11/2014 21:15:22
+channel ORA_DISK_1: finished piece 18 at 01/11/2014 21:17:27
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_18_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 19 at 01/11/2014 21:17:27
+channel ORA_DISK_2: finished piece 19 at 01/11/2014 21:22:32
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_19_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 20 at 01/11/2014 21:22:32
+channel ORA_DISK_1: finished piece 19 at 01/11/2014 21:24:27
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_19_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 20 at 01/11/2014 21:24:27
+channel ORA_DISK_2: finished piece 20 at 01/11/2014 21:29:42
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_20_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 21 at 01/11/2014 21:29:42
+channel ORA_DISK_1: finished piece 20 at 01/11/2014 21:31:17
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_20_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 21 at 01/11/2014 21:31:17
+channel ORA_DISK_2: finished piece 21 at 01/11/2014 21:36:42
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_21_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 22 at 01/11/2014 21:36:42
+channel ORA_DISK_1: finished piece 21 at 01/11/2014 21:38:07
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_21_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 22 at 01/11/2014 21:38:07
+channel ORA_DISK_2: finished piece 22 at 01/11/2014 21:43:42
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_22_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 23 at 01/11/2014 21:43:42
+channel ORA_DISK_1: finished piece 22 at 01/11/2014 21:44:57
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_22_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 23 at 01/11/2014 21:44:57
+channel ORA_DISK_2: finished piece 23 at 01/11/2014 21:51:02
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_23_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 24 at 01/11/2014 21:51:02
+channel ORA_DISK_1: finished piece 23 at 01/11/2014 21:51:47
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_23_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 24 at 01/11/2014 21:51:47
+channel ORA_DISK_2: finished piece 24 at 01/11/2014 21:58:22
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_24_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 25 at 01/11/2014 21:58:22
+channel ORA_DISK_1: finished piece 24 at 01/11/2014 21:58:37
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_24_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 25 at 01/11/2014 21:58:37
+channel ORA_DISK_2: finished piece 25 at 01/11/2014 22:05:32
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_25_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 26 at 01/11/2014 22:05:32
+channel ORA_DISK_1: finished piece 25 at 01/11/2014 22:05:39
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_25_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 26 at 01/11/2014 22:05:39
+channel ORA_DISK_1: finished piece 26 at 01/11/2014 22:12:45
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_26_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 27 at 01/11/2014 22:12:45
+channel ORA_DISK_2: finished piece 26 at 01/11/2014 22:13:00
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_26_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 27 at 01/11/2014 22:13:00
+channel ORA_DISK_1: finished piece 27 at 01/11/2014 22:19:55
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_27_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 28 at 01/11/2014 22:19:55
+channel ORA_DISK_2: finished piece 27 at 01/11/2014 22:20:20
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_27_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 28 at 01/11/2014 22:20:20
+channel ORA_DISK_1: finished piece 28 at 01/11/2014 22:27:05
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_28_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 29 at 01/11/2014 22:27:05
+channel ORA_DISK_2: finished piece 28 at 01/11/2014 22:27:30
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_28_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 29 at 01/11/2014 22:27:30
+channel ORA_DISK_1: finished piece 29 at 01/11/2014 22:34:15
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_29_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 30 at 01/11/2014 22:34:15
+channel ORA_DISK_2: finished piece 29 at 01/11/2014 22:34:40
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_29_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 30 at 01/11/2014 22:34:40
+channel ORA_DISK_1: finished piece 30 at 01/11/2014 22:41:25
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_30_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 31 at 01/11/2014 22:41:25
+channel ORA_DISK_2: finished piece 30 at 01/11/2014 22:42:10
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_30_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 31 at 01/11/2014 22:42:10
+channel ORA_DISK_1: finished piece 31 at 01/11/2014 22:48:35
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_31_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 32 at 01/11/2014 22:48:35
+channel ORA_DISK_2: finished piece 31 at 01/11/2014 22:49:40
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_31_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 32 at 01/11/2014 22:49:40
+channel ORA_DISK_1: finished piece 32 at 01/11/2014 22:55:55
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_32_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 33 at 01/11/2014 22:55:55
+channel ORA_DISK_2: finished piece 32 at 01/11/2014 22:57:10
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_32_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 33 at 01/11/2014 22:57:10
+channel ORA_DISK_1: finished piece 33 at 01/11/2014 23:03:15
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_33_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 34 at 01/11/2014 23:03:15
+channel ORA_DISK_2: finished piece 33 at 01/11/2014 23:04:00
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_33_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 34 at 01/11/2014 23:04:00
+channel ORA_DISK_1: finished piece 34 at 01/11/2014 23:10:45
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_34_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 35 at 01/11/2014 23:10:45
+channel ORA_DISK_2: finished piece 34 at 01/11/2014 23:10:52
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_34_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 35 at 01/11/2014 23:10:52
+channel ORA_DISK_1: finished piece 35 at 01/11/2014 23:17:47
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_35_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 36 at 01/11/2014 23:17:47
+channel ORA_DISK_2: finished piece 35 at 01/11/2014 23:18:02
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_35_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 36 at 01/11/2014 23:18:02
+channel ORA_DISK_1: finished piece 36 at 01/11/2014 23:24:57
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_36_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 37 at 01/11/2014 23:24:57
+channel ORA_DISK_2: finished piece 36 at 01/11/2014 23:25:42
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_36_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 37 at 01/11/2014 23:25:42
+channel ORA_DISK_1: finished piece 37 at 01/11/2014 23:32:08
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_37_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 38 at 01/11/2014 23:32:08
+channel ORA_DISK_2: finished piece 37 at 01/11/2014 23:33:43
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_37_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 38 at 01/11/2014 23:33:43
+channel ORA_DISK_1: finished piece 38 at 01/11/2014 23:39:58
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_38_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 39 at 01/11/2014 23:39:58
+channel ORA_DISK_2: finished piece 38 at 01/11/2014 23:41:33
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_38_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 39 at 01/11/2014 23:41:33
+channel ORA_DISK_1: finished piece 39 at 01/11/2014 23:47:58
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_39_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 40 at 01/11/2014 23:47:58
+channel ORA_DISK_2: finished piece 39 at 01/11/2014 23:49:23
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_39_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 40 at 01/11/2014 23:49:23
+channel ORA_DISK_2: finished piece 40 at 01/11/2014 23:52:48
+piece handle=+RECO/rman/level0_01_20141101_bspmhq46_40_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 04:51:21
+channel ORA_DISK_2: starting compressed incremental level 0 datafile backup set
+channel ORA_DISK_2: specifying datafile(s) in backup set
+input datafile file number=00106 name=+DATA/ccbs/datafile/sysaux.389.822699397
+input datafile file number=00127 name=+DATA/ccbs/datafile/undotbs1_02.455.857385555
+input datafile file number=00128 name=+DATA/ccbs/datafile/undotbs1_02.425.857385591
+input datafile file number=00131 name=+DATA/ccbs/datafile/undotbs2_02.423.857385961
+input datafile file number=00134 name=+DATA/ccbs/datafile/undotbs2_02.485.857386063
+input datafile file number=00005 name=+DATA/ccbs/datafile/users.269.772710879
+input datafile file number=00008 name=+DATA/ccbs/datafile/users.283.774527719
+input datafile file number=00011 name=+DATA/ccbs/datafile/tbs_others.288.774531157
+input datafile file number=00014 name=+DATA/ccbs/datafile/indx.291.774541763
+input datafile file number=00017 name=+DATA/ccbs/datafile/indx.294.774541943
+input datafile file number=00020 name=+DATA/ccbs/datafile/users.297.774542019
+input datafile file number=00023 name=+DATA/ccbs/datafile/users.300.774543249
+input datafile file number=00026 name=+DATA/ccbs/datafile/users.303.774543375
+input datafile file number=00029 name=+DATA/ccbs/datafile/users.306.774543465
+input datafile file number=00032 name=+DATA/ccbs/datafile/users.309.774543697
+input datafile file number=00035 name=+DATA/ccbs/datafile/users.312.775873715
+input datafile file number=00038 name=+DATA/ccbs/datafile/users.315.775996699
+input datafile file number=00041 name=+DATA/ccbs/datafile/users.318.775997657
+input datafile file number=00044 name=+DATA/ccbs/datafile/users.321.775997721
+input datafile file number=00047 name=+DATA/ccbs/datafile/users.324.775997821
+input datafile file number=00050 name=+DATA/ccbs/datafile/users.327.775997915
+input datafile file number=00053 name=+DATA/ccbs/datafile/users.330.775998311
+input datafile file number=00056 name=+DATA/ccbs/datafile/users.333.776000415
+input datafile file number=00059 name=+DATA/ccbs/datafile/tbs_others.336.776001499
+input datafile file number=00063 name=+DATA/ccbs/datafile/users.340.780491785
+input datafile file number=00066 name=+DATA/ccbs/datafile/users.343.780492321
+input datafile file number=00069 name=+DATA/ccbs/datafile/users.346.780493683
+input datafile file number=00072 name=+DATA/ccbs/datafile/indx.349.780852847
+input datafile file number=00075 name=+DATA/ccbs/datafile/indx.352.780853165
+input datafile file number=00078 name=+DATA/ccbs/datafile/users.355.780853553
+input datafile file number=00081 name=+DATA/ccbs/datafile/users.358.780853623
+input datafile file number=00084 name=+DATA/ccbs/datafile/users.361.780853717
+input datafile file number=00087 name=+DATA/ccbs/datafile/users.364.780853901
+input datafile file number=00090 name=+DATA/ccbs/datafile/users.367.780853961
+input datafile file number=00093 name=+DATA/ccbs/datafile/users.370.780854023
+input datafile file number=00096 name=+DATA/ccbs/datafile/users.373.780854307
+input datafile file number=00099 name=+DATA/ccbs/datafile/users.376.780854365
+input datafile file number=00102 name=+DATA/ccbs/datafile/indx.284.819597493
+input datafile file number=00122 name=+DATA/ccbs/datafile/indx.415.843228705
+input datafile file number=00125 name=+DATA/ccbs/datafile/indx.418.843228751
+input datafile file number=00110 name=+DATA/ccbs/datafile/indx.403.843228457
+input datafile file number=00113 name=+DATA/ccbs/datafile/indx.406.843228475
+input datafile file number=00116 name=+DATA/ccbs/datafile/indx.409.843228497
+input datafile file number=00119 name=+DATA/ccbs/datafile/indx.412.843228547
+channel ORA_DISK_2: starting piece 1 at 01/11/2014 23:52:49
+channel ORA_DISK_1: finished piece 40 at 01/11/2014 23:55:54
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_40_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 41 at 01/11/2014 23:55:54
+channel ORA_DISK_2: finished piece 1 at 02/11/2014 00:00:09
+piece handle=+RECO/rman/level0_01_20141101_btpmib6g_1_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 2 at 02/11/2014 00:00:09
+channel ORA_DISK_1: finished piece 41 at 02/11/2014 00:03:54
+piece handle=+RECO/rman/level0_01_20141101_brpmhq46_41_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: starting piece 42 at 02/11/2014 00:03:54
+channel ORA_DISK_2: finished piece 2 at 02/11/2014 00:07:49
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_2_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 3 at 02/11/2014 00:07:49
+channel ORA_DISK_1: finished piece 42 at 02/11/2014 00:08:54
+piece handle=+RECO/rman/level0_02_20141102_brpmhq46_42_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 05:07:28
+channel ORA_DISK_1: starting compressed incremental level 0 datafile backup set
+channel ORA_DISK_1: specifying datafile(s) in backup set
+including current control file in backup set
+channel ORA_DISK_1: starting piece 1 at 02/11/2014 00:08:57
+channel ORA_DISK_1: finished piece 1 at 02/11/2014 00:09:00
+piece handle=+RECO/rman/level0_02_20141102_bupmic4m_1_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_1: backup set complete, elapsed time: 00:00:03
+channel ORA_DISK_2: finished piece 3 at 02/11/2014 00:15:12
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_3_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 4 at 02/11/2014 00:15:12
+channel ORA_DISK_2: finished piece 4 at 02/11/2014 00:22:37
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_4_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 5 at 02/11/2014 00:22:37
+channel ORA_DISK_2: finished piece 5 at 02/11/2014 00:30:32
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_5_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 6 at 02/11/2014 00:30:32
+channel ORA_DISK_2: finished piece 6 at 02/11/2014 00:38:17
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_6_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 7 at 02/11/2014 00:38:17
+channel ORA_DISK_2: finished piece 7 at 02/11/2014 00:45:43
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_7_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 8 at 02/11/2014 00:45:43
+channel ORA_DISK_2: finished piece 8 at 02/11/2014 00:52:48
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_8_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 9 at 02/11/2014 00:52:48
+channel ORA_DISK_2: finished piece 9 at 02/11/2014 00:59:43
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_9_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 10 at 02/11/2014 00:59:43
+channel ORA_DISK_2: finished piece 10 at 02/11/2014 01:06:48
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_10_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 11 at 02/11/2014 01:06:48
+channel ORA_DISK_2: finished piece 11 at 02/11/2014 01:13:43
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_11_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 12 at 02/11/2014 01:13:43
+channel ORA_DISK_2: finished piece 12 at 02/11/2014 01:20:58
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_12_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 13 at 02/11/2014 01:20:58
+channel ORA_DISK_2: finished piece 13 at 02/11/2014 01:28:23
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_13_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 14 at 02/11/2014 01:28:23
+channel ORA_DISK_2: finished piece 14 at 02/11/2014 01:35:28
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_14_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 15 at 02/11/2014 01:35:28
+channel ORA_DISK_2: finished piece 15 at 02/11/2014 01:42:33
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_15_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 16 at 02/11/2014 01:42:33
+channel ORA_DISK_2: finished piece 16 at 02/11/2014 01:49:28
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_16_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 17 at 02/11/2014 01:49:28
+channel ORA_DISK_2: finished piece 17 at 02/11/2014 01:56:13
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_17_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 18 at 02/11/2014 01:56:13
+channel ORA_DISK_2: finished piece 18 at 02/11/2014 02:03:08
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_18_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 19 at 02/11/2014 02:03:08
+channel ORA_DISK_2: finished piece 19 at 02/11/2014 02:10:13
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_19_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 20 at 02/11/2014 02:10:13
+channel ORA_DISK_2: finished piece 20 at 02/11/2014 02:17:18
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_20_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 21 at 02/11/2014 02:17:18
+channel ORA_DISK_2: finished piece 21 at 02/11/2014 02:24:14
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_21_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 22 at 02/11/2014 02:24:14
+channel ORA_DISK_2: finished piece 22 at 02/11/2014 02:31:29
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_22_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 23 at 02/11/2014 02:31:29
+channel ORA_DISK_2: finished piece 23 at 02/11/2014 02:38:44
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_23_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 24 at 02/11/2014 02:38:44
+channel ORA_DISK_2: finished piece 24 at 02/11/2014 02:45:59
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_24_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 25 at 02/11/2014 02:45:59
+channel ORA_DISK_2: finished piece 25 at 02/11/2014 02:53:14
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_25_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 26 at 02/11/2014 02:53:14
+channel ORA_DISK_2: finished piece 26 at 02/11/2014 03:00:29
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_26_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 27 at 02/11/2014 03:00:29
+channel ORA_DISK_2: finished piece 27 at 02/11/2014 03:07:44
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_27_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 28 at 02/11/2014 03:07:44
+channel ORA_DISK_2: finished piece 28 at 02/11/2014 03:15:09
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_28_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 29 at 02/11/2014 03:15:09
+channel ORA_DISK_2: finished piece 29 at 02/11/2014 03:22:14
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_29_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 30 at 02/11/2014 03:22:14
+channel ORA_DISK_2: finished piece 30 at 02/11/2014 03:29:19
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_30_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 31 at 02/11/2014 03:29:19
+channel ORA_DISK_2: finished piece 31 at 02/11/2014 03:36:34
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_31_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 32 at 02/11/2014 03:36:34
+channel ORA_DISK_2: finished piece 32 at 02/11/2014 03:43:49
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_32_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 33 at 02/11/2014 03:43:49
+channel ORA_DISK_2: finished piece 33 at 02/11/2014 03:50:34
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_33_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 34 at 02/11/2014 03:50:34
+channel ORA_DISK_2: finished piece 34 at 02/11/2014 03:57:40
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_34_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 35 at 02/11/2014 03:57:40
+channel ORA_DISK_2: finished piece 35 at 02/11/2014 04:04:45
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_35_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 36 at 02/11/2014 04:04:45
+channel ORA_DISK_2: finished piece 36 at 02/11/2014 04:12:00
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_36_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 37 at 02/11/2014 04:12:00
+channel ORA_DISK_2: finished piece 37 at 02/11/2014 04:19:25
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_37_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 38 at 02/11/2014 04:19:25
+channel ORA_DISK_2: finished piece 38 at 02/11/2014 04:27:00
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_38_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 39 at 02/11/2014 04:27:00
+channel ORA_DISK_2: finished piece 39 at 02/11/2014 04:34:45
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_39_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 40 at 02/11/2014 04:34:45
+channel ORA_DISK_2: finished piece 40 at 02/11/2014 04:42:40
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_40_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: starting piece 41 at 02/11/2014 04:42:40
+channel ORA_DISK_2: finished piece 41 at 02/11/2014 04:48:25
+piece handle=+RECO/rman/level0_02_20141102_btpmib6g_41_1 tag=MONTHLY_LEVEL_0_DAY1 comment=NONE
+channel ORA_DISK_2: backup set complete, elapsed time: 04:55:36
+Finished backup at 02/11/2014 04:48:25
+
+Starting backup at 02/11/2014 04:48:26
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+skipping backup set key 5253; already backed up 2 time(s)
+skipping backup set key 5254; already backed up 2 time(s)
+skipping backup set key 5256; already backed up 2 time(s)
+skipping backup set key 5258; already backed up 2 time(s)
+skipping backup set key 5259; already backed up 2 time(s)
+channel ORA_DISK_1: input backup set: count=6522, stamp=862437338, piece=1
+channel ORA_DISK_1: starting piece 1 at 02/11/2014 04:48:26
+skipping backup piece handle +RECO/rman/c-271141816-20141031-01; already exists
+channel ORA_DISK_1: finished piece 1 at 02/11/2014 04:48:26
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:00:00
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=2
+channel ORA_DISK_1: starting piece 2 at 02/11/2014 04:48:26
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_2_1
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=1
+channel ORA_DISK_2: starting piece 1 at 02/11/2014 04:48:26
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_1_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_2_2 comment=NONE
+channel ORA_DISK_1: finished piece 2 at 02/11/2014 05:02:01
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=3
+channel ORA_DISK_1: starting piece 3 at 02/11/2014 05:02:01
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_3_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_1_2 comment=NONE
+channel ORA_DISK_2: finished piece 1 at 02/11/2014 05:02:01
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=4
+channel ORA_DISK_2: starting piece 4 at 02/11/2014 05:02:01
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_4_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_3_2 comment=NONE
+channel ORA_DISK_1: finished piece 3 at 02/11/2014 05:15:47
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:46
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=5
+channel ORA_DISK_1: starting piece 5 at 02/11/2014 05:15:47
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_5_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_4_2 comment=NONE
+channel ORA_DISK_2: finished piece 4 at 02/11/2014 05:15:47
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:46
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=6
+channel ORA_DISK_2: starting piece 6 at 02/11/2014 05:15:47
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_6_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_5_2 comment=NONE
+channel ORA_DISK_1: finished piece 5 at 02/11/2014 05:29:22
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=7
+channel ORA_DISK_1: starting piece 7 at 02/11/2014 05:29:22
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_7_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_6_2 comment=NONE
+channel ORA_DISK_2: finished piece 6 at 02/11/2014 05:29:29
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:42
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=8
+channel ORA_DISK_2: starting piece 8 at 02/11/2014 05:29:29
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_8_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_7_2 comment=NONE
+channel ORA_DISK_1: finished piece 7 at 02/11/2014 05:45:04
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:15:42
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=9
+channel ORA_DISK_1: starting piece 9 at 02/11/2014 05:45:04
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_9_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_8_2 comment=NONE
+channel ORA_DISK_2: finished piece 8 at 02/11/2014 05:45:04
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:15:35
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=10
+channel ORA_DISK_2: starting piece 10 at 02/11/2014 05:45:04
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_10_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_9_2 comment=NONE
+channel ORA_DISK_1: finished piece 9 at 02/11/2014 06:02:39
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:17:35
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=11
+channel ORA_DISK_1: starting piece 11 at 02/11/2014 06:02:39
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_11_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_10_2 comment=NONE
+channel ORA_DISK_2: finished piece 10 at 02/11/2014 06:02:39
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:17:35
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=12
+channel ORA_DISK_2: starting piece 12 at 02/11/2014 06:02:39
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_12_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_11_2 comment=NONE
+channel ORA_DISK_1: finished piece 11 at 02/11/2014 06:17:05
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:26
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=13
+channel ORA_DISK_1: starting piece 13 at 02/11/2014 06:17:05
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_13_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_12_2 comment=NONE
+channel ORA_DISK_2: finished piece 12 at 02/11/2014 06:17:06
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:27
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=14
+channel ORA_DISK_2: starting piece 14 at 02/11/2014 06:17:06
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_14_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_13_2 comment=NONE
+channel ORA_DISK_1: finished piece 13 at 02/11/2014 06:31:01
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:56
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=15
+channel ORA_DISK_1: starting piece 15 at 02/11/2014 06:31:01
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_15_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_14_2 comment=NONE
+channel ORA_DISK_2: finished piece 14 at 02/11/2014 06:31:01
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:55
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=16
+channel ORA_DISK_2: starting piece 16 at 02/11/2014 06:31:01
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_16_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_15_2 comment=NONE
+channel ORA_DISK_1: finished piece 15 at 02/11/2014 06:44:36
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=17
+channel ORA_DISK_1: starting piece 17 at 02/11/2014 06:44:36
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_17_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_16_2 comment=NONE
+channel ORA_DISK_2: finished piece 16 at 02/11/2014 06:44:36
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=18
+channel ORA_DISK_2: starting piece 18 at 02/11/2014 06:44:36
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_18_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_17_2 comment=NONE
+channel ORA_DISK_1: finished piece 17 at 02/11/2014 06:58:21
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=19
+channel ORA_DISK_1: starting piece 19 at 02/11/2014 06:58:21
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_19_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_18_2 comment=NONE
+channel ORA_DISK_2: finished piece 18 at 02/11/2014 06:58:21
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=20
+channel ORA_DISK_2: starting piece 20 at 02/11/2014 06:58:21
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_20_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_19_2 comment=NONE
+channel ORA_DISK_1: finished piece 19 at 02/11/2014 07:11:57
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:36
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=21
+channel ORA_DISK_1: starting piece 21 at 02/11/2014 07:11:57
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_21_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_20_2 comment=NONE
+channel ORA_DISK_2: finished piece 20 at 02/11/2014 07:11:57
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:36
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=22
+channel ORA_DISK_2: starting piece 22 at 02/11/2014 07:11:57
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_22_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_21_2 comment=NONE
+channel ORA_DISK_1: finished piece 21 at 02/11/2014 07:25:32
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=23
+channel ORA_DISK_1: starting piece 23 at 02/11/2014 07:25:32
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_23_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_22_2 comment=NONE
+channel ORA_DISK_2: finished piece 22 at 02/11/2014 07:25:39
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:42
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=24
+channel ORA_DISK_2: starting piece 24 at 02/11/2014 07:25:39
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_24_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_23_2 comment=NONE
+channel ORA_DISK_1: finished piece 23 at 02/11/2014 07:39:04
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:32
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=25
+channel ORA_DISK_1: starting piece 25 at 02/11/2014 07:39:04
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_25_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_24_2 comment=NONE
+channel ORA_DISK_2: finished piece 24 at 02/11/2014 07:39:04
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:25
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=26
+channel ORA_DISK_2: starting piece 26 at 02/11/2014 07:39:04
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_26_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_25_2 comment=NONE
+channel ORA_DISK_1: finished piece 25 at 02/11/2014 07:52:49
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=27
+channel ORA_DISK_1: starting piece 27 at 02/11/2014 07:52:49
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_27_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_26_2 comment=NONE
+channel ORA_DISK_2: finished piece 26 at 02/11/2014 07:53:24
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:20
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=28
+channel ORA_DISK_2: starting piece 28 at 02/11/2014 07:53:24
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_28_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_27_2 comment=NONE
+channel ORA_DISK_1: finished piece 27 at 02/11/2014 08:06:30
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=29
+channel ORA_DISK_1: starting piece 29 at 02/11/2014 08:06:30
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_29_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_28_2 comment=NONE
+channel ORA_DISK_2: finished piece 28 at 02/11/2014 08:07:25
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:01
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=30
+channel ORA_DISK_2: starting piece 30 at 02/11/2014 08:07:25
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_30_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_29_2 comment=NONE
+channel ORA_DISK_1: finished piece 29 at 02/11/2014 08:20:10
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=31
+channel ORA_DISK_1: starting piece 31 at 02/11/2014 08:20:10
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_31_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_30_2 comment=NONE
+channel ORA_DISK_2: finished piece 30 at 02/11/2014 08:21:05
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=32
+channel ORA_DISK_2: starting piece 32 at 02/11/2014 08:21:05
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_32_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_31_2 comment=NONE
+channel ORA_DISK_1: finished piece 31 at 02/11/2014 08:34:00
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=33
+channel ORA_DISK_1: starting piece 33 at 02/11/2014 08:34:00
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_33_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_32_2 comment=NONE
+channel ORA_DISK_2: finished piece 32 at 02/11/2014 08:34:55
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=34
+channel ORA_DISK_2: starting piece 34 at 02/11/2014 08:34:55
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_34_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_33_2 comment=NONE
+channel ORA_DISK_1: finished piece 33 at 02/11/2014 08:47:40
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=35
+channel ORA_DISK_1: starting piece 35 at 02/11/2014 08:47:40
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_35_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_34_2 comment=NONE
+channel ORA_DISK_2: finished piece 34 at 02/11/2014 08:48:35
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=36
+channel ORA_DISK_2: starting piece 36 at 02/11/2014 08:48:35
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_36_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_35_2 comment=NONE
+channel ORA_DISK_1: finished piece 35 at 02/11/2014 09:01:00
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:20
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=37
+channel ORA_DISK_1: starting piece 37 at 02/11/2014 09:01:00
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_37_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_36_2 comment=NONE
+channel ORA_DISK_2: finished piece 36 at 02/11/2014 09:02:16
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=38
+channel ORA_DISK_2: starting piece 38 at 02/11/2014 09:02:16
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_38_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_37_2 comment=NONE
+channel ORA_DISK_1: finished piece 37 at 02/11/2014 09:14:21
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:21
+channel ORA_DISK_1: input backup set: count=6524, stamp=862513286, piece=39
+channel ORA_DISK_1: starting piece 39 at 02/11/2014 09:14:21
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_bspmhq46_39_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_38_2 comment=NONE
+channel ORA_DISK_2: finished piece 38 at 02/11/2014 09:15:46
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_2: input backup set: count=6524, stamp=862513286, piece=40
+channel ORA_DISK_2: starting piece 40 at 02/11/2014 09:15:46
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_bspmhq46_40_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_40_2 comment=NONE
+channel ORA_DISK_2: finished piece 40 at 02/11/2014 09:21:21
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:05:35
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=1
+channel ORA_DISK_2: starting piece 1 at 02/11/2014 09:21:21
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_1_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bspmhq46_39_2 comment=NONE
+channel ORA_DISK_1: finished piece 39 at 02/11/2014 09:27:46
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:25
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=2
+channel ORA_DISK_1: starting piece 2 at 02/11/2014 09:27:46
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_2_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_1_2 comment=NONE
+channel ORA_DISK_2: finished piece 1 at 02/11/2014 09:34:41
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:20
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=3
+channel ORA_DISK_2: starting piece 3 at 02/11/2014 09:34:41
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_3_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_2_2 comment=NONE
+channel ORA_DISK_1: finished piece 2 at 02/11/2014 09:41:06
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:20
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=4
+channel ORA_DISK_1: starting piece 4 at 02/11/2014 09:41:06
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_4_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_3_2 comment=NONE
+channel ORA_DISK_2: finished piece 3 at 02/11/2014 09:48:01
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:20
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=5
+channel ORA_DISK_2: starting piece 5 at 02/11/2014 09:48:01
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_5_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_4_2 comment=NONE
+channel ORA_DISK_1: finished piece 4 at 02/11/2014 09:54:16
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:10
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=6
+channel ORA_DISK_1: starting piece 6 at 02/11/2014 09:54:16
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_6_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_5_2 comment=NONE
+channel ORA_DISK_2: finished piece 5 at 02/11/2014 10:01:22
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:21
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=7
+channel ORA_DISK_2: starting piece 7 at 02/11/2014 10:01:22
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_7_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_6_2 comment=NONE
+channel ORA_DISK_1: finished piece 6 at 02/11/2014 10:07:57
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=8
+channel ORA_DISK_1: starting piece 8 at 02/11/2014 10:07:57
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_8_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_7_2 comment=NONE
+channel ORA_DISK_2: finished piece 7 at 02/11/2014 10:15:32
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:10
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=9
+channel ORA_DISK_2: starting piece 9 at 02/11/2014 10:15:32
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_9_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_8_2 comment=NONE
+channel ORA_DISK_1: finished piece 8 at 02/11/2014 10:21:57
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:00
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=10
+channel ORA_DISK_1: starting piece 10 at 02/11/2014 10:21:57
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_10_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_9_2 comment=NONE
+channel ORA_DISK_2: finished piece 9 at 02/11/2014 10:29:22
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=11
+channel ORA_DISK_2: starting piece 11 at 02/11/2014 10:29:22
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_11_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_10_2 comment=NONE
+channel ORA_DISK_1: finished piece 10 at 02/11/2014 10:35:47
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=12
+channel ORA_DISK_1: starting piece 12 at 02/11/2014 10:35:47
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_12_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_11_2 comment=NONE
+channel ORA_DISK_2: finished piece 11 at 02/11/2014 10:43:02
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=13
+channel ORA_DISK_2: starting piece 13 at 02/11/2014 10:43:02
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_13_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_12_2 comment=NONE
+channel ORA_DISK_1: finished piece 12 at 02/11/2014 10:49:17
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=14
+channel ORA_DISK_1: starting piece 14 at 02/11/2014 10:49:17
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_14_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_13_2 comment=NONE
+channel ORA_DISK_2: finished piece 13 at 02/11/2014 10:56:43
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=15
+channel ORA_DISK_2: starting piece 15 at 02/11/2014 10:56:43
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_15_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_14_2 comment=NONE
+channel ORA_DISK_1: finished piece 14 at 02/11/2014 11:02:58
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=16
+channel ORA_DISK_1: starting piece 16 at 02/11/2014 11:02:58
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_16_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_15_2 comment=NONE
+channel ORA_DISK_2: finished piece 15 at 02/11/2014 11:10:23
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=17
+channel ORA_DISK_2: starting piece 17 at 02/11/2014 11:10:23
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_17_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_16_2 comment=NONE
+channel ORA_DISK_1: finished piece 16 at 02/11/2014 11:16:38
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=18
+channel ORA_DISK_1: starting piece 18 at 02/11/2014 11:16:38
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_18_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_17_2 comment=NONE
+channel ORA_DISK_2: finished piece 17 at 02/11/2014 11:24:23
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:00
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=19
+channel ORA_DISK_2: starting piece 19 at 02/11/2014 11:24:23
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_19_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_18_2 comment=NONE
+channel ORA_DISK_1: finished piece 18 at 02/11/2014 11:30:38
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:00
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=20
+channel ORA_DISK_1: starting piece 20 at 02/11/2014 11:30:38
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_20_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_19_2 comment=NONE
+channel ORA_DISK_2: finished piece 19 at 02/11/2014 11:38:23
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:00
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=21
+channel ORA_DISK_2: starting piece 21 at 02/11/2014 11:38:23
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_21_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_20_2 comment=NONE
+channel ORA_DISK_1: finished piece 20 at 02/11/2014 11:44:18
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=22
+channel ORA_DISK_1: starting piece 22 at 02/11/2014 11:44:18
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_22_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_21_2 comment=NONE
+channel ORA_DISK_2: finished piece 21 at 02/11/2014 11:52:04
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=23
+channel ORA_DISK_2: starting piece 23 at 02/11/2014 11:52:04
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_23_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_22_2 comment=NONE
+channel ORA_DISK_1: finished piece 22 at 02/11/2014 11:57:59
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=24
+channel ORA_DISK_1: starting piece 24 at 02/11/2014 11:57:59
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_24_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_23_2 comment=NONE
+channel ORA_DISK_2: finished piece 23 at 02/11/2014 12:05:54
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=25
+channel ORA_DISK_2: starting piece 25 at 02/11/2014 12:05:54
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_25_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_24_2 comment=NONE
+channel ORA_DISK_1: finished piece 24 at 02/11/2014 12:11:39
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=26
+channel ORA_DISK_1: starting piece 26 at 02/11/2014 12:11:39
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_26_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_25_2 comment=NONE
+channel ORA_DISK_2: finished piece 25 at 02/11/2014 12:19:24
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=27
+channel ORA_DISK_2: starting piece 27 at 02/11/2014 12:19:24
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_27_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_26_2 comment=NONE
+channel ORA_DISK_1: finished piece 26 at 02/11/2014 12:25:09
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=28
+channel ORA_DISK_1: starting piece 28 at 02/11/2014 12:25:09
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_28_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_27_2 comment=NONE
+channel ORA_DISK_2: finished piece 27 at 02/11/2014 12:32:44
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:20
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=29
+channel ORA_DISK_2: starting piece 29 at 02/11/2014 12:32:44
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_29_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_28_2 comment=NONE
+channel ORA_DISK_1: finished piece 28 at 02/11/2014 12:38:39
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=30
+channel ORA_DISK_1: starting piece 30 at 02/11/2014 12:38:39
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_30_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_29_2 comment=NONE
+channel ORA_DISK_2: finished piece 29 at 02/11/2014 12:46:14
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=31
+channel ORA_DISK_2: starting piece 31 at 02/11/2014 12:46:14
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_31_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_30_2 comment=NONE
+channel ORA_DISK_1: finished piece 30 at 02/11/2014 12:52:20
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:41
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=32
+channel ORA_DISK_1: starting piece 32 at 02/11/2014 12:52:20
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_32_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_31_2 comment=NONE
+channel ORA_DISK_2: finished piece 31 at 02/11/2014 12:59:45
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:31
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=33
+channel ORA_DISK_2: starting piece 33 at 02/11/2014 12:59:45
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_33_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_32_2 comment=NONE
+channel ORA_DISK_1: finished piece 32 at 02/11/2014 13:05:50
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:30
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=34
+channel ORA_DISK_1: starting piece 34 at 02/11/2014 13:05:50
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_34_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_33_2 comment=NONE
+channel ORA_DISK_2: finished piece 33 at 02/11/2014 13:13:25
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=35
+channel ORA_DISK_2: starting piece 35 at 02/11/2014 13:13:25
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_35_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_34_2 comment=NONE
+channel ORA_DISK_1: finished piece 34 at 02/11/2014 13:19:40
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=36
+channel ORA_DISK_1: starting piece 36 at 02/11/2014 13:19:40
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_36_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_35_2 comment=NONE
+channel ORA_DISK_2: finished piece 35 at 02/11/2014 13:27:15
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=37
+channel ORA_DISK_2: starting piece 37 at 02/11/2014 13:27:15
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_37_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_36_2 comment=NONE
+channel ORA_DISK_1: finished piece 36 at 02/11/2014 13:33:30
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=38
+channel ORA_DISK_1: starting piece 38 at 02/11/2014 13:33:30
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_38_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_37_2 comment=NONE
+channel ORA_DISK_2: finished piece 37 at 02/11/2014 13:41:15
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:00
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=39
+channel ORA_DISK_2: starting piece 39 at 02/11/2014 13:41:15
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_39_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_38_2 comment=NONE
+channel ORA_DISK_1: finished piece 38 at 02/11/2014 13:47:10
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:40
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=40
+channel ORA_DISK_1: starting piece 40 at 02/11/2014 13:47:11
+channel ORA_DISK_1: backup piece +RECO/rman/level0_01_20141101_brpmhq46_40_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_39_2 comment=NONE
+channel ORA_DISK_2: finished piece 39 at 02/11/2014 13:55:06
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:51
+channel ORA_DISK_2: input backup set: count=6523, stamp=862513286, piece=41
+channel ORA_DISK_2: starting piece 41 at 02/11/2014 13:55:06
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_brpmhq46_41_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_40_2 comment=NONE
+channel ORA_DISK_1: finished piece 40 at 02/11/2014 14:01:01
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:50
+channel ORA_DISK_1: input backup set: count=6523, stamp=862513286, piece=42
+channel ORA_DISK_1: starting piece 42 at 02/11/2014 14:01:01
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_brpmhq46_42_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_42_2 comment=NONE
+channel ORA_DISK_1: finished piece 42 at 02/11/2014 14:08:56
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:07:55
+channel ORA_DISK_1: input backup set: count=6526, stamp=862531734, piece=1
+channel ORA_DISK_1: starting piece 1 at 02/11/2014 14:08:56
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_bupmic4m_1_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_brpmhq46_41_2 comment=NONE
+channel ORA_DISK_2: finished piece 41 at 02/11/2014 14:08:57
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:51
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=1
+channel ORA_DISK_2: starting piece 1 at 02/11/2014 14:08:57
+channel ORA_DISK_2: backup piece +RECO/rman/level0_01_20141101_btpmib6g_1_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_bupmic4m_1_2 comment=NONE
+channel ORA_DISK_1: finished piece 1 at 02/11/2014 14:08:58
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:00:02
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=2
+channel ORA_DISK_1: starting piece 2 at 02/11/2014 14:08:58
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_2_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_2_2 comment=NONE
+channel ORA_DISK_1: finished piece 2 at 02/11/2014 14:22:43
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=3
+channel ORA_DISK_1: starting piece 3 at 02/11/2014 14:22:43
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_3_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_1_2 comment=NONE
+channel ORA_DISK_2: finished piece 1 at 02/11/2014 14:22:43
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:46
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=4
+channel ORA_DISK_2: starting piece 4 at 02/11/2014 14:22:43
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_4_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_4_2 comment=NONE
+channel ORA_DISK_2: finished piece 4 at 02/11/2014 14:36:28
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=5
+channel ORA_DISK_2: starting piece 5 at 02/11/2014 14:36:28
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_5_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_3_2 comment=NONE
+channel ORA_DISK_1: finished piece 3 at 02/11/2014 14:36:31
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:48
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=6
+channel ORA_DISK_1: starting piece 6 at 02/11/2014 14:36:31
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_6_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_5_2 comment=NONE
+channel ORA_DISK_2: finished piece 5 at 02/11/2014 14:51:07
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:39
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=7
+channel ORA_DISK_2: starting piece 7 at 02/11/2014 14:51:07
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_7_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_6_2 comment=NONE
+channel ORA_DISK_1: finished piece 6 at 02/11/2014 14:51:08
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:37
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=8
+channel ORA_DISK_1: starting piece 8 at 02/11/2014 14:51:08
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_8_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_7_2 comment=NONE
+channel ORA_DISK_2: finished piece 7 at 02/11/2014 15:05:13
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:06
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=9
+channel ORA_DISK_2: starting piece 9 at 02/11/2014 15:05:13
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_9_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_8_2 comment=NONE
+channel ORA_DISK_1: finished piece 8 at 02/11/2014 15:05:20
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:12
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=10
+channel ORA_DISK_1: starting piece 10 at 02/11/2014 15:05:20
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_10_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_10_2 comment=NONE
+channel ORA_DISK_1: finished piece 10 at 02/11/2014 15:18:55
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=11
+channel ORA_DISK_1: starting piece 11 at 02/11/2014 15:18:55
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_11_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_9_2 comment=NONE
+channel ORA_DISK_2: finished piece 9 at 02/11/2014 15:18:55
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:42
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=12
+channel ORA_DISK_2: starting piece 12 at 02/11/2014 15:18:55
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_12_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_11_2 comment=NONE
+channel ORA_DISK_1: finished piece 11 at 02/11/2014 15:32:50
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:55
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=13
+channel ORA_DISK_1: starting piece 13 at 02/11/2014 15:32:50
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_13_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_12_2 comment=NONE
+channel ORA_DISK_2: finished piece 12 at 02/11/2014 15:32:50
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:55
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=14
+channel ORA_DISK_2: starting piece 14 at 02/11/2014 15:32:50
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_14_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_13_2 comment=NONE
+channel ORA_DISK_1: finished piece 13 at 02/11/2014 15:47:26
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:36
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=15
+channel ORA_DISK_1: starting piece 15 at 02/11/2014 15:47:26
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_15_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_14_2 comment=NONE
+channel ORA_DISK_2: finished piece 14 at 02/11/2014 15:47:26
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:36
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=16
+channel ORA_DISK_2: starting piece 16 at 02/11/2014 15:47:26
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_16_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_15_2 comment=NONE
+channel ORA_DISK_1: finished piece 15 at 02/11/2014 16:01:11
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=17
+channel ORA_DISK_1: starting piece 17 at 02/11/2014 16:01:11
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_17_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_16_2 comment=NONE
+channel ORA_DISK_2: finished piece 16 at 02/11/2014 16:01:11
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:45
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=18
+channel ORA_DISK_2: starting piece 18 at 02/11/2014 16:01:11
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_18_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_18_2 comment=NONE
+channel ORA_DISK_2: finished piece 18 at 02/11/2014 16:14:46
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=19
+channel ORA_DISK_2: starting piece 19 at 02/11/2014 16:14:46
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_19_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_17_2 comment=NONE
+channel ORA_DISK_1: finished piece 17 at 02/11/2014 16:14:47
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:36
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=20
+channel ORA_DISK_1: starting piece 20 at 02/11/2014 16:14:47
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_20_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_19_2 comment=NONE
+channel ORA_DISK_2: finished piece 19 at 02/11/2014 16:28:42
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:56
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=21
+channel ORA_DISK_2: starting piece 21 at 02/11/2014 16:28:42
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_21_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_20_2 comment=NONE
+channel ORA_DISK_1: finished piece 20 at 02/11/2014 16:28:49
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:02
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=22
+channel ORA_DISK_1: starting piece 22 at 02/11/2014 16:28:49
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_22_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_21_2 comment=NONE
+channel ORA_DISK_2: finished piece 21 at 02/11/2014 16:42:25
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:43
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=23
+channel ORA_DISK_2: starting piece 23 at 02/11/2014 16:42:25
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_23_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_22_2 comment=NONE
+channel ORA_DISK_1: finished piece 22 at 02/11/2014 16:42:40
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:51
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=24
+channel ORA_DISK_1: starting piece 24 at 02/11/2014 16:42:40
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_24_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_24_2 comment=NONE
+channel ORA_DISK_1: finished piece 24 at 02/11/2014 16:56:35
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:55
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=25
+channel ORA_DISK_1: starting piece 25 at 02/11/2014 16:56:35
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_25_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_23_2 comment=NONE
+channel ORA_DISK_2: finished piece 23 at 02/11/2014 16:56:35
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:10
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=26
+channel ORA_DISK_2: starting piece 26 at 02/11/2014 16:56:35
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_26_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_25_2 comment=NONE
+channel ORA_DISK_1: finished piece 25 at 02/11/2014 17:10:50
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:15
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=27
+channel ORA_DISK_1: starting piece 27 at 02/11/2014 17:10:50
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_27_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_26_2 comment=NONE
+channel ORA_DISK_2: finished piece 26 at 02/11/2014 17:10:50
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:15
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=28
+channel ORA_DISK_2: starting piece 28 at 02/11/2014 17:10:50
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_28_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_27_2 comment=NONE
+channel ORA_DISK_1: finished piece 27 at 02/11/2014 17:24:55
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:14:05
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=29
+channel ORA_DISK_1: starting piece 29 at 02/11/2014 17:24:55
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_29_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_28_2 comment=NONE
+channel ORA_DISK_2: finished piece 28 at 02/11/2014 17:24:55
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:14:05
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=30
+channel ORA_DISK_2: starting piece 30 at 02/11/2014 17:24:55
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_30_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_29_2 comment=NONE
+channel ORA_DISK_1: finished piece 29 at 02/11/2014 17:38:31
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:36
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=31
+channel ORA_DISK_1: starting piece 31 at 02/11/2014 17:38:31
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_31_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_30_2 comment=NONE
+channel ORA_DISK_2: finished piece 30 at 02/11/2014 17:38:31
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:36
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=32
+channel ORA_DISK_2: starting piece 32 at 02/11/2014 17:38:31
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_32_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_31_2 comment=NONE
+channel ORA_DISK_1: finished piece 31 at 02/11/2014 17:52:06
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=33
+channel ORA_DISK_1: starting piece 33 at 02/11/2014 17:52:06
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_33_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_32_2 comment=NONE
+channel ORA_DISK_2: finished piece 32 at 02/11/2014 17:52:06
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=34
+channel ORA_DISK_2: starting piece 34 at 02/11/2014 17:52:06
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_34_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_33_2 comment=NONE
+channel ORA_DISK_1: finished piece 33 at 02/11/2014 18:05:41
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=35
+channel ORA_DISK_1: starting piece 35 at 02/11/2014 18:05:41
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_35_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_34_2 comment=NONE
+channel ORA_DISK_2: finished piece 34 at 02/11/2014 18:05:41
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=36
+channel ORA_DISK_2: starting piece 36 at 02/11/2014 18:05:41
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_36_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_36_2 comment=NONE
+channel ORA_DISK_2: finished piece 36 at 02/11/2014 18:19:06
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:25
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=37
+channel ORA_DISK_2: starting piece 37 at 02/11/2014 18:19:06
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_37_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_35_2 comment=NONE
+channel ORA_DISK_1: finished piece 35 at 02/11/2014 18:19:09
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:28
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=38
+channel ORA_DISK_1: starting piece 38 at 02/11/2014 18:19:09
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_38_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_38_2 comment=NONE
+channel ORA_DISK_1: finished piece 38 at 02/11/2014 18:32:44
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=39
+channel ORA_DISK_1: starting piece 39 at 02/11/2014 18:32:45
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_39_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_37_2 comment=NONE
+channel ORA_DISK_2: finished piece 37 at 02/11/2014 18:32:45
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:39
+channel ORA_DISK_2: input backup set: count=6525, stamp=862530768, piece=40
+channel ORA_DISK_2: starting piece 40 at 02/11/2014 18:32:45
+channel ORA_DISK_2: backup piece +RECO/rman/level0_02_20141102_btpmib6g_40_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_39_2 comment=NONE
+channel ORA_DISK_1: finished piece 39 at 02/11/2014 18:46:20
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:13:35
+channel ORA_DISK_1: input backup set: count=6525, stamp=862530768, piece=41
+channel ORA_DISK_1: starting piece 41 at 02/11/2014 18:46:20
+channel ORA_DISK_1: backup piece +RECO/rman/level0_02_20141102_btpmib6g_41_1
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_40_2 comment=NONE
+channel ORA_DISK_2: finished piece 40 at 02/11/2014 18:46:20
+channel ORA_DISK_2: backup piece complete, elapsed time: 00:13:35
+piece handle=/mnt/nfs52100/RMAN/level0_02_20141102_btpmib6g_41_2 comment=NONE
+channel ORA_DISK_1: finished piece 41 at 02/11/2014 18:51:35
+channel ORA_DISK_1: backup piece complete, elapsed time: 00:05:15
+Finished backup at 02/11/2014 18:51:35
+
+Starting Control File and SPFILE Autobackup at 02/11/2014 18:51:35
+piece handle=+RECO/rman/c-271141816-20141102-00 comment=NONE
+Finished Control File and SPFILE Autobackup at 02/11/2014 18:51:38
+
+Recovery Manager complete.

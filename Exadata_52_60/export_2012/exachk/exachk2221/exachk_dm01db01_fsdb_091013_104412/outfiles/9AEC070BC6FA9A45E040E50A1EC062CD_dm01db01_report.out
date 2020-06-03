@@ -1,0 +1,16 @@
+TO REVIEW COLLECTED DATA FROM DM01DB01 - CCBS DATABASE - HIGH REDUNDANCY CONTROLFILE 
+
+
+
+Number of Control files = 	  2
+High redundancy diskgroups = 	  0
+High redundancy diskgroups where control files are multiplexed = 		       0
+Normal redundancy diskgroups where control files are multiplexed = 		       1
+TO REVIEW COLLECTED DATA FROM DM01DB01 - FSDB DATABASE - HIGH REDUNDANCY CONTROLFILE 
+
+
+
+Number of Control files = 	  1
+High redundancy diskgroups = 	  0
+High redundancy diskgroups where control files are multiplexed = 		       0
+Normal redundancy diskgroups where control files are multiplexed = 		       1

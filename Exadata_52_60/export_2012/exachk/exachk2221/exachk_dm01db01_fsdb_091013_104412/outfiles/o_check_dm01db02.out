@@ -1,0 +1,256 @@
+
+ UNSPECIFIED 379.0.0.0.0.0.0.0.0.0 date >/dev/null ==     
+
+ UNSPECIFIED 380.0.0.0.0.0.0.0.0.0 grep [a-z] /sys/class/net/ib*/mode|grep -v connected|wc -l == 0    
+
+ CRS 385.0.0.0.0.0.0.0.0.0 CRS_MISSCOUNT_VALUE=`$CRS_HOME/bin/crsctl get css misscount`;if [ `echo $CRS_MISSCOUNT_VALUE | egrep -c "CRS-4678:"` -eq 1 ]; then   echo $CRS_MISSCOUNT_VALUE |sed 's/[a-zA-Z]//g'|awk '{print $2}'|head -1; else   echo $CRS_MISSCOUNT_VALUE; fi; == 60    
+
+ CRS 388.0.0.0.0.0.0.0.0.0 f1=`md5sum $CRS_HOME/lib/libskgxp11.so |awk '{print $1}'`;f2=`md5sum $CRS_HOME/lib/libskgxpr.so |awk '{print $1}'`;if [ $f1 = $f2 ]; then echo 1; else echo 0; fi; == 1    
+
+ CRS 389.0.0.0.0.0.0.0.0.0 /sbin/ifconfig `$CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|tail -1|awk '{print $1}'`|grep -i mtu|cut -d: -f2|awk '{print $1}' == 65520    
+
+ UNSPECIFIED 394.0.0.0.0.0.0.0.0.0 cat /proc/cmdline|grep -ic "numa=off" 2>/dev/null == 1    
+
+ ASM 397.0.0.0.0.0.0.0.0.0 asm_version=$(echo -e  "set heading off lines 180\n select substr(replace(version,'.'),1,5) from v\$instance;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$|tail -1);echo $asm_version == 11202    
+
+ccbs RDBMS 399.0.0.0.0.0.0.0.0.0 final_status=0;no_of_control_files=$(echo -e "set heading off feedback off timing off \nselect count(name) from v\$controlfile;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);high_dg=$(echo -e "set heading off feedback off \nselect count(name) from v\$asm_diskgroup where type='HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);control_files_dg_high=$(echo -e "set heading off feedback off \nselect count(distinct(dg.name))from v\$controlfile cf,v\$asm_diskgroup dg where replace(substr(cf.name,1,instr(cf.name,'/',1,1) - 1),'+') = dg.name and dg.type = 'HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);control_files_dg_normal=$(echo -e "set heading off feedback off \nselect count(distinct(dg.name))from v\$controlfile cf,v\$asm_diskgroup dg where replace(substr(cf.name,1,instr(cf.name,'/',1,1) - 1),'+') = dg.name and dg.type != 'HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [[ "$high_dg" -ge 1 && "$no_of_control_files" -eq 2 && "$control_files_dg_high" -eq 1 ]];then final_status=0;elif [[ "$high_dg" -ge 0 && "$no_of_control_files" -eq 2 && "$control_files_dg_normal" -eq 2 ]]; then final_status=0; elif [[ "$high_dg" -ge 1 && "$no_of_control_files" -lt 2 ]]; then final_status=1;elif [[ "$high_dg" -eq 0 && "$no_of_control_files" -lt 2 ]]; then final_status=1;elif [[ "$high_dg" -ge 1 && "$no_of_control_files" -ge 2 && "$control_files_dg_high" -eq 2 ]]; then final_status=2;else=final_status=3;fi;echo "$final_status" == 0     
+
+fsdb RDBMS 399.0.0.0.0.0.0.0.0.0 final_status=0;no_of_control_files=$(echo -e "set heading off feedback off timing off \nselect count(name) from v\$controlfile;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);high_dg=$(echo -e "set heading off feedback off \nselect count(name) from v\$asm_diskgroup where type='HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);control_files_dg_high=$(echo -e "set heading off feedback off \nselect count(distinct(dg.name))from v\$controlfile cf,v\$asm_diskgroup dg where replace(substr(cf.name,1,instr(cf.name,'/',1,1) - 1),'+') = dg.name and dg.type = 'HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);control_files_dg_normal=$(echo -e "set heading off feedback off \nselect count(distinct(dg.name))from v\$controlfile cf,v\$asm_diskgroup dg where replace(substr(cf.name,1,instr(cf.name,'/',1,1) - 1),'+') = dg.name and dg.type != 'HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [[ "$high_dg" -ge 1 && "$no_of_control_files" -eq 2 && "$control_files_dg_high" -eq 1 ]];then final_status=0;elif [[ "$high_dg" -ge 0 && "$no_of_control_files" -eq 2 && "$control_files_dg_normal" -eq 2 ]]; then final_status=0; elif [[ "$high_dg" -ge 1 && "$no_of_control_files" -lt 2 ]]; then final_status=1;elif [[ "$high_dg" -eq 0 && "$no_of_control_files" -lt 2 ]]; then final_status=1;elif [[ "$high_dg" -ge 1 && "$no_of_control_files" -ge 2 && "$control_files_dg_high" -eq 2 ]]; then final_status=2;else=final_status=3;fi;echo "$final_status" == 1     
+
+ CRS 406.0.0.0.0.0.0.0.0.0 infinet_status=0;for infinet in `$CRS_HOME/bin/oifcfg getif -type cluster_interconnect|awk '{print $1}'`; do infinet_type=$(/sbin/ifconfig $infinet|grep -i "Link encap"|cut -d: -f2|awk '{print $1}');if [ $infinet_type != InfiniBand ];then infinet_status=1;break; else infinet_status=0;fi; done;echo $infinet_status == 0    
+
+u01apporacleproduct11202dbhome_1 RDBMS 407.0.0.0.0.0.0.0.0.0 f1=`md5sum $ORACLE_HOME/lib/libskgxp11.so |awk '{print $1}'`;f2=`md5sum $ORACLE_HOME/lib/libskgxpr.so |awk '{print $1}'`;if [ $f1 = $f2 ]; then echo 1; else echo 0; fi; == 1     
+
+u01apporacleproduct11202dbhome_1 RDBMS 408.0.0.0.0.0.0.0.0.0 $ORACLE_HOME/bin/skgxpinfo == rds     
+
+ UNSPECIFIED 410.0.0.0.0.0.0.0.0.0 df -h /|cut -d% -f1|awk '{print $NF}'|tail -1 == 25    
+
+ ASM 414.0.0.0.0.0.0.0.0.0 cell_cnt=`grep -v \#cell= /etc/oracle/cell/network-config/cellip.ora|grep -c cell=`;cnt=$(echo "select count(*) from (select count(*) fg from (select distinct group_number,failgroup from v\$asm_disk where group_number != 0) group by group_number) where fg < $cell_cnt ;"|$ORACLE_HOME/bin/sqlplus -s / as sysasm|grep -v ^$|tail -1);echo $cnt; == 0    
+
+ ASM 416.0.0.0.0.0.0.0.0.0 afdest=$(echo -e "set heading off lines 180\n select value from v\$parameter where name='audit_file_dest';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);aud_files=$(find $afdest -name '*.*' 2>/dev/null|wc -l);if [ $aud_files -gt 100000 ]; then echo 1 ;else echo 0;fi == 0    
+
+ UNSPECIFIED 419.0.0.0.0.0.0.0.0.0 netips=$(grep -i network /etc/sysconfig/network-scripts/ifcfg* | cut -f5 -d"/" | egrep -v '#|ifcfg-lo'|cut -d= -f2|sed 's/\.//g');count=0;for netip in $netips;do if [ $count -eq 0 ] ; then firstip=$netip;else if [ $netip -eq $firstip ];then netIpCheckstatus=1 ;break; else netIpCheckstatus=0;fi;fi;count=$(expr $count + 1 );done;echo $netIpCheckstatus == 0    
+
+  420.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_master_serial_number.out ]; then cat /tmp/o_root_clusterwide_check_master_serial_number.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_master_serial_number.out>/dev/null 2>&1;fi == Exadata Database Machine X2-2 AK00027248    
+
+ CRS 421.0.0.0.0.0.0.0.0.0 user=`ls -l $CRS_HOME/bin/ocssd.bin |awk '{print $3}'`;lim=`grep $user /etc/security/limits.conf |grep soft |grep nofile |grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then group=$(ls -l $CRS_HOME/bin/oracle |awk '{print $4}');lim=`grep $group /etc/security/limits.conf |grep soft |grep nofile|grep -v ^# |awk '{print $4}'`;fi;if [ -z "$lim" ]; then lim=`grep '\* soft nofile' /etc/security/limits.conf |grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then lim=0;fi;elif [ $lim = unlimited ];then lim=999999;fi;echo $lim == 131072    
+
+ CRS 422.0.0.0.0.0.0.0.0.0 user=`ls -l $CRS_HOME/bin/oracle |awk '{print $3}'`;lim=`grep $user /etc/security/limits.conf |grep soft |grep nproc|grep -v ^# |awk '{print $4}'`;if [ -z "$lim" ]; then group=$(ls -l $CRS_HOME/bin/oracle |awk '{print $4}');lim=`grep $group /etc/security/limits.conf |grep soft |grep nproc|grep -v ^# |awk '{print $4}'`;fi;if [ -z "$lim" ]; then lim=`grep '\* soft nproc' /etc/security/limits.conf |grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then lim=0;fi;elif [ $lim = unlimited ];then lim=999999;fi;echo $lim == 131072    
+
+ CRS 423.0.0.0.0.0.0.0.0.0 user=`ls -l $CRS_HOME/bin/ocssd.bin |awk '{print $3}'`;lim=`grep $user /etc/security/limits.conf |grep hard |grep nofile|grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then group=$(ls -l $CRS_HOME/bin/oracle |awk '{print $4}');lim=`grep $group /etc/security/limits.conf |grep hard |grep nofile|grep -v ^# |awk '{print $4}'`;fi;if [ -z "$lim" ]; then lim=`grep '\* hard nofile' /etc/security/limits.conf |grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then lim=0;fi;elif [ $lim = unlimited ];then lim=999999;fi;echo $lim == 131072    
+
+ CRS 424.0.0.0.0.0.0.0.0.0 user=`ls -l $CRS_HOME/bin/ocssd.bin |awk '{print $3}'`;lim=`grep $user /etc/security/limits.conf |grep hard |grep nproc|grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then group=$(ls -l $CRS_HOME/bin/oracle |awk '{print $4}');lim=`grep $group /etc/security/limits.conf |grep hard |grep nproc|grep -v ^# |awk '{print $4}'`;fi;if [ -z "$lim" ]; then lim=`grep '\* hard nproc' /etc/security/limits.conf |grep -v ^#|awk '{print $4}'`;if [ -z "$lim" ]; then lim=0;fi;elif [ $lim = unlimited ];then lim=999999;fi;echo $lim == 131072    
+
+ RDBMS 425.0.0.0.0.0.0.0.0.0  usrlimit=$(ulimit -Hu);if [ "$usrlimit" = "unlimited" ];then echo 1;elif [ $usrlimit -ge 16384 ];then echo 1;else echo 0;fi == 1    
+
+ UNSPECIFIED 426.0.0.0.0.0.0.0.0.0 usrlimit=$(ulimit -Sn);if [ "$usrlimit" = "unlimited" ];then echo 1;elif [ $usrlimit -ge 1024 ];then echo 1;else echo 0;fi == 1    
+
+ UNSPECIFIED 427.0.0.0.0.0.0.0.0.0 usrlimit=$(ulimit -Hn);if [ "$usrlimit" = "unlimited" ];then echo 1;elif [ $usrlimit -ge 65536 ];then echo 1;else echo 0;fi == 1    
+
+ UNSPECIFIED 428.0.0.0.0.0.0.0.0.0 usrlimit=$(ulimit -Hs);if [ "$usrlimit" = "unlimited" ];then echo 1;elif [ $usrlimit -ge 10240 ];then echo 1;else echo 0;fi == 1    
+
+ UNSPECIFIED 429.0.0.0.0.0.0.0.0.0 usrlimit=$(ulimit -Su);if [ "$usrlimit" = "unlimited" ];then echo 1;elif [ $usrlimit -ge 2047 ];then echo 1;else echo 0;fi == 1    
+
+ CRS 431.0.0.0.0.0.0.0.0.0 /sbin/ifconfig `$CRS_HOME/bin/oifcfg getif|grep public|awk '{print $1}'`|grep -ic MASTER == 1    
+
+ CRS 431.1.0.0.0.0.0.0.0.0 cat /proc/net/bonding/`$CRS_HOME/bin/oifcfg getif -type public|awk '{print $1}'`|grep "Bonding Mode"|cut -d'(' -f2|cut -d')' -f1 == active-backup    
+
+ UNSPECIFIED 432.0.0.0.0.0.0.0.0.0 lim=`ulimit -n`;if [ "$lim" != "unlimited" ]; then if [ $lim -lt 65536 ]; then echo 0; else echo 1; fi;else echo 1;fi; == 1    
+
+ CRS 433.0.0.0.0.0.0.0.0.0  /sbin/ifconfig `$CRS_HOME/bin/oifcfg getif|grep public |awk '{print $1}'`|grep -ic MASTER == 1    
+
+ UNSPECIFIED 434.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_root_time_zone.out ]; then cat /tmp/o_root_clusterwide_check_root_time_zone.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_root_time_zone.out>/dev/null 2>&1;fi == ICT    
+
+ CRS 435.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_crs_time_zone.out ]; then cat /tmp/o_root_clusterwide_check_crs_time_zone.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_crs_time_zone.out>/dev/null 2>&1;fi == ICT    
+
+ CRS 436.0.0.0.0.0.0.0.0.0 host=`hostname|cut -d. -f1`;files=`ls -l $CRS_HOME/log/$host/ohasd/|grep -c ohasd`;root_owned=`ls -l $CRS_HOME/log/$host/ohasd|grep ohasd |awk '{print $3}'|grep -c root`;if [ $files -eq $root_owned ];then echo "1";else echo "0";fi; == 1    
+
+u01apporacleproduct11202dbhome_1 RDBMS 437.0.0.0.0.0.0.0.0.0 PERMS=`ls -l $ORACLE_HOME/bin/oradism |awk '{print $1}'`;PERM=${PERMS:3:1};echo $PERM == s     
+
+ CRS 438.0.0.0.0.0.0.0.0.0  /sbin/ifconfig `$CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|awk '{print $1}'`|grep -ic MASTER == 1    
+
+ RDBMS 439.0.0.0.0.0.0.0.0.0 cat /etc/passwd|grep -w `ls -l $ORACLE_HOME/bin/oracle|awk '{print $3}'`|cut -d: -f3 == 1000    
+
+u01apporacleproduct11202dbhome_1 RDBMS 440.0.0.0.0.0.0.0.0.0 ls -l $ORACLE_HOME/bin/oradism |awk '{print $3}' == root     
+
+ CRS 441.0.0.0.0.0.0.0.0.0 host=`hostname|cut -d. -f1`;files=`ls -l $CRS_HOME/log/$host/agent/crsd/orarootagent_root/|grep -c orarootagent_root`;root_owned=`ls -l $CRS_HOME/log/$host/agent/crsd/orarootagent_root/|grep orarootagent_root |awk '{print $3}'|grep -c root`;if [ $files -eq $root_owned ];then echo "1";else echo "0";fi; == 1    
+
+ UNSPECIFIED 442.0.0.0.0.0.0.0.0.0 /usr/sbin/getenforce == Disabled    
+
+ CRS 443.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/srvctl config scan_listener|wc -l == 3    
+
+ccbs RDBMS 445.0.0.0.0.0.0.0.0.0 ps -efl |grep ora_vktm_$ORACLE_SID|grep -v grep|head -1|awk '{print $7}' == 58     
+
+fsdb RDBMS 445.0.0.0.0.0.0.0.0.0 ps -efl |grep ora_vktm_$ORACLE_SID|grep -v grep|head -1|awk '{print $7}' == 58     
+
+ UNSPECIFIED 446.0.0.0.0.0.0.0.0.0 uname -r|sed 's/\.//g' == 2618-23812202el5    
+
+ccbs UNSPECIFIED 447.0.0.0.0.0.0.0.0.0 ps -efl |grep ora_lms0_$ORACLE_SID|grep -v grep|head -1|awk '{print $7}' == 58     
+
+fsdb UNSPECIFIED 447.0.0.0.0.0.0.0.0.0 ps -efl |grep ora_lms0_$ORACLE_SID|grep -v grep|head -1|awk '{print $7}' == 58     
+
+ CRS 448.0.0.0.0.0.0.0.0.0 /sbin/ifconfig `$CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|awk '{print $1}'`|grep -ic MASTER == 1    
+
+ CRS 448.1.0.0.0.0.0.0.0.0 cat /proc/net/bonding/`$CRS_HOME/bin/oifcfg getif -type cluster_interconnect|awk '{print $1}'`|grep "Bonding Mode"|cut -d'(' -f2|cut -d')' -f1 == active-backup    
+
+ CRS 450.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep public|awk '{ print $1}'|tail -1 == bondeth0    
+
+ CRS 451.0.0.0.0.0.0.0.0.0 env |grep ORA_CRS_HOME ==     
+
+ RDBMS 452.0.0.0.0.0.0.0.0.0 grepexp=$(echo `hostname|cut -d. -f1`);cat /tmp/raccheck_env.out|grep $grepexp|grep INSTANCE_VERSION|cut -d= -f2|sed 's/\.//g'|sed 's/ //g'|head -1 == 112020    
+
+ UNSPECIFIED 453.0.0.0.0.0.0.0.0.0 ps -ef |grep -i osw |grep -v grep|wc -l == 9    
+
+ CRS 454.0.0.0.0.0.0.0.0.0 host=`hostname|cut -d. -f1`;files=`ls -l $CRS_HOME/log/$host/crsd/|grep -c crsd`;root_owned=`ls -l $CRS_HOME/log/$host/crsd|grep crsd |awk '{print $3}'|grep -c root`;if [ $files -eq $root_owned ];then echo "1";else echo "0";fi; == 1    
+
+ CRS 455.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|awk '{ print $1}'|tail -1 == bondib0    
+
+ UNSPECIFIED 457.0.0.0.0.0.0.0.0.0 date '+%Z' == ICT    
+
+ CRS 460.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|awk '{print $2}'|cut -d . -f1|grep -c -E '10|172|192' == 1    
+
+ CRS 461.0.0.0.0.0.0.0.0.0 cat /etc/passwd|grep -w `ls -l $CRS_HOME/bin/ocssd.bin|awk '{print $3}'`|cut -d: -f3 == 1000    
+
+ CRS 462.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/crsctl check ctss|grep -w "CRS-4700"|wc -l == 1    
+
+ UNSPECIFIED 462.1.0.0.0.0.0.0.0.0 ps -ef |grep  ntpd | grep "\-x" |grep -v grep | wc -l == 1    
+
+ CRS 463.0.0.0.0.0.0.0.0.0 grepexp=$(echo `hostname|cut -d. -f1`.CRS_ACTIVE_VERSION);cat /tmp/raccheck_env.out|grep $grepexp|cut -d= -f2|sed 's/\.//g'|sed 's/ //g' == 112020    
+
+ccbs RDBMS 464.0.0.0.0.0.0.0.0.0 remotelsnr=$(echo -e "set heading off feedback off timing off \nselect value from v\$parameter where name='remote_listener';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$|tail -1|cut -d: -f1);scanname=$($CRS_HOME/bin/srvctl config scan|grep -i "scan name"|cut -d: -f2|cut -d',' -f1);echo $remotelsnr|grep -ic $scanname == 1     
+
+fsdb RDBMS 464.0.0.0.0.0.0.0.0.0 remotelsnr=$(echo -e "set heading off feedback off timing off \nselect value from v\$parameter where name='remote_listener';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$|tail -1|cut -d: -f1);scanname=$($CRS_HOME/bin/srvctl config scan|grep -i "scan name"|cut -d: -f2|cut -d',' -f1);echo $remotelsnr|grep -ic $scanname == 1     
+
+ CRS 465.0.0.0.0.0.0.0.0.0 host=`hostname|cut -d. -f1`;files=`ls -l $CRS_HOME/log/$host/agent/ohasd/orarootagent_root/|grep -c orarootagent_root`;root_owned=`ls -l $CRS_HOME/log/$host/agent/ohasd/orarootagent_root/|grep orarootagent_root |awk '{print $3}'|grep -c root`;if [ $files -eq $root_owned ];then echo "1";else echo "0";fi; == 1    
+
+ CRS 467.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/crsctl query css votedisk|sed 's/^ //g'|grep ^[0-9]|grep -vi online|grep -vi "voting disk"|wc -l == 0    
+
+ccbs RDBMS 468.0.0.0.0.0.0.0.0.0 hostname=$(hostname|cut -d. -f1);locallsnr=$( echo -e "set heading off lines 180 timing off \n select value from v\$parameter where name='local_listener';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$|tail -1);localvipnames=$($CRS_HOME/bin/srvctl config vip -n $hostname|awk -F"/" '{print $2}');localvipips=$($CRS_HOME/bin/srvctl config vip -n $hostname|awk -F"/" '{print $3}');vipcount=0;for localvipip in $localvipips;do a_localvipips[$vipcount]=$localvipip;vipcount=$(expr $vipcount + 1 );done;vipcount=0;for localvipname in $localvipnames; do nameexists=$(echo $locallsnr|grep -c $localvipname);ipexists=$(echo $locallsnr|grep -c ${a_localvipips[$vipcount]});vipcount=$(expr $vipcount + 1 );if [[ $nameexists -eq 1 || $ipexists -eq 1 ]]; then final_status=1;break;else final_status=0;fi;done;echo $final_status == 1     
+
+fsdb RDBMS 468.0.0.0.0.0.0.0.0.0 hostname=$(hostname|cut -d. -f1);locallsnr=$( echo -e "set heading off lines 180 timing off \n select value from v\$parameter where name='local_listener';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$|tail -1);localvipnames=$($CRS_HOME/bin/srvctl config vip -n $hostname|awk -F"/" '{print $2}');localvipips=$($CRS_HOME/bin/srvctl config vip -n $hostname|awk -F"/" '{print $3}');vipcount=0;for localvipip in $localvipips;do a_localvipips[$vipcount]=$localvipip;vipcount=$(expr $vipcount + 1 );done;vipcount=0;for localvipname in $localvipnames; do nameexists=$(echo $locallsnr|grep -c $localvipname);ipexists=$(echo $locallsnr|grep -c ${a_localvipips[$vipcount]});vipcount=$(expr $vipcount + 1 );if [[ $nameexists -eq 1 || $ipexists -eq 1 ]]; then final_status=1;break;else final_status=0;fi;done;echo $final_status == 1     
+
+ ASM 469.0.0.0.0.0.0.0.0.0 cat /etc/oracle/cell/network-config/cellip.ora|wc -l == 3    
+
+ CRS 481.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/skgxpinfo == rds    
+
+ ASM 504.0.0.0.0.0.0.0.0.0 cluster_interconnects=$(echo -e "set heading off feedback off \n select value from v\$parameter where name='cluster_interconnects';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|tail -1);for bondnet in $($CRS_HOME/bin/oifcfg getif -type cluster_interconnect|awk '{print $1}'); do bondnet=$(/sbin/ifconfig $bondnet|grep -w "inet"|awk '{print $2}'|cut -d: -f2);status=$(echo $cluster_interconnects|grep -c $bondnet);if [ $status -eq 0 ]; then final_status=1;break; else final_status=0;fi; done;echo $final_status == 0    
+
+ccbs RDBMS 505.0.0.0.0.0.0.0.0.0 cluster_interconnects=$(echo -e "set heading off feedback off timing off \n select value from v\$parameter where name='cluster_interconnects';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|tail -1);for bondnet in $($CRS_HOME/bin/oifcfg getif -type cluster_interconnect|awk '{print $1}'); do bondnet=$(/sbin/ifconfig $bondnet|grep -w "inet"|awk '{print $2}'|cut -d: -f2);status=$(echo $cluster_interconnects|grep -c $bondnet);if [ $status -eq 0 ]; then final_status=1;break; else final_status=0;fi; done;echo $final_status == 1     
+
+fsdb RDBMS 505.0.0.0.0.0.0.0.0.0 cluster_interconnects=$(echo -e "set heading off feedback off timing off \n select value from v\$parameter where name='cluster_interconnects';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|tail -1);for bondnet in $($CRS_HOME/bin/oifcfg getif -type cluster_interconnect|awk '{print $1}'); do bondnet=$(/sbin/ifconfig $bondnet|grep -w "inet"|awk '{print $2}'|cut -d: -f2);status=$(echo $cluster_interconnects|grep -c $bondnet);if [ $status -eq 0 ]; then final_status=1;break; else final_status=0;fi; done;echo $final_status == 1     
+
+ccbs RDBMS 506.0.0.0.0.0.0.0.0.0 rec_dest=$(echo -e " set heading off feedback off \nselect count(*) from (select substr(nvl(value,'NONE'),1,5) name from v\$parameter where name = 'db_recovery_file_dest') a,(select substr(nvl(value,'NONE'),1,5) name from v\$parameter where name = 'db_create_file_dest') b where a.name = b.name;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);echo $rec_dest == 0     
+
+fsdb RDBMS 506.0.0.0.0.0.0.0.0.0 rec_dest=$(echo -e " set heading off feedback off \nselect count(*) from (select substr(nvl(value,'NONE'),1,5) name from v\$parameter where name = 'db_recovery_file_dest') a,(select substr(nvl(value,'NONE'),1,5) name from v\$parameter where name = 'db_create_file_dest') b where a.name = b.name;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);echo $rec_dest == 0     
+
+ccbs RDBMS 507.0.0.0.0.0.0.0.0.0 dg=$(echo -e " set heading off feedback off \nselect replace(value,'+')  from v\$parameter where name = 'db_recovery_file_dest';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);reco_size_90=$(echo -e " set heading off feedback off \nselect round(total_mb/1024/100*90,0) from v\$asm_diskgroup where name='$dg';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);db_recovery_file_dest_size=$(echo -e " set heading off feedback off \nselect round(value/1024/1024/1024,0) from v\$parameter where name='db_recovery_file_dest_size';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [ $db_recovery_file_dest_size -gt $reco_size_90 ]; then echo 1;else echo 0;fi == 0     
+
+fsdb RDBMS 507.0.0.0.0.0.0.0.0.0 dg=$(echo -e " set heading off feedback off \nselect replace(value,'+')  from v\$parameter where name = 'db_recovery_file_dest';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);reco_size_90=$(echo -e " set heading off feedback off \nselect round(total_mb/1024/100*90,0) from v\$asm_diskgroup where name='$dg';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);db_recovery_file_dest_size=$(echo -e " set heading off feedback off \nselect round(value/1024/1024/1024,0) from v\$parameter where name='db_recovery_file_dest_size';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [ $db_recovery_file_dest_size -gt $reco_size_90 ]; then echo 1;else echo 0;fi == 0     
+
+ UNSPECIFIED 508.0.0.0.0.0.0.0.0.0 for cable in $(ls /sys/class/net |grep '^ib'); do cat /sys/class/net/$cable/carrier 2>/dev/null|grep -v "Invalid argument"; done|grep -c 0 == 0    
+
+ UNSPECIFIED 510.0.0.0.0.0.0.0.0.0 for cable in $(ls /sys/class/net |grep '^eth'); do cat /sys/class/net/$cable/carrier 2>/dev/null|grep -v "Invalid argument"; done|grep -c 0 == 0    
+
+ccbs RDBMS 513.0.0.0.0.0.0.0.0.0 comp=$(echo -e " set heading off feedback off \nselect substr(replace(value,'.'),1,5) comp from v\$parameter where name = 'compatible';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);inst_version=$(echo -e " set heading off feedback off \nselect substr(replace(version,'.'),1,5) inst_verson from v\$instance;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [ $comp -eq $inst_version ]; then echo 1;else echo 0;fi == 1     
+
+fsdb RDBMS 513.0.0.0.0.0.0.0.0.0 comp=$(echo -e " set heading off feedback off \nselect substr(replace(value,'.'),1,5) comp from v\$parameter where name = 'compatible';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);inst_version=$(echo -e " set heading off feedback off \nselect substr(replace(version,'.'),1,5) inst_verson from v\$instance;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [ $comp -eq $inst_version ]; then echo 1;else echo 0;fi == 1     
+
+ccbs RDBMS 514.0.0.0.0.0.0.0.0.0 locCnt=$(echo -e " set heading off feedback off \nselect count(*) from v\$parameter where name like 'log_archive_dest%' and upper(value) like '%LOCATION=%' and upper(value) not like '%LOCATION=USE_DB_RECOVERY_FILE_DEST%' and upper(value) not like '%LOCATION = USE_DB_RECOVERY_FILE_DEST%' and value is not null;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [ $locCnt -gt 0 ]; then echo 1;else echo 0;fi == 1
+log_archive_dest_1 = LOCATION=+RECO :     
+
+fsdb RDBMS 514.0.0.0.0.0.0.0.0.0 locCnt=$(echo -e " set heading off feedback off \nselect count(*) from v\$parameter where name like 'log_archive_dest%' and upper(value) like '%LOCATION=%' and upper(value) not like '%LOCATION=USE_DB_RECOVERY_FILE_DEST%' and upper(value) not like '%LOCATION = USE_DB_RECOVERY_FILE_DEST%' and value is not null;"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [ $locCnt -gt 0 ]; then echo 1;else echo 0;fi == 0
+NO LOG ARCHIVE DESTINATIONS ARE SET     
+
+ccbs RDBMS 515.0.0.0.0.0.0.0.0.0 high_dg=$(echo -e "set heading off feedback off \nselect count(name) from v\$asm_diskgroup where type='HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [ $high_dg -ge 1 ]; then members_in_groups=$(echo -e "set heading off feedback off \nselect count(members) from v\$log where members >1;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [ $members_in_groups -gt 1 ]; then echo 1;else echo 0;fi;else members_in_groups=$(echo -e "set heading off feedback off \nselect count(distinct(dg.name))from v\$logfile lf,v\$asm_diskgroup dg where replace(substr(lf.member,1,instr(lf.member,'/',1,1) - 1),'+') = dg.name;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [ $members_in_groups -lt 2 ]; then echo 1;else echo 0;fi;fi == 1     
+
+fsdb RDBMS 515.0.0.0.0.0.0.0.0.0 high_dg=$(echo -e "set heading off feedback off \nselect count(name) from v\$asm_diskgroup where type='HIGH';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [ $high_dg -ge 1 ]; then members_in_groups=$(echo -e "set heading off feedback off \nselect count(members) from v\$log where members >1;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [ $members_in_groups -gt 1 ]; then echo 1;else echo 0;fi;else members_in_groups=$(echo -e "set heading off feedback off \nselect count(distinct(dg.name))from v\$logfile lf,v\$asm_diskgroup dg where replace(substr(lf.member,1,instr(lf.member,'/',1,1) - 1),'+') = dg.name;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$);if [ $members_in_groups -lt 2 ]; then echo 1;else echo 0;fi;fi == 1     
+
+ UNSPECIFIED 516.0.0.0.0.0.0.0.0.0 ps -ef |grep ora_pmon|grep -v grep |wc -l == 2    
+
+ ASM 518.0.0.0.0.0.0.0.0.0 /tmp/checkDiskFGMapping.sh -exachk >/dev/null 2>&1;echo $? == 255    
+
+  527.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_imagehistory.out ]; then cat /tmp/o_root_clusterwide_check_imagehistory.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_imagehistory.out>/dev/null 2>&1;fi == 112242    
+
+ccbs RDBMS 554.0.0.0.0.0.0.0.0.0 current_value=$(echo -e " set heading off feedback off \nselect upper(value) current_value from v\$parameter where name = 'db_block_checking';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [[ "$current_value" = "FULL" || "$current_value" = "MEDIUM" ]]; then echo 0;else echo 1;fi == 1     
+
+fsdb RDBMS 554.0.0.0.0.0.0.0.0.0 current_value=$(echo -e " set heading off feedback off \nselect upper(value) current_value from v\$parameter where name = 'db_block_checking';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$);if [[ "$current_value" = "FULL" || "$current_value" = "MEDIUM" ]]; then echo 0;else echo 1;fi == 1     
+
+ UNSPECIFIED 582.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ CRS 583.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/crsctl status resource -t >/dev/null 2>&1;echo $? == 0    
+
+ UNSPECIFIED 584.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ UNSPECIFIED 585.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ UNSPECIFIED 586.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ UNSPECIFIED 587.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ UNSPECIFIED 588.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ UNSPECIFIED 589.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ccbs RDBMS 635.0.0.0.0.0.0.0.0.0 echo "@/tmp/scnhealthcheck.sql"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -w "Result:"|awk '{print $2}' == A     
+
+fsdb RDBMS 635.0.0.0.0.0.0.0.0.0 echo "@/tmp/scnhealthcheck.sql"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -w "Result:"|awk '{print $2}' == A     
+
+ccbs RDBMS 636.0.0.0.0.0.0.0.0.0 echo  "@/tmp/scnhealthcheck.sql"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -w "Result:"|awk '{print $2}' == A     
+
+fsdb RDBMS 636.0.0.0.0.0.0.0.0.0 echo  "@/tmp/scnhealthcheck.sql"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -w "Result:"|awk '{print $2}' == A     
+
+ccbs RDBMS 637.0.0.0.0.0.0.0.0.0 echo "@/tmp/scnhealthcheck.sql"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -w "Result:"|awk '{print $2}' == A     
+
+fsdb RDBMS 637.0.0.0.0.0.0.0.0.0 echo "@/tmp/scnhealthcheck.sql"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -w "Result:"|awk '{print $2}' == A     
+
+ UNSPECIFIED 640.0.0.0.0.0.0.0.0.0 HOST_NAME=`hostname`; DNS_SERVER=`nslookup $HOST_NAME | head -1 | cut -d: -f2 | sed -e 's/^[ \t]*//'`;ping_time_in_ms=$(ping -c10 $DNS_SERVER | grep -E ^64| cut -d"=" -f 4 | cut -d" " -f 1 | awk '{ SUM += $1} END { print SUM/10}');echo $ping_time_in_ms|cut -d'.' -f1 == 0    
+
+ UNSPECIFIED 659.0.0.0.0.0.0.0.0.0 uname -r|awk -F. '{print $1$2$3}'|tr -d '-' == 2618238    
+
+ ASM 688.0.0.0.0.0.0.0.0.0 actual_processes=$(echo -e "set heading off feedback off \n select value from v\$parameter where name='processes';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|tail -1);db_instances=$(ps -ef |grep ora_smon|grep -v grep|wc -l);db_instances=$(expr $db_instances + 1 );if [ $db_instances -le 10 ]; then reco_process=$(echo "scale=0;50 * $db_instances"|bc);else db_instances_max=$(expr $db_instances - 11 );db_instances_min=$(expr $db_instances - $db_instances_max );reco_process_min=$(echo "scale=0;50 * $db_instances_min"|bc);reco_process_max=$(echo "scale=0;10 * $db_instances_max"|bc);reco_process=$(echo "scale=0;$reco_process_max + $reco_process_min"|bc);fi;if [ $actual_processes -lt $reco_process ]; then final_status=0;elif [[ $actual_processes -lt 1024 && $reco_process -lt 1024 ]]; then final_status=1;elif [[ $actual_processes -eq 1024 || $actual_processes -gt $reco_process  ]];then final_status=2;fi;echo "$final_status" == 0    
+
+ CRS 689.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/olsnodes|wc -l == 2    
+
+ ASM 690.0.0.0.0.0.0.0.0.0 actual_processes=$(echo -e "set heading off feedback off \n select value from v\$parameter where name='processes';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|tail -1);db_instances=$(ps -ef |grep ora_smon|grep -v grep|wc -l);db_instances=$(expr $db_instances + 1 );if [ $db_instances -le 10 ]; then reco_process=$(echo "scale=0;50 * $db_instances"|bc);else db_instances_max=$(expr $db_instances - 11 );db_instances_min=$(expr $db_instances - $db_instances_max );reco_process_min=$(echo "scale=0;50 * $db_instances_min"|bc);reco_process_max=$(echo "scale=0;10 * $db_instances_max"|bc);reco_process=$(echo "scale=0;$reco_process_max + $reco_process_min"|bc);fi;if [ $actual_processes -lt $reco_process ]; then final_status=0;elif [[ $actual_processes -lt 1024 && $reco_process -lt 1024 ]]; then final_status=1;elif [[ $actual_processes -eq 1024 || $actual_processes -gt $reco_process  ]];then final_status=2;fi;echo "$final_status" == 0    
+
+ ASM 690.1.0.0.0.0.0.0.0.0 actual_processes=$(echo -e "set heading off feedback off \n select value from v\$parameter where name='processes';"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|tail -1);db_instances=$(ps -ef |grep ora_smon|grep -v grep|wc -l);db_instances=$(expr $db_instances + 1 );if [ $db_instances -le 10 ]; then reco_process=$(echo "scale=0;50 * $db_instances"|bc);else db_instances_max=$(expr $db_instances - 11 );db_instances_min=$(expr $db_instances - $db_instances_max );reco_process_min=$(echo "scale=0;50 * $db_instances_min"|bc);reco_process_max=$(echo "scale=0;10 * $db_instances_max"|bc);reco_process=$(echo "scale=0;$reco_process_max + $reco_process_min"|bc);fi;if [ $actual_processes -lt $reco_process ]; then final_status=0;elif [[ $actual_processes -lt 1024 && $reco_process -lt 1024 ]]; then final_status=1;elif [[ $actual_processes -eq 1024 || $actual_processes -gt $reco_process  ]];then final_status=2;fi;echo "$final_status" == 0    
+
+ UNSPECIFIED 723.0.0.0.0.0.0.0.0.0 TOTAL_HUGEPAGES=`grep HugePages_Total /proc/meminfo | cut -d":" -f 2 | sed -e 's/^[ \t]*//;s/[ \t]*$//'`;HPG_SZ=`grep Hugepagesize /proc/meminfo | awk '{print $2}'`;NUM_PG=0;for SEG_BYTES in `ipcs -m | cut -c44-60 | awk '{print $1}' | grep "[0-9][0-9]*"`; do    MIN_PG=`echo "$SEG_BYTES/($HPG_SZ*1024)" | bc -q`;    if [ $MIN_PG -gt 0 ]; then       NUM_PG=`echo "$NUM_PG+$MIN_PG+1" | bc -q`;    fi; done;if [ $TOTAL_HUGEPAGES -ge $NUM_PG ] ;   then echo 0;   else echo 1; fi == 1    
+
+ UNSPECIFIED 731.0.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ccbs RDBMS 747.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+fsdb RDBMS 747.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+ ASM 755.0.0.0.0.0.0.0.0.0 echo -e "set heading off feedback off timing off \nselect distinct type from v\$asm_diskgroup;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$|grep -vw HIGH|grep -vw NORMAL|wc -l == 0    
+
+ ASM 756.0.0.0.0.0.0.0.0.0 echo -e "set heading off feedback off timing off \nselect distinct redundancy from v\$asm_template;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$|grep -vw HIGH|grep -vw MIRROR|wc -l == 0    
+
+ccbs RDBMS 771.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+fsdb RDBMS 771.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+ UNSPECIFIED 771.2.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ ASM 772.0.0.0.0.0.0.0.0.0 echo -e "set heading off feedback off timing off \nselect count(header_status) from gv\$asm_disk where group_number=0;"|$ORACLE_HOME/bin/sqlplus -s "/ as sysdba"|grep -v ^$ == 		   0    
+
+ UNSPECIFIED 774.0.0.0.0.0.0.0.0.0 date >/dev/null ==     
+
+ UNSPECIFIED 787.0.0.0.0.0.0.0.0.0 if [ -e /tmp/o_root_clusterwide_check_compute_imageinfo.out ]; then cat /tmp/o_root_clusterwide_check_compute_imageinfo.out 2> /dev/null;rm /tmp/o_root_clusterwide_check_compute_imageinfo.out>/dev/null 2>&1;fi == 11.2.2.4.2.111221    
+
+ccbs RDBMS 791.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+fsdb RDBMS 791.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+ UNSPECIFIED 791.1.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ccbs RDBMS 797.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+fsdb RDBMS 797.0.0.0.0.0.0.0.0.0 date >/dev/null ==      
+
+ UNSPECIFIED 797.1.0.0.0.0.0.0.0.0 echo 1 == 1    
+
+ ASM 817.0.0.0.0.0.0.0.0.0 alert_dest=$(echo -e  "set heading off lines 180\n select value from v\$parameter where name='background_dump_dest';"|$ORACLE_HOME/bin/sqlplus -s / as sysdba|grep -v ^$|tail -1);alert_name=$(find $alert_dest -name 'alert_*.log' 2>/dev/null);errors=`grep -iw "with BADFDATA" $alert_name|wc -l`;if [ $errors -gt 0 ]; then echo 1;else echo 0;fi == 0    
+
+ UNSPECIFIED 818.0.0.0.0.0.0.0.0.0 MIN_FREE_KBYTES_SYSCTL=`egrep vm.min_free_kbytes /etc/sysctl.conf | awk '{print $3}'`;MIN_FREE_KBYTES_MEMORY=`cat /proc/sys/vm/min_free_kbytes`;if [ $MIN_FREE_KBYTES_SYSCTL -eq "524288" -a $MIN_FREE_KBYTES_MEMORY -eq "524288" ]; then echo "0"; else echo -e "1"; fi == 1    

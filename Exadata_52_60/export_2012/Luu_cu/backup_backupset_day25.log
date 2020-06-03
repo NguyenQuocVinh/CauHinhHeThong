@@ -1,0 +1,127 @@
+
+Recovery Manager: Release 11.2.0.2.0 - Production on Fri Feb 1 14:00:01 2013
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: CCBS (DBID=271141816)
+
+RMAN> run
+2> {
+3> 	backup backupset completed between "sysdate-4" AND "sysdate" format '/mnt/rman_ccbs/level0_%D_%T_%U' tag backup_backupset_day25;
+4> 	delete  noprompt backupset tag MONTHLY_LEVEL_0_day25;
+5> }
+6> 
+7> # cu phap chinh su dung trong script:
+8> # backup backupset {all |CompleteSpec | PrimaryKey}
+9> 
+Starting backup at 01/02/2013 14:00:02
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=1054 instance=ccbs1 device type=DISK
+allocated channel: ORA_DISK_2
+channel ORA_DISK_2: SID=1112 instance=ccbs1 device type=DISK
+skipping backup set key 1072; already backed up 2 time(s)
+skipping backup set key 1074; already backed up 2 time(s)
+skipping backup set key 1076; already backed up 2 time(s)
+skipping backup set key 1077; already backed up 2 time(s)
+skipping backup set key 1078; already backed up 2 time(s)
+skipping backup set key 1081; already backed up 2 time(s)
+skipping backup set key 1083; already backed up 2 time(s)
+skipping backup set key 1085; already backed up 2 time(s)
+skipping backup set key 1086; already backed up 2 time(s)
+skipping backup set key 1087; already backed up 2 time(s)
+skipping backup set key 1090; already backed up 1 time(s)
+skipping backup set key 1092; already backed up 1 time(s)
+skipping backup set key 1094; already backed up 2 time(s)
+skipping backup set key 1095; already backed up 2 time(s)
+skipping backup set key 1096; already backed up 2 time(s)
+skipping backup set key 1099; already backed up 2 time(s)
+skipping backup set key 1101; already backed up 2 time(s)
+skipping backup set key 1103; already backed up 2 time(s)
+skipping backup set key 1104; already backed up 2 time(s)
+skipping backup set key 1105; already backed up 2 time(s)
+skipping backup set key 1108; already backed up 2 time(s)
+skipping backup set key 1110; already backed up 2 time(s)
+skipping backup set key 1111; already backed up 1 time(s)
+skipping backup set key 1112; already backed up 2 time(s)
+skipping backup set key 1113; already backed up 2 time(s)
+skipping backup set key 1114; already backed up 2 time(s)
+skipping backup set key 1115; already backed up 1 time(s)
+Finished backup at 01/02/2013 14:00:03
+
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_1_1 RECID=2313 STAMP=806079616
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_2_1 RECID=2314 STAMP=806080572
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_3_1 RECID=2315 STAMP=806081522
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_4_1 RECID=2316 STAMP=806082472
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_5_1 RECID=2317 STAMP=806083432
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_6_1 RECID=2318 STAMP=806084372
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_7_1 RECID=2319 STAMP=806085293
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_8_1 RECID=2320 STAMP=806086233
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_9_1 RECID=2321 STAMP=806087213
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_10_1 RECID=2322 STAMP=806088263
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_11_1 RECID=2323 STAMP=806089264
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_12_1 RECID=2324 STAMP=806090234
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_13_1 RECID=2325 STAMP=806091199
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3bo0nj3p_14_1 RECID=2326 STAMP=806092169
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_1_1 RECID=2328 STAMP=806079617
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_2_1 RECID=2329 STAMP=806080697
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_3_1 RECID=2330 STAMP=806081757
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_4_1 RECID=2331 STAMP=806082817
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_5_1 RECID=2332 STAMP=806083907
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_6_1 RECID=2333 STAMP=806084968
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_7_1 RECID=2334 STAMP=806085988
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_8_1 RECID=2335 STAMP=806086988
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_9_1 RECID=2336 STAMP=806087978
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_10_1 RECID=2337 STAMP=806089038
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_11_1 RECID=2338 STAMP=806090139
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_12_1 RECID=2339 STAMP=806091224
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_13_1 RECID=2340 STAMP=806092214
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_14_1 RECID=2341 STAMP=806093125
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_15_1 RECID=2342 STAMP=806094051
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_16_1 RECID=2343 STAMP=806094996
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_17_1 RECID=2344 STAMP=806095931
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_18_1 RECID=2345 STAMP=806096866
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_19_1 RECID=2346 STAMP=806097821
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_20_1 RECID=2347 STAMP=806098796
+deleted backup piece
+backup piece handle=+RECO/rman/level0_30_20130130_3co0nj3v_21_1 RECID=2348 STAMP=806099832
+Deleted 35 objects
+
+
+Recovery Manager complete.

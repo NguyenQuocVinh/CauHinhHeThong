@@ -1,0 +1,561 @@
+TO REVIEW COLLECTED DATA FROM DM01CEL01 FOR VERIFY CELLDISK CONFIGURATION ON DISK DRIVES 
+
+
+
+	 name:              	 CD_00_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:29+07:00
+	 deviceName:        	 /dev/sda
+	 devicePartition:   	 /dev/sda3
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 c6ba035b-28c7-4f0a-946a-89446a588ee0
+	 interleaving:      	 none
+	 lun:               	 0_0
+	 raidLevel:         	 0
+	 size:              	 528.734375G
+	 status:            	 normal
+
+	 name:              	 CD_01_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:32+07:00
+	 deviceName:        	 /dev/sdb
+	 devicePartition:   	 /dev/sdb3
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 67a58df7-d368-4a3c-a56c-ced663477bd9
+	 interleaving:      	 none
+	 lun:               	 0_1
+	 raidLevel:         	 0
+	 size:              	 528.734375G
+	 status:            	 normal
+
+	 name:              	 CD_02_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sdc
+	 devicePartition:   	 /dev/sdc
+	 diskType:          	 HardDisk
+	 errorCount:        	 10
+	 freeSpace:         	 0
+	 id:                	 8ecf9d65-b89b-482f-ade2-8cb9cd7983b0
+	 interleaving:      	 none
+	 lun:               	 0_2
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_03_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sdd
+	 devicePartition:   	 /dev/sdd
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 b68a5682-4828-4523-926d-47f637dd580a
+	 interleaving:      	 none
+	 lun:               	 0_3
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_04_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sde
+	 devicePartition:   	 /dev/sde
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 fc5082b2-77b4-47b0-b1d4-279e9e90dab1
+	 interleaving:      	 none
+	 lun:               	 0_4
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_05_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sdf
+	 devicePartition:   	 /dev/sdf
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 871b07bc-bc95-4cc1-9376-3bcd30a0fb26
+	 interleaving:      	 none
+	 lun:               	 0_5
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_06_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sdg
+	 devicePartition:   	 /dev/sdg
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 fcb68cd3-618c-4cf9-9409-840caed93a01
+	 interleaving:      	 none
+	 lun:               	 0_6
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_07_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdh
+	 devicePartition:   	 /dev/sdh
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 0185e6cf-28c7-4792-92dd-dded4f7703ef
+	 interleaving:      	 none
+	 lun:               	 0_7
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_08_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdi
+	 devicePartition:   	 /dev/sdi
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 283055dc-4d0c-4d75-b30c-c10ec987f4ef
+	 interleaving:      	 none
+	 lun:               	 0_8
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_09_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdj
+	 devicePartition:   	 /dev/sdj
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 b227f181-4cc1-480f-b886-af13042ca355
+	 interleaving:      	 none
+	 lun:               	 0_9
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_10_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdk
+	 devicePartition:   	 /dev/sdk
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 629dec5d-587a-417c-924c-3c35414d3225
+	 interleaving:      	 none
+	 lun:               	 0_10
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_11_dm01cel01
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdl
+	 devicePartition:   	 /dev/sdl
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 a6179537-7c4d-442b-94c7-a5ecafecf3b2
+	 interleaving:      	 none
+	 lun:               	 0_11
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL02 FOR VERIFY CELLDISK CONFIGURATION ON DISK DRIVES 
+
+
+
+	 name:              	 CD_00_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:29+07:00
+	 deviceName:        	 /dev/sda
+	 devicePartition:   	 /dev/sda3
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 3ed3c3ee-7b21-4426-9ae8-5d236cec2144
+	 interleaving:      	 none
+	 lun:               	 0_0
+	 raidLevel:         	 0
+	 size:              	 528.734375G
+	 status:            	 normal
+
+	 name:              	 CD_01_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:32+07:00
+	 deviceName:        	 /dev/sdb
+	 devicePartition:   	 /dev/sdb3
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 0eec6de0-fe6d-4954-a001-66d676309e53
+	 interleaving:      	 none
+	 lun:               	 0_1
+	 raidLevel:         	 0
+	 size:              	 528.734375G
+	 status:            	 normal
+
+	 name:              	 CD_02_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sdc
+	 devicePartition:   	 /dev/sdc
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 c81623f0-2f47-435d-8f13-7540d89f768e
+	 interleaving:      	 none
+	 lun:               	 0_2
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_03_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sdd
+	 devicePartition:   	 /dev/sdd
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 c81cd4de-fb01-42b2-9392-e549d25f4a60
+	 interleaving:      	 none
+	 lun:               	 0_3
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_04_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sde
+	 devicePartition:   	 /dev/sde
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 71bebefd-5a2f-414b-bd94-98c6dc130aaf
+	 interleaving:      	 none
+	 lun:               	 0_4
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_05_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sdf
+	 devicePartition:   	 /dev/sdf
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 6f8f346b-f783-4cef-a5e1-46894a416918
+	 interleaving:      	 none
+	 lun:               	 0_5
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_06_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sdg
+	 devicePartition:   	 /dev/sdg
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 90fb9989-b735-401c-96ba-53f4f52dddc7
+	 interleaving:      	 none
+	 lun:               	 0_6
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_07_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdh
+	 devicePartition:   	 /dev/sdh
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 6ee3bfb3-f071-4427-bfa1-1a1688e5b86d
+	 interleaving:      	 none
+	 lun:               	 0_7
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_08_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdi
+	 devicePartition:   	 /dev/sdi
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 77512468-9c37-44dd-a15e-2afa9ed8297d
+	 interleaving:      	 none
+	 lun:               	 0_8
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_09_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdj
+	 devicePartition:   	 /dev/sdj
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 790f8b98-52aa-4c10-bc42-c2d206e49a47
+	 interleaving:      	 none
+	 lun:               	 0_9
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_10_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdk
+	 devicePartition:   	 /dev/sdk
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 413dde35-0d11-484c-b0c3-8e15f9faec07
+	 interleaving:      	 none
+	 lun:               	 0_10
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_11_dm01cel02
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdl
+	 devicePartition:   	 /dev/sdl
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 027e14b2-6f4c-4310-b81f-62226bd63bde
+	 interleaving:      	 none
+	 lun:               	 0_11
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+
+
+
+TO REVIEW COLLECTED DATA FROM DM01CEL03 FOR VERIFY CELLDISK CONFIGURATION ON DISK DRIVES 
+
+
+
+	 name:              	 CD_00_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:29+07:00
+	 deviceName:        	 /dev/sda
+	 devicePartition:   	 /dev/sda3
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 2e5298bf-d619-4527-b42b-fc25f7c02442
+	 interleaving:      	 none
+	 lun:               	 0_0
+	 raidLevel:         	 0
+	 size:              	 528.734375G
+	 status:            	 normal
+
+	 name:              	 CD_01_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:32+07:00
+	 deviceName:        	 /dev/sdb
+	 devicePartition:   	 /dev/sdb3
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 c4bc22d8-c39a-4468-9150-687678ca802e
+	 interleaving:      	 none
+	 lun:               	 0_1
+	 raidLevel:         	 0
+	 size:              	 528.734375G
+	 status:            	 normal
+
+	 name:              	 CD_02_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sdc
+	 devicePartition:   	 /dev/sdc
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 bef829a7-f4fe-4b58-ae9e-f1541a2d7372
+	 interleaving:      	 none
+	 lun:               	 0_2
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_03_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:33+07:00
+	 deviceName:        	 /dev/sdd
+	 devicePartition:   	 /dev/sdd
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 987e4343-3b73-4aef-9b16-04385878123f
+	 interleaving:      	 none
+	 lun:               	 0_3
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_04_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sde
+	 devicePartition:   	 /dev/sde
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 3d4fc2d6-6c52-4505-9402-1dc60ab63611
+	 interleaving:      	 none
+	 lun:               	 0_4
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_05_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sdf
+	 devicePartition:   	 /dev/sdf
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 cb49c482-6ce8-4e43-8620-449f9bbbe605
+	 interleaving:      	 none
+	 lun:               	 0_5
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_06_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:34+07:00
+	 deviceName:        	 /dev/sdg
+	 devicePartition:   	 /dev/sdg
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 d8da016d-2451-4473-9cd9-059f29bdbcae
+	 interleaving:      	 none
+	 lun:               	 0_6
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_07_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdh
+	 devicePartition:   	 /dev/sdh
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 0e921939-9470-4bdf-80b0-5caf8456a4f0
+	 interleaving:      	 none
+	 lun:               	 0_7
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_08_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:35+07:00
+	 deviceName:        	 /dev/sdi
+	 devicePartition:   	 /dev/sdi
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 6640df96-fe52-42d1-83d7-b0085c535747
+	 interleaving:      	 none
+	 lun:               	 0_8
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_09_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdj
+	 devicePartition:   	 /dev/sdj
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 7989cfd2-e635-45de-a1da-e8fce4491b71
+	 interleaving:      	 none
+	 lun:               	 0_9
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_10_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdk
+	 devicePartition:   	 /dev/sdk
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 b892e293-2bcb-4c7c-b47b-93c8d7371281
+	 interleaving:      	 none
+	 lun:               	 0_10
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+	 name:              	 CD_11_dm01cel03
+	 comment:           	 
+	 creationTime:      	 2012-01-10T21:51:36+07:00
+	 deviceName:        	 /dev/sdl
+	 devicePartition:   	 /dev/sdl
+	 diskType:          	 HardDisk
+	 errorCount:        	 0
+	 freeSpace:         	 0
+	 id:                	 11dd1bac-5823-47d2-a81b-bf937e93e91d
+	 interleaving:      	 none
+	 lun:               	 0_11
+	 raidLevel:         	 0
+	 size:              	 557.859375G
+	 status:            	 normal
+
+
+
+
