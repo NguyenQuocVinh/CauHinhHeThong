@@ -1,8 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01DB01 - VERIFY OPERATING SYSTEM HUGEPAGES COUNT SATISFIES TOTAL SGA REQUIREMENTS 
-
-
-
-
-FAILURE:  Total current hugepages (0) should be greater than or equal to
- estimated requirements for all currently active SGAs (20482).
-

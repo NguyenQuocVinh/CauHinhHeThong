@@ -1,7 +1,0 @@
-TO REVIEW COLLECTED DATA FOR FSDB FOR VERIFY ALL "BIGFILE" TABLESPACES HAVE NON-DEFAULT "MAXBYTES" VALUES SET 
-
-
-
-
-Query returned no rows which is expected when the SQL check passes.
-

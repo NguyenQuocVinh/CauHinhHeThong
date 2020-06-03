@@ -1,7 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01DB01 - ASM ALLOCATION UNIT SIZE FOR ALL DISK GROUPS 
-
-
-
-ASM DATA.au_size = 4194304                                                      
-ASM DBFS_DG.au_size = 4194304                                                   
-ASM RECO.au_size = 4194304                                                      

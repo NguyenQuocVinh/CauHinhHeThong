@@ -1,2 +1,0 @@
-dm01db01 439.0.0.0.0.0.0.0.0.0 cat /etc/passwd|grep -w `ls -l $ORACLE_HOME/bin/oracle|awk '{print $3}'`|cut -d: -f3 == 1000
-dm01db02 439.0.0.0.0.0.0.0.0.0 cat /etc/passwd|grep -w `ls -l $ORACLE_HOME/bin/oracle|awk '{print $3}'`|cut -d: -f3 == 1000

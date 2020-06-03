@@ -1,8 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01SW-IB2 FOR HOSTNAME IN /ETC/HOSTS 
-
-
-
-# Do not remove the following line, or various programs
-# that require network functionality will fail.
-127.0.0.1		localhost.localdomain localhost
-172.17.3.15		dm01sw-ib2.ccbs.hcmpt.vn	dm01sw-ib2

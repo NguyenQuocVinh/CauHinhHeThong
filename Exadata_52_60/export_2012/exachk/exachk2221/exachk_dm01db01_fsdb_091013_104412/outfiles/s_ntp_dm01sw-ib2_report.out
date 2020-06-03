@@ -1,7 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01SW-IB2 FOR INFINIBAND SWITCH NTP CONFIGURATION 
-
-
-
-server = 172.17.1.253 = prefer
-driftfile = /var/lib/ntp/drift
-pidfile = /var/run/ntpd.pid

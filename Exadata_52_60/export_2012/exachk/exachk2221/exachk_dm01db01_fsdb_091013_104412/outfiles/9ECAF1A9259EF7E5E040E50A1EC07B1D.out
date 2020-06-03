@@ -1,2 +1,0 @@
-dm01db01 463.0.0.0.0.0.0.0.0.0 grepexp=$(echo `hostname|cut -d. -f1`.CRS_ACTIVE_VERSION);cat /tmp/raccheck_env.out|grep $grepexp|cut -d= -f2|sed 's/\.//g'|sed 's/ //g' == 112020
-dm01db02 463.0.0.0.0.0.0.0.0.0 grepexp=$(echo `hostname|cut -d. -f1`.CRS_ACTIVE_VERSION);cat /tmp/raccheck_env.out|grep $grepexp|cut -d= -f2|sed 's/\.//g'|sed 's/ //g' == 112020

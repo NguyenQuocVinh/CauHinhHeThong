@@ -1,9 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01DB01 - VERIFY ORACLE RAC DATABASES USE RDS PROTOCOL OVER INFINIBAND NETWORK. [CLUSTER HOME] 
-
-
-
-
-NOTE: md5sum should match for Clusterware to properly use RDS Protocol for Infiniband
-
-3cf8643d2f1d29dfaf5eede6cc24846e  /u01/app/11.2.0.2/grid/lib/libskgxp11.so
-3cf8643d2f1d29dfaf5eede6cc24846e  /u01/app/11.2.0.2/grid/lib/libskgxpr.so

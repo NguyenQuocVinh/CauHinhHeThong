@@ -1,2 +1,0 @@
-dm01db01 455.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|awk '{ print $1}'|tail -1 == bondib0
-dm01db02 455.0.0.0.0.0.0.0.0.0 $CRS_HOME/bin/oifcfg getif|grep cluster_interconnect|awk '{ print $1}'|tail -1 == bondib0

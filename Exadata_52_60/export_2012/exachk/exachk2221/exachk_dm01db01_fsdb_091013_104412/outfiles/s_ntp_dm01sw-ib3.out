@@ -1,3 +1,0 @@
-server = 172.17.1.253 = prefer
-driftfile = /var/lib/ntp/drift
-pidfile = /var/run/ntpd.pid

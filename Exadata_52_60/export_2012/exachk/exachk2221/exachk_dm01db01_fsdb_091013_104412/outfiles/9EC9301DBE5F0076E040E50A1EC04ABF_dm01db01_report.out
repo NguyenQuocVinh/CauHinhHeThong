@@ -1,7 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01DB01 - CRSD LOG FILE OWNERSHIP 
-
-
-
-total 9500
--rw-r--r-- 1 root root 9707263 Sep 10 10:56 crsd.log
--rw-r--r-- 1 root root    1236 Sep  6 19:45 crsdOUT.log

@@ -1,7 +1,0 @@
-TO REVIEW COLLECTED DATA FROM DM01DB02 - FREE SPACE IN ROOT FILE SYSTEM 
-
-
-
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/mapper/VGExaDb-LVDbSys1
-                       30G  6.9G   22G  25% /

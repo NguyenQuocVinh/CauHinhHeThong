@@ -1,9 +1,0 @@
-
-<b><u>RDBMS home(/u01/app/oracle/product/11.2.0.2/dbhome_1) patch inventory</b></u>
-
-Patch  13396479     : applied on Thu Apr 05 09:47:25 ICT 2012
-Patch  13603787     : applied on Thu Apr 05 09:46:03 ICT 2012
-Patch  13603796     : applied on Thu Apr 05 09:47:40 ICT 2012
-Patch Description:  "Exadata Database Recommended Patch (CRS) : 11.2.0.2.15 (13396479) "
-Patch Description:  "Exadata Database Recommended Patch (Database) : 11.2.0.2.15 (13603787)"
-Patch Description:  "Exadata Database Recommended Patch (Diskmon) : 11.2.0.2.15 (13603796)"
